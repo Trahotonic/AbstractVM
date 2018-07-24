@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/rkyslyy/CLionProjects/abstractVM/src/Operand.cpp" "/Users/rkyslyy/CLionProjects/abstractVM/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Operand.cpp.o"
-  "/Users/rkyslyy/CLionProjects/abstractVM/src/VM.cpp" "/Users/rkyslyy/CLionProjects/abstractVM/cmake-build-debug/CMakeFiles/abstractVM.dir/src/VM.cpp.o"
-  "/Users/rkyslyy/CLionProjects/abstractVM/src/main.cpp" "/Users/rkyslyy/CLionProjects/abstractVM/cmake-build-debug/CMakeFiles/abstractVM.dir/src/main.cpp.o"
+  "/Users/rkyslyy/avm/src/Operand.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Operand.cpp.o"
+  "/Users/rkyslyy/avm/src/VM.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/VM.cpp.o"
+  "/Users/rkyslyy/avm/src/main.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

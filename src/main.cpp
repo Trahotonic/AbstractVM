@@ -1,17 +1,15 @@
 #include <iostream>
 #include <stack>
 #include "../inc/Operand.hpp"
+#include <typeinfo>
 
 int main(int argc, char **argv)
 {
 	argc = 0;
 	argv = nullptr;
-	std::stack<IOperand*> stack;
-	Operand<float>	op(Int8, 300);
-	stack.push(&op);
-	std::cout << stack.top()->toString() << std::endl;
-	Operand<int>	op2(Int32, 300);
-	stack.push(&op2);
-	std::cout << stack.top()->toString() << std::endl;
+	IOperand const *one = new Operand<int>(Int32, 10);
+ 	IOperand const *two = new Operand<double>(Double, 30);
+ 	IOperand const *three = *one / *two;
+ 	std::cout << three->toString() << std::endl;
 	return 0;
 }

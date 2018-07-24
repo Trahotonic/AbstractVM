@@ -41,6 +41,71 @@ public:
 		return _type;
 	}
 
+	const IOperand	*getMax(const IOperand * other) const{
+		if (this->getType() > other->getType())
+			return this;
+		return other;
+	}
+
+	IOperand const * operator+( IOperand const & rhs ) const {
+		if (getMax(&rhs)->getType() == Int8)
+			return new Operand<char>(getMax(&rhs)->getType(), _value + std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int16)
+			return new Operand<short>(getMax(&rhs)->getType(), _value + std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int32)
+			return new Operand<int>(getMax(&rhs)->getType(), _value + std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Float)
+			return new Operand<float>(getMax(&rhs)->getType(), static_cast<float>(_value) + std::stof(rhs.toString()));
+		else
+			return new Operand<double>(getMax(&rhs)->getType(), static_cast<double>(_value) + std::stod(rhs.toString()));
+	}
+
+	IOperand const * operator-( IOperand const & rhs ) const {
+		if (getMax(&rhs)->getType() == Int8)
+			return new Operand<char>(getMax(&rhs)->getType(), _value - std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int16)
+			return new Operand<short>(getMax(&rhs)->getType(), _value - std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int32)
+			return new Operand<int>(getMax(&rhs)->getType(), _value - std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Float)
+			return new Operand<float>(getMax(&rhs)->getType(), static_cast<float>(_value) - std::stof(rhs.toString()));
+		else
+			return new Operand<double>(getMax(&rhs)->getType(), static_cast<double>(_value) - std::stod(rhs.toString()));
+	}
+	IOperand const * operator*( IOperand const & rhs ) const {
+		if (getMax(&rhs)->getType() == Int8)
+			return new Operand<char>(getMax(&rhs)->getType(), _value * std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int16)
+			return new Operand<short>(getMax(&rhs)->getType(), _value * std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int32)
+			return new Operand<int>(getMax(&rhs)->getType(), _value * std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Float)
+			return new Operand<float>(getMax(&rhs)->getType(), static_cast<float>(_value) * std::stof(rhs.toString()));
+		else
+			return new Operand<double>(getMax(&rhs)->getType(), static_cast<double>(_value) * std::stod(rhs.toString()));
+	}
+	IOperand const * operator/( IOperand const & rhs ) const {
+		if (getMax(&rhs)->getType() == Int8)
+			return new Operand<char>(getMax(&rhs)->getType(), _value / std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int16)
+			return new Operand<short>(getMax(&rhs)->getType(), _value / std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Int32)
+			return new Operand<int>(getMax(&rhs)->getType(), _value / std::stoi(rhs.toString()));
+		else if (getMax(&rhs)->getType() == Float)
+			return new Operand<float>(getMax(&rhs)->getType(), static_cast<float>(_value) / std::stof(rhs.toString()));
+		else
+			return new Operand<double>(getMax(&rhs)->getType(), static_cast<double>(_value) / std::stod(rhs.toString()));
+	}
+//	IOperand const * operator%( IOperand const & rhs ) const {
+//		if (getMax(&rhs)->getType() == Int8)
+//			return new Operand<char>(getMax(&rhs)->getType(), _value % std::stoi(rhs.toString()));
+//		else if (getMax(&rhs)->getType() == Int16)
+//			return new Operand<short>(getMax(&rhs)->getType(), _value % std::stoi(rhs.toString()));
+//		else if (getMax(&rhs)->getType() == Int32)
+//			return new Operand<int>(getMax(&rhs)->getType(), _value % std::stoi(rhs.toString()));
+//		else
+//			return nullptr;
+//	}
 };
 
 #endif //ABSTRACTVM_OPERAND_HPP
