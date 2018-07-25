@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 # Install script for directory: /Users/rkyslyy/avm
+=======
+# Install script for directory: /Users/rkyslyy/avmGit
+>>>>>>> Stashed changes
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +44,9 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
+<<<<<<< Updated upstream
 file(WRITE "/Users/rkyslyy/avm/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+=======
+file(WRITE "/Users/rkyslyy/avmGit/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+>>>>>>> Stashed changes
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

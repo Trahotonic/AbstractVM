@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 /Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/rkyslyy/avm
 -- The C compiler identification is AppleClang 9.1.0.9020039
 -- The CXX compiler identification is AppleClang 9.1.0.9020039
+=======
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/rkyslyy/avmGit
+-- The C compiler identification is AppleClang 9.0.0.9000039
+-- The CXX compiler identification is AppleClang 9.0.0.9000039
+>>>>>>> Stashed changes
 -- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc
 -- Check for working C compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc -- works
 -- Detecting C compiler ABI info
@@ -15,4 +21,8 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
+<<<<<<< Updated upstream
 -- Build files have been written to: /Users/rkyslyy/avm/cmake-build-debug
+=======
+-- Build files have been written to: /Users/rkyslyy/avmGit/cmake-build-debug
+>>>>>>> Stashed changes

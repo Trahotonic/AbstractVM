@@ -48,10 +48,17 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< Updated upstream
 CMAKE_SOURCE_DIR = /Users/rkyslyy/avm
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /Users/rkyslyy/avm/cmake-build-debug
+=======
+CMAKE_SOURCE_DIR = /Users/rkyslyy/avmGit
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /Users/rkyslyy/avmGit/cmake-build-debug
+>>>>>>> Stashed changes
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +87,15 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
+<<<<<<< Updated upstream
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rkyslyy/avm/cmake-build-debug/CMakeFiles /Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rkyslyy/avm/cmake-build-debug/CMakeFiles 0
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rkyslyy/avmGit/cmake-build-debug/CMakeFiles /Users/rkyslyy/avmGit/cmake-build-debug/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rkyslyy/avmGit/cmake-build-debug/CMakeFiles 0
+>>>>>>> Stashed changes
 .PHONY : all
 
 # The main clean target
