@@ -23,29 +23,28 @@ void VM::readInput(int argc, char **argv)
 {
 	std::string buffer;
 	std::cmatch result;
-	std::regex  command("(push|assert)([ ])(int8|int16|int32|float|double)(\\()([0-9]*\\.?[0-9]*)(\\))");
-	std::regex  fl("([0-9]*\\.[0-9]*)");
-	if (argc == 2)
-	{
+	std::regex  command("(push|assert)([ ])(int8|int16|int32|float|double)(\\()([+|-]?[0-9]*\\.?[0-9]*)(\\))");
+	std::regex  fl("([+|-]?[0-9]*\\.[0-9]*)");
+	if (argc == 2) {
 		std::ifstream fs(argv[1]);
-		while (!fs.eof())
-		{
+		while (!fs.eof()) {
 			std::getline(fs, buffer);
 			std::cout << buffer << std::endl;
 		}
 	}
 	else
-		while (!std::cin.eof())
-		{
+		while (!std::cin.eof()) {
 			std::getline(std::cin, buffer);
-			if (std::regex_match(buffer.c_str(), result, command))
-			{
-				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32")
-					throw FloatIntoIntException();
-				std::cout << "string \"" << buffer << "\" matches regex\n";
+			if (std::regex_match(buffer.c_str(), result, command)) {
+				std::cout << "line \"" << buffer << "\" matches regex\n";
 				std::cout << "command: " << result[1] << std::endl;
 				std::cout << "data type: " << result[3] << std::endl;
 				std::cout << "value: " << result[5] << std::endl;
+				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32") {
+					std::string v = result[5];
+					if (std::regex_match(v.c_str(), fl))
+						throw FloatIntoIntException();
+				}
 			}
 		}
 }
