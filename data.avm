@@ -1,4 +1,4 @@
-push int8(-4)
 push int8(0)
+push int8(-4)
 div
 dump

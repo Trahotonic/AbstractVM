@@ -152,9 +152,9 @@ void DivisionByZero::checkZero(int c, const IOperand *one, const IOperand * two,
     if ((two->getType() == Float && std::stof(two->to_string()) == 0) ||
 			(two->getType() == Double && std::stod(two->to_string()) == 0) ||
 			(two->getType() != Double && two->getType() != Float && std::stoi(two->to_string()) == 0)) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \"\e[31m";
-		std::cout << one->to_string() << " " << op << " " << two->to_string();
-		std::cout << "\e[0m\" - ";
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : [";
+		std::cout << one->to_string() << " " << op << " \e[31m" << two->to_string();
+		std::cout << "\e[0m] - ";
 		throw DivisionByZero();
     }
 
