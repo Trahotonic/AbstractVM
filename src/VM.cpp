@@ -35,8 +35,10 @@ void VM::readInput(int argc, char **argv)
 		}
 	}
 	else
-		while (!std::cin.eof()) {
+		while (true) {
 			std::getline(std::cin, buffer);
+			if (std::cin.eof())
+				break ;
 			if (std::regex_match(buffer.c_str(), result, command)) {
 //				std::cout << "line \"" << buffer << "\" matches regex\n";
 //				std::cout << "command: " << result[1] << std::endl;
@@ -54,9 +56,9 @@ void VM::readInput(int argc, char **argv)
 						push(Int8, result[5]);
 					else if (result[3] == "int16")
 						push(Int16, result[5]);
-					else if (result[3] == "int16")
+					else if (result[3] == "int32")
 						push(Int32, result[5]);
-					else if (result[3] == "int16")
+					else if (result[3] == "float")
 						push(Float, result[5]);
 					else
 						push(Double, result[5]);
