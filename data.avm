@@ -1,4 +1,2 @@
-push int8(0)
-push int8(-4)
-div
+push int8(-255)
 dump

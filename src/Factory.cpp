@@ -2,8 +2,10 @@
 // Created by Roman KYSLYY on 7/26/18.
 //
 
+#include <climits>
 #include "../inc/Factory.hpp"
 #include "../inc/Operand.hpp"
+#include "../inc/Exceptions.hpp"
 
 Factory::Factory() {}
 
@@ -30,14 +32,26 @@ IOperand const* Factory::createOperand(eOperandType type, std::string const &val
 }
 
 IOperand const* Factory::createInt8(std::string const &value) const {
+    if (std::stol(value) > CHAR_MAX)
+        throw ValueOverflow();
+    if (std::stol(value) < CHAR_MIN)
+        throw ValueUnderflow();
 	return new Operand<char>(Int8, static_cast<char>(std::stoi(value)));
 }
 
 IOperand const* Factory::createInt16(std::string const &value) const {
+    if (std::stol(value) > SHRT_MAX)
+        throw ValueOverflow();
+    if (std::stol(value) < SHRT_MIN)
+        throw ValueUnderflow();
 	return new Operand<short>(Int16, static_cast<short>(std::stoi(value)));
 }
 
 IOperand const* Factory::createInt32(std::string const &value) const {
+	if (std::stol(value) > INT_MAX)
+		throw ValueOverflow();
+	if (std::stol(value) < INT_MIN)
+		throw ValueUnderflow();
 	return new Operand<int>(Int32, std::stoi(value));
 }
 
