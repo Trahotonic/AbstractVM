@@ -46,4 +46,17 @@ public:
 	virtual const char* what() const throw();
 };
 
+class InvalidInput : public virtual std::exception
+{
+public:
+	InvalidInput(void);
+	InvalidInput(InvalidInput const & src);
+
+	InvalidInput	&operator=(InvalidInput const & src);
+
+	~InvalidInput(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

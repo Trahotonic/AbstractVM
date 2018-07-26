@@ -21,6 +21,7 @@ VM::~VM() {}
 
 void VM::readInput(int argc, char **argv)
 {
+	int         count = 1;
 	std::string buffer;
 	std::cmatch result;
 	std::regex  command("(push|assert)([ ])(int8|int16|int32|float|double)(\\()([+|-]?[0-9]*\\.?[0-9]*)(\\))");
@@ -30,6 +31,7 @@ void VM::readInput(int argc, char **argv)
 		while (!fs.eof()) {
 			std::getline(fs, buffer);
 			std::cout << buffer << std::endl;
+			count++;
 		}
 	}
 	else
@@ -42,9 +44,16 @@ void VM::readInput(int argc, char **argv)
 				std::cout << "value: " << result[5] << std::endl;
 				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32") {
 					std::string v = result[5];
-					if (std::regex_match(v.c_str(), fl))
+					if (std::regex_match(v.c_str(), fl)) {
+						std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m: ";
 						throw FloatIntoIntException();
+					}
 				}
+				count++;
+			}
+			else {
+				std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m: ";
+				throw InvalidInput();
 			}
 		}
 }

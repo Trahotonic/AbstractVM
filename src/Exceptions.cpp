@@ -57,3 +57,22 @@ FloatIntoIntException::FloatIntoIntException() {}
 FloatIntoIntException::FloatIntoIntException(FloatIntoIntException const &src) {
 	*this = src;
 }
+
+InvalidInput::~InvalidInput() throw() {}
+
+const char* InvalidInput::InvalidInput::what() const throw() {
+	return "Invalid input\n";
+}
+
+InvalidInput& InvalidInput::operator=(InvalidInput const &src)
+{
+	(void)src;
+	return *this;
+}
+
+InvalidInput::InvalidInput() {}
+
+InvalidInput::InvalidInput(InvalidInput const &src) {
+	*this = src;
+}
+
