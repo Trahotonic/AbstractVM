@@ -80,10 +80,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/rkyslyy/avmGit/Converter.cpp">
+		<Unit filename="/Users/rkyslyy/avmGit/Exceptions.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
-		<Unit filename="/Users/rkyslyy/avmGit/Converter.hpp">
+		<Unit filename="/Users/rkyslyy/avmGit/Exceptions.hpp">
+			<Option target="abstractVM"/>
+		</Unit>
+		<Unit filename="/Users/rkyslyy/avmGit/inc/Converter.hpp">
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avmGit/inc/IOperand.hpp">
@@ -93,6 +96,9 @@
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avmGit/inc/VM.hpp">
+			<Option target="abstractVM"/>
+		</Unit>
+		<Unit filename="/Users/rkyslyy/avmGit/src/Converter.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avmGit/src/Operand.cpp">

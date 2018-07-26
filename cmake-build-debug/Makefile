@@ -123,32 +123,59 @@ abstractVM/fast:
 	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/build
 .PHONY : abstractVM/fast
 
-Converter.o: Converter.cpp.o
+Exceptions.o: Exceptions.cpp.o
 
-.PHONY : Converter.o
+.PHONY : Exceptions.o
 
 # target to build an object file
-Converter.cpp.o:
-	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Converter.cpp.o
-.PHONY : Converter.cpp.o
+Exceptions.cpp.o:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Exceptions.cpp.o
+.PHONY : Exceptions.cpp.o
 
-Converter.i: Converter.cpp.i
+Exceptions.i: Exceptions.cpp.i
 
-.PHONY : Converter.i
+.PHONY : Exceptions.i
 
 # target to preprocess a source file
-Converter.cpp.i:
-	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Converter.cpp.i
-.PHONY : Converter.cpp.i
+Exceptions.cpp.i:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Exceptions.cpp.i
+.PHONY : Exceptions.cpp.i
 
-Converter.s: Converter.cpp.s
+Exceptions.s: Exceptions.cpp.s
 
-.PHONY : Converter.s
+.PHONY : Exceptions.s
 
 # target to generate assembly for a file
-Converter.cpp.s:
-	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Converter.cpp.s
-.PHONY : Converter.cpp.s
+Exceptions.cpp.s:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Exceptions.cpp.s
+.PHONY : Exceptions.cpp.s
+
+src/Converter.o: src/Converter.cpp.o
+
+.PHONY : src/Converter.o
+
+# target to build an object file
+src/Converter.cpp.o:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Converter.cpp.o
+.PHONY : src/Converter.cpp.o
+
+src/Converter.i: src/Converter.cpp.i
+
+.PHONY : src/Converter.i
+
+# target to preprocess a source file
+src/Converter.cpp.i:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Converter.cpp.i
+.PHONY : src/Converter.cpp.i
+
+src/Converter.s: src/Converter.cpp.s
+
+.PHONY : src/Converter.s
+
+# target to generate assembly for a file
+src/Converter.cpp.s:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Converter.cpp.s
+.PHONY : src/Converter.cpp.s
 
 src/Operand.o: src/Operand.cpp.o
 
@@ -240,9 +267,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... abstractVM"
-	@echo "... Converter.o"
-	@echo "... Converter.i"
-	@echo "... Converter.s"
+	@echo "... Exceptions.o"
+	@echo "... Exceptions.i"
+	@echo "... Exceptions.s"
+	@echo "... src/Converter.o"
+	@echo "... src/Converter.i"
+	@echo "... src/Converter.s"
 	@echo "... src/Operand.o"
 	@echo "... src/Operand.i"
 	@echo "... src/Operand.s"

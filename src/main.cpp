@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 	vm.push(new Operand<float>(Float, 80));
 	vm.add();
 //	vm.dump();
-	vm.push(new Operand<float>(Float, 300.5));
+	vm.push(new Operand<float>(Float, 300));
 	vm.dump();
 	vm.sub();
 	vm.dump();

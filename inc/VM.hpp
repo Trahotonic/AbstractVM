@@ -12,7 +12,6 @@
 class VM {
 private:
 	std::list<const IOperand*>      _stack;
-    std::string			            getStrSum(const IOperand*, const IOperand*);
 public:
 	VM();
 	VM(VM const & src);
