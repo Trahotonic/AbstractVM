@@ -123,32 +123,32 @@ abstractVM/fast:
 	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/build
 .PHONY : abstractVM/fast
 
-Exceptions.o: Exceptions.cpp.o
+Factory.o: Factory.cpp.o
 
-.PHONY : Exceptions.o
+.PHONY : Factory.o
 
 # target to build an object file
-Exceptions.cpp.o:
-	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Exceptions.cpp.o
-.PHONY : Exceptions.cpp.o
+Factory.cpp.o:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Factory.cpp.o
+.PHONY : Factory.cpp.o
 
-Exceptions.i: Exceptions.cpp.i
+Factory.i: Factory.cpp.i
 
-.PHONY : Exceptions.i
+.PHONY : Factory.i
 
 # target to preprocess a source file
-Exceptions.cpp.i:
-	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Exceptions.cpp.i
-.PHONY : Exceptions.cpp.i
+Factory.cpp.i:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Factory.cpp.i
+.PHONY : Factory.cpp.i
 
-Exceptions.s: Exceptions.cpp.s
+Factory.s: Factory.cpp.s
 
-.PHONY : Exceptions.s
+.PHONY : Factory.s
 
 # target to generate assembly for a file
-Exceptions.cpp.s:
-	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Exceptions.cpp.s
-.PHONY : Exceptions.cpp.s
+Factory.cpp.s:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Factory.cpp.s
+.PHONY : Factory.cpp.s
 
 src/Converter.o: src/Converter.cpp.o
 
@@ -176,6 +176,33 @@ src/Converter.s: src/Converter.cpp.s
 src/Converter.cpp.s:
 	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Converter.cpp.s
 .PHONY : src/Converter.cpp.s
+
+src/Exceptions.o: src/Exceptions.cpp.o
+
+.PHONY : src/Exceptions.o
+
+# target to build an object file
+src/Exceptions.cpp.o:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Exceptions.cpp.o
+.PHONY : src/Exceptions.cpp.o
+
+src/Exceptions.i: src/Exceptions.cpp.i
+
+.PHONY : src/Exceptions.i
+
+# target to preprocess a source file
+src/Exceptions.cpp.i:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Exceptions.cpp.i
+.PHONY : src/Exceptions.cpp.i
+
+src/Exceptions.s: src/Exceptions.cpp.s
+
+.PHONY : src/Exceptions.s
+
+# target to generate assembly for a file
+src/Exceptions.cpp.s:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Exceptions.cpp.s
+.PHONY : src/Exceptions.cpp.s
 
 src/Operand.o: src/Operand.cpp.o
 
@@ -267,12 +294,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... abstractVM"
-	@echo "... Exceptions.o"
-	@echo "... Exceptions.i"
-	@echo "... Exceptions.s"
+	@echo "... Factory.o"
+	@echo "... Factory.i"
+	@echo "... Factory.s"
 	@echo "... src/Converter.o"
 	@echo "... src/Converter.i"
 	@echo "... src/Converter.s"
+	@echo "... src/Exceptions.o"
+	@echo "... src/Exceptions.i"
+	@echo "... src/Exceptions.s"
 	@echo "... src/Operand.o"
 	@echo "... src/Operand.i"
 	@echo "... src/Operand.s"

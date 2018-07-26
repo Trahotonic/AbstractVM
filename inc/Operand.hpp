@@ -5,12 +5,14 @@
 #ifndef ABSTRACTVM_OPERAND_HPP
 #define ABSTRACTVM_OPERAND_HPP
 
-# include "IOperand.hpp"
-# include "Converter.hpp"
-
+# include <iomanip>
 # include <iostream>
 # include <sstream>
 # include <string>
+
+# include "IOperand.hpp"
+# include "Converter.hpp"
+# include "Factory.hpp"
 
 template <typename T>
 class Operand : public IOperand {
@@ -19,6 +21,7 @@ private:
 	T				_value;
 	std::string		_str;
 	Converter       _converter;
+	Factory         _factory;
 
 public:
 	Operand() : _type(Int8), _value(0), _str(toString(_value)) {}
@@ -42,37 +45,6 @@ public:
 		return out.str();
 	}
 
-	IOperand const* createOperand(eOperandType type, std::string const &value) const {
-		IOperand const	*(Operand::*method[])(std::string const &value) const = {
-				&Operand::createInt8,
-				&Operand::createInt16,
-				&Operand::createInt32,
-				&Operand::createFloat,
-				&Operand::createDouble
-		};
-		return ((this->*method[type])(value));
-	}
-
-	IOperand const* createInt8(std::string const &value) const {
-		return new Operand<char>(Int8, static_cast<char>(std::stoi(value)));
-	}
-
-	IOperand const* createInt16(std::string const &value) const {
-		return new Operand<short>(Int16, static_cast<short>(std::stoi(value)));
-	}
-
-	IOperand const* createInt32(std::string const &value) const {
-		return new Operand<int>(Int32, std::stoi(value));
-	}
-
-	IOperand const* createFloat(std::string const &value) const {
-		return new Operand<float>(Float, std::stof(value));
-	}
-
-	IOperand const* createDouble(std::string const &value) const {
-		return new Operand<double>(Double, std::stod(value));
-	}
-
 	std::string const & toString() const {
 		return _str;
 	}
@@ -92,64 +64,64 @@ public:
 
 	IOperand const * operator+( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8)
-			return createOperand(Int8, _converter.getStrSum(this, &rhs));
+			return _factory.createOperand(Int8, _converter.getStrSum(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int16)
-			return createOperand(Int16, _converter.getStrSum(this, &rhs));
+			return _factory.createOperand(Int16, _converter.getStrSum(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int32)
-			return createOperand(Int32, _converter.getStrSum(this, &rhs));
+			return _factory.createOperand(Int32, _converter.getStrSum(this, &rhs));
 		else if (getMax(&rhs)->getType() == Float)
-			return createOperand(Float, _converter.getStrSum(this, &rhs));
+			return _factory.createOperand(Float, _converter.getStrSum(this, &rhs));
 		else
-			return createOperand(Double, _converter.getStrSum(this, &rhs));
+			return _factory.createOperand(Double, _converter.getStrSum(this, &rhs));
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8)
-			return createOperand(Int8, _converter.getStrSub(this, &rhs));
+			return _factory.createOperand(Int8, _converter.getStrSub(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int16)
-			return createOperand(Int16, _converter.getStrSub(this, &rhs));
+			return _factory.createOperand(Int16, _converter.getStrSub(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int32)
-			return createOperand(Int32, _converter.getStrSub(this, &rhs));
+			return _factory.createOperand(Int32, _converter.getStrSub(this, &rhs));
 		else if (getMax(&rhs)->getType() == Float)
-			return createOperand(Float, _converter.getStrSub(this, &rhs));
+			return _factory.createOperand(Float, _converter.getStrSub(this, &rhs));
 		else
-			return createOperand(Double, _converter.getStrSub(this, &rhs));
+			return _factory.createOperand(Double, _converter.getStrSub(this, &rhs));
 	}
 	IOperand const * operator*( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8)
-			return createOperand(Int8, _converter.getStrMul(this, &rhs));
+			return _factory.createOperand(Int8, _converter.getStrMul(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int16)
-			return createOperand(Int16, _converter.getStrMul(this, &rhs));
+			return _factory.createOperand(Int16, _converter.getStrMul(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int32)
-			return createOperand(Int32, _converter.getStrMul(this, &rhs));
+			return _factory.createOperand(Int32, _converter.getStrMul(this, &rhs));
 		else if (getMax(&rhs)->getType() == Float)
-			return createOperand(Float, _converter.getStrMul(this, &rhs));
+			return _factory.createOperand(Float, _converter.getStrMul(this, &rhs));
 		else
-			return createOperand(Double, _converter.getStrMul(this, &rhs));
+			return _factory.createOperand(Double, _converter.getStrMul(this, &rhs));
 	}
 	IOperand const * operator/( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8)
-			return createOperand(Int8, _converter.getStrDiv(this, &rhs));
+			return _factory.createOperand(Int8, _converter.getStrDiv(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int16)
-			return createOperand(Int16, _converter.getStrDiv(this, &rhs));
+			return _factory.createOperand(Int16, _converter.getStrDiv(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int32)
-			return createOperand(Int32, _converter.getStrDiv(this, &rhs));
+			return _factory.createOperand(Int32, _converter.getStrDiv(this, &rhs));
 		else if (getMax(&rhs)->getType() == Float)
-			return createOperand(Float, _converter.getStrDiv(this, &rhs));
+			return _factory.createOperand(Float, _converter.getStrDiv(this, &rhs));
 		else
-			return createOperand(Double, _converter.getStrDiv(this, &rhs));
+			return _factory.createOperand(Double, _converter.getStrDiv(this, &rhs));
 	}
 	IOperand const * operator%( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8)
-			return createOperand(Int8, _converter.getStrMod(this, &rhs));
+			return _factory.createOperand(Int8, _converter.getStrMod(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int16)
-			return createOperand(Int16, _converter.getStrMod(this, &rhs));
+			return _factory.createOperand(Int16, _converter.getStrMod(this, &rhs));
 		else if (getMax(&rhs)->getType() == Int32)
-			return createOperand(Int32, _converter.getStrMod(this, &rhs));
+			return _factory.createOperand(Int32, _converter.getStrMod(this, &rhs));
 		else if (getMax(&rhs)->getType() == Float)
-			return createOperand(Float, _converter.getStrMod(this, &rhs));
+			return _factory.createOperand(Float, _converter.getStrMod(this, &rhs));
 		else
-			return createOperand(Double, _converter.getStrMod(this, &rhs));
+			return _factory.createOperand(Double, _converter.getStrMod(this, &rhs));
 	}
 };
 

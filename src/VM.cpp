@@ -38,21 +38,33 @@ void VM::readInput(int argc, char **argv)
 		while (!std::cin.eof()) {
 			std::getline(std::cin, buffer);
 			if (std::regex_match(buffer.c_str(), result, command)) {
-				std::cout << "line \"" << buffer << "\" matches regex\n";
-				std::cout << "command: " << result[1] << std::endl;
-				std::cout << "data type: " << result[3] << std::endl;
-				std::cout << "value: " << result[5] << std::endl;
+//				std::cout << "line \"" << buffer << "\" matches regex\n";
+//				std::cout << "command: " << result[1] << std::endl;
+//				std::cout << "data type: " << result[3] << std::endl;
+//				std::cout << "value: " << result[5] << std::endl;
 				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32") {
 					std::string v = result[5];
 					if (std::regex_match(v.c_str(), fl)) {
-						std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m: ";
+						std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
 						throw FloatIntoIntException();
 					}
+				}
+				if (result[1] == "push") {
+					if (result[3] == "int8")
+						push(Int8, result[5]);
+					else if (result[3] == "int16")
+						push(Int16, result[5]);
+					else if (result[3] == "int16")
+						push(Int32, result[5]);
+					else if (result[3] == "int16")
+						push(Float, result[5]);
+					else
+						push(Double, result[5]);
 				}
 				count++;
 			}
 			else {
-				std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m: ";
+				std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
 				throw InvalidInput();
 			}
 		}
@@ -66,7 +78,7 @@ void VM::add() {
     const IOperand    *two = *_stack.begin();
     _stack.pop_front();
 
-	push(*one + *two);
+	_stack.push_front(*one +*two);
 }
 
 void VM::sub() {
@@ -77,7 +89,7 @@ void VM::sub() {
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 
-	push(*one - *two);
+	_stack.push_front(*one - *two);
 }
 
 void VM::mul() {
@@ -88,7 +100,7 @@ void VM::mul() {
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 
-	push(*one * *two);
+	_stack.push_front(*one * *two);
 }
 
 void VM::div() {
@@ -99,7 +111,7 @@ void VM::div() {
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 
-	push(*one / *two);
+	_stack.push_front(*one / *two);
 }
 
 void VM::mod() {
@@ -110,11 +122,11 @@ void VM::mod() {
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 
-	push(*one % *two);
+	_stack.push_front(*one % *two);
 }
 
-void VM::push(const IOperand * newOperand) {
-    _stack.push_front(newOperand);
+void VM::push(eOperandType type, std::string value) {
+	   _stack.push_front(_factory.createOperand(type, value));
 }
 
 void VM::pop() {

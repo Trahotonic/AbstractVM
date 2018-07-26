@@ -6,20 +6,20 @@
 #define ABSTRACTVM_VM_HPP
 
 #include <list>
-#include <iomanip>
-#include "IOperand.hpp"
 #include "Exceptions.hpp"
+#include "Operand.hpp"
 
 class VM {
 private:
 	std::list<const IOperand*>      _stack;
+	Factory                         _factory;
 public:
 	VM();
 	VM(VM const & src);
 	VM	&operator=(VM const & src);
 	~VM();
 
-	void                    push(const IOperand*);
+	void                    push(eOperandType, std::string);
 	void                    dump();
 	void                    add();
 	void                    sub();

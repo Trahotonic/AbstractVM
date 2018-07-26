@@ -1,5 +1,5 @@
 #include <regex>
-#include "../inc/Operand.hpp"
+#include "../inc/VM.hpp"
 
 int main(int argc, char **argv)
 {
@@ -14,5 +14,6 @@ int main(int argc, char **argv)
 		std::cout << e.what() << std::endl;
 		return 1;
 	}
+	vm.dump();
 	return 0;
 }

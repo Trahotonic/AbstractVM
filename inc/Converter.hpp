@@ -5,7 +5,7 @@
 #ifndef ABSTRACTVM_CONVERTER_HPP
 #define ABSTRACTVM_CONVERTER_HPP
 
-# include "VM.hpp"
+# include "IOperand.hpp"
 
 class Converter {
 public:
