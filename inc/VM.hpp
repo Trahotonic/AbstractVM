@@ -8,6 +8,7 @@
 #include <list>
 #include <iomanip>
 #include "IOperand.hpp"
+#include "Exceptions.hpp"
 
 class VM {
 private:
@@ -25,6 +26,7 @@ public:
 	void                    mul();
 	void                    div();
 	void                    mod();
+	void                    pop();
 	void                    readInput(int, char**);
 };
 

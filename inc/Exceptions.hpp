@@ -33,4 +33,17 @@ public:
 	virtual const char* what() const throw();
 };
 
+class FloatIntoIntException : public virtual std::exception
+{
+public:
+	FloatIntoIntException(void);
+	FloatIntoIntException(FloatIntoIntException const & src);
+
+	FloatIntoIntException	&operator=(FloatIntoIntException const & src);
+
+	~FloatIntoIntException(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

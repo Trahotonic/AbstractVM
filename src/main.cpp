@@ -7,6 +7,12 @@ int main(int argc, char **argv)
 
 	argc = 0;
 	argv = 0;
-	vm.readInput(argc, argv);
+	try {
+		vm.readInput(argc, argv);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+		return 1;
+	}
 	return 0;
 }

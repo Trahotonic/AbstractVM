@@ -23,7 +23,7 @@ void VM::readInput(int argc, char **argv)
 {
 	std::string buffer;
 	std::cmatch result;
-	std::regex  command("(push)([ ])(int8|int16|int32|float|double)(\\()([0-9]*\\.?[0-9]*)(\\))");
+	std::regex  command("(push|assert)([ ])(int8|int16|int32|float|double)(\\()([0-9]*\\.?[0-9]*)(\\))");
 	std::regex  fl("([0-9]*\\.[0-9]*)");
 	if (argc == 2)
 	{
@@ -40,25 +40,19 @@ void VM::readInput(int argc, char **argv)
 			std::getline(std::cin, buffer);
 			if (std::regex_match(buffer.c_str(), result, command))
 			{
+				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32")
+					throw FloatIntoIntException();
 				std::cout << "string \"" << buffer << "\" matches regex\n";
 				std::cout << "command: " << result[1] << std::endl;
 				std::cout << "data type: " << result[3] << std::endl;
 				std::cout << "value: " << result[5] << std::endl;
-				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32")
-				{
-					std::string v = result[5];
-					if (std::regex_match(v, fl))
-						std::cout << "Incompatible type and value\n";
-				}
 			}
 		}
 }
 
 void VM::add() {
-    if (_stack.size() < 2) {
-        std::cout << "Too few elements in stack\n";
-        return ;
-    }
+    if (_stack.size() < 2)
+	    throw TooFewOperandsException();
     const IOperand    *one = *_stack.begin();
     _stack.pop_front();
     const IOperand    *two = *_stack.begin();
@@ -68,10 +62,8 @@ void VM::add() {
 }
 
 void VM::sub() {
-	if (_stack.size() < 2) {
-		std::cout << "Too few elements in stack\n";
-		return ;
-	}
+	if (_stack.size() < 2)
+		throw TooFewOperandsException();
 	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
@@ -81,10 +73,8 @@ void VM::sub() {
 }
 
 void VM::mul() {
-	if (_stack.size() < 2) {
-		std::cout << "Too few elements in stack\n";
-		return ;
-	}
+	if (_stack.size() < 2)
+		throw TooFewOperandsException();
 	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
@@ -94,10 +84,8 @@ void VM::mul() {
 }
 
 void VM::div() {
-	if (_stack.size() < 2) {
-		std::cout << "Too few elements in stack\n";
-		return ;
-	}
+	if (_stack.size() < 2)
+		throw TooFewOperandsException();
 	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
@@ -107,10 +95,8 @@ void VM::div() {
 }
 
 void VM::mod() {
-	if (_stack.size() < 2) {
-		std::cout << "Too few elements in stack\n";
-		return ;
-	}
+	if (_stack.size() < 2)
+		throw TooFewOperandsException();
 	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
@@ -121,6 +107,12 @@ void VM::mod() {
 
 void VM::push(const IOperand * newOperand) {
     _stack.push_front(newOperand);
+}
+
+void VM::pop() {
+	if (_stack.empty())
+		throw EmptyStackException();
+	_stack.pop_front();
 }
 
 void VM::dump() {
