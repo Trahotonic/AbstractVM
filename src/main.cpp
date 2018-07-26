@@ -2,16 +2,10 @@
 
 int main(int argc, char **argv)
 {
-	argc = 0;
-	argv = nullptr;
 	VM  vm;
-	vm.push(new Operand<int>(Int32, 42));
-	vm.push(new Operand<float>(Float, 80));
-	vm.add();
-//	vm.dump();
-	vm.push(new Operand<float>(Float, 300));
-	vm.dump();
-	vm.sub();
-	vm.dump();
+	if (argc == 2)
+		vm.readInput(argv[1]);
+	else
+		vm.readInput(stdin);
 	return 0;
 }

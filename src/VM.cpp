@@ -2,6 +2,7 @@
 // Created by Roman KYSLYY on 7/24/18.
 //
 
+#include <fstream>
 #include "../inc/VM.hpp"
 
 VM::VM() {}
@@ -16,6 +17,15 @@ VM& VM::operator=(VM const &src) {
 }
 
 VM::~VM() {}
+
+void VM::readInput(std::ifstream fs) {
+	std::string buffer;
+	std::ifstream fs(fs);
+	while (!fs.eof()) {
+		std::getline(fs, buffer);
+		std::cout << buffer << std::endl;
+	}
+}
 
 void VM::add() {
     if (_stack.size() < 2) {
