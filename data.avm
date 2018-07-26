@@ -1,2 +1,4 @@
-push int8(128)
+push int8(100)
+push int8(-124)
+sub
 dump

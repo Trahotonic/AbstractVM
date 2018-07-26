@@ -178,7 +178,7 @@ void VM::add(int c) {
     const IOperand    *two = *_stack.begin();
     _stack.pop_front();
 
-	_stack.push_front(*one +*two);
+	_stack.push_front(*one + *two);
 }
 
 void VM::sub(int c) {

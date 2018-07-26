@@ -33,13 +33,13 @@ IOperand const* Factory::createOperand(eOperandType type, std::string const &val
 
 IOperand const* Factory::createInt8(std::string const &value) const {
     if (std::stol(value) > CHAR_MAX) {
-		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : \"Int8 (\e[31m"
-                                          << value << "\e[0m)\" - <Int8> ";
+		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+                                          << value << "\e[0m] - <Int8> ";
 		throw ValueOverflow();
     }
     if (std::stol(value) < CHAR_MIN) {
-		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : \"Int8 (\e[31m"
-                                          << value << "\e[0m)\" - <Int8> ";
+		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+                                       << value << "\e[0m] - <Int8> ";
 		throw ValueUnderflow();
     }
 	return new Operand<char>(Int8, static_cast<char>(std::stoi(value)));

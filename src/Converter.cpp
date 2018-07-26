@@ -26,8 +26,8 @@ std::string Converter::getStrSum(const IOperand * one, const IOperand * two) con
 	else
 		max = two->getType();
 	if (max == Int8)
-		return std::to_string(static_cast<int>((CASTCH(std::stoi(one->to_string()) +
-                                                       std::stoi(two->to_string())))));
+		return std::to_string(std::stoi(one->to_string()) +
+                                                       std::stoi(two->to_string()));
 	else if (max == Int16)
 		return std::to_string(CASTSH(std::stoi(one->to_string()) +
 		                             std::stoi(two->to_string())));
@@ -79,8 +79,8 @@ std::string Converter::getStrSub(const IOperand * one, const IOperand * two) con
 	else
 		max = two->getType();
 	if (max == Int8)
-		return std::to_string(static_cast<int>((CASTCH(std::stoi(one->to_string()) -
-		                             std::stoi(two->to_string())))));
+		return std::to_string(std::stoi(one->to_string()) -
+		                             std::stoi(two->to_string()));
 	else if (max == Int16)
 		return std::to_string(CASTSH(std::stoi(one->to_string()) -
 		                             std::stoi(two->to_string())));
@@ -132,8 +132,8 @@ std::string Converter::getStrMul(const IOperand * one, const IOperand * two) con
 	else
 		max = two->getType();
 	if (max == Int8)
-		return std::to_string(static_cast<int>((CASTCH(std::stoi(one->to_string()) *
-		                             std::stoi(two->to_string())))));
+		return std::to_string(std::stoi(one->to_string()) *
+		                             std::stoi(two->to_string()));
 	else if (max == Int16)
 		return std::to_string(CASTSH(std::stoi(one->to_string()) *
 		                             std::stoi(two->to_string())));
@@ -185,8 +185,8 @@ std::string Converter::getStrDiv(const IOperand * one, const IOperand * two) con
 	else
 		max = two->getType();
 	if (max == Int8)
-		return std::to_string(static_cast<int>((CASTCH(std::stoi(one->to_string()) /
-		                             std::stoi(two->to_string())))));
+		return std::to_string(std::stoi(one->to_string()) /
+		                             std::stoi(two->to_string()));
 	else if (max == Int16)
 		return std::to_string(CASTSH(std::stoi(one->to_string()) /
 		                             std::stoi(two->to_string())));
@@ -238,8 +238,8 @@ std::string Converter::getStrMod(const IOperand * one, const IOperand * two) con
 	else
 		max = two->getType();
 	if (max == Int8)
-		return std::to_string(static_cast<int>((CASTCH(std::stoi(one->to_string()) %
-		                             std::stoi(two->to_string())))));
+		return std::to_string(std::stoi(one->to_string()) %
+		                             std::stoi(two->to_string()));
 	else if (max == Int16)
 		return std::to_string(CASTSH(std::stoi(one->to_string()) %
 		                             std::stoi(two->to_string())));
