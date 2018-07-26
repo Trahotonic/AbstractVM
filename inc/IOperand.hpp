@@ -23,7 +23,7 @@ public:
 	virtual IOperand const * operator*( IOperand const & rhs ) const = 0; // Product
 	virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
 	virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
-	virtual std::string const & toString() const = 0; // String representation of the instance
+	virtual std::string const & to_string() const = 0; // String representation of the instance
 	virtual ~IOperand() {}
 };
 

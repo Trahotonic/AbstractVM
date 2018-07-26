@@ -41,11 +41,14 @@ public:
 	std::string toString(const X a_value)
 	{
 		std::ostringstream out;
-		out << std::setprecision(2) << std::fixed << a_value;
+		if (typeid(a_value) == typeid(char))
+			out << std::setprecision(2) << std::fixed << static_cast<int>(a_value);
+		else
+			out << std::setprecision(2) << std::fixed << a_value;
 		return out.str();
 	}
 
-	std::string const & toString() const {
+	std::string const & to_string() const {
 		return _str;
 	}
 

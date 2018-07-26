@@ -76,3 +76,111 @@ InvalidInput::InvalidInput(InvalidInput const &src) {
 	*this = src;
 }
 
+UnknownCommand::~UnknownCommand() throw() {}
+
+const char* UnknownCommand::UnknownCommand::what() const throw() {
+	return "Unknown command\n";
+}
+
+UnknownCommand& UnknownCommand::UnknownCommand::operator=(UnknownCommand const &src)
+{
+	(void)src;
+	return *this;
+}
+
+UnknownCommand::UnknownCommand() {}
+
+UnknownCommand::UnknownCommand(UnknownCommand const &src) {
+	*this = src;
+}
+
+ValueOverflow::~ValueOverflow() throw() {}
+
+const char* ValueOverflow::ValueOverflow::what() const throw() {
+	return "Unknown command\n";
+}
+
+ValueOverflow& ValueOverflow::ValueOverflow::operator=(ValueOverflow const &src)
+{
+	(void)src;
+	return *this;
+}
+
+ValueOverflow::ValueOverflow() {}
+
+ValueOverflow::ValueOverflow(ValueOverflow const &src) {
+	*this = src;
+}
+
+ValueUnderflow::~ValueUnderflow() throw() {}
+
+const char* ValueUnderflow::ValueUnderflow::what() const throw() {
+	return "Unknown command\n";
+}
+
+ValueUnderflow& ValueUnderflow::ValueUnderflow::operator=(ValueUnderflow const &src)
+{
+	(void)src;
+	return *this;
+}
+
+ValueUnderflow::ValueUnderflow() {}
+
+ValueUnderflow::ValueUnderflow(ValueUnderflow const &src) {
+	*this = src;
+}
+
+DivisionByZero::~DivisionByZero() throw() {}
+
+const char* DivisionByZero::DivisionByZero::what() const throw() {
+	return "Unknown command\n";
+}
+
+DivisionByZero& DivisionByZero::DivisionByZero::operator=(DivisionByZero const &src)
+{
+	(void)src;
+	return *this;
+}
+
+DivisionByZero::DivisionByZero() {}
+
+DivisionByZero::DivisionByZero(DivisionByZero const &src) {
+	*this = src;
+}
+
+NoExit::~NoExit() throw() {}
+
+const char* NoExit::NoExit::what() const throw() {
+	return "Unknown command\n";
+}
+
+NoExit& NoExit::NoExit::operator=(NoExit const &src)
+{
+	(void)src;
+	return *this;
+}
+
+NoExit::NoExit() {}
+
+NoExit::NoExit(NoExit const &src) {
+	*this = src;
+}
+
+AssertFalse::~AssertFalse() throw() {}
+
+const char* AssertFalse::AssertFalse::what() const throw() {
+	return "Unknown command\n";
+}
+
+AssertFalse& AssertFalse::AssertFalse::operator=(AssertFalse const &src)
+{
+	(void)src;
+	return *this;
+}
+
+AssertFalse::AssertFalse() {}
+
+AssertFalse::AssertFalse(AssertFalse const &src) {
+	*this = src;
+}
+

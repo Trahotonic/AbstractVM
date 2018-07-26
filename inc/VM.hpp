@@ -21,11 +21,11 @@ public:
 
 	void                    push(eOperandType, std::string);
 	void                    dump();
-	void                    add();
-	void                    sub();
-	void                    mul();
-	void                    div();
-	void                    mod();
+	void                    add(int);
+	void                    sub(int);
+	void                    mul(int);
+	void                    div(int);
+	void                    mod(int);
 	void                    pop();
 	void                    readInput(int, char**);
 };

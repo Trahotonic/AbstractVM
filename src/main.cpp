@@ -1,12 +1,11 @@
 #include <regex>
 #include "../inc/VM.hpp"
+#include <typeinfo>
 
 int main(int argc, char **argv)
 {
 	VM  vm;
 
-	argc = 0;
-	argv = 0;
 	try {
 		vm.readInput(argc, argv);
 	}
