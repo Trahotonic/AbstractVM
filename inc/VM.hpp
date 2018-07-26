@@ -25,7 +25,7 @@ public:
 	void                    mul();
 	void                    div();
 	void                    mod();
-	void                    readInput(std::ifstream);
+	void                    readInput(int, char**);
 };
 
 #endif //ABSTRACTVM_VM_HPP

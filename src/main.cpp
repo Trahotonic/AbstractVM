@@ -1,11 +1,12 @@
+#include <regex>
 #include "../inc/Operand.hpp"
 
 int main(int argc, char **argv)
 {
 	VM  vm;
-	if (argc == 2)
-		vm.readInput(argv[1]);
-	else
-		vm.readInput(stdin);
+
+	argc = 0;
+	argv = 0;
+	vm.readInput(argc, argv);
 	return 0;
 }

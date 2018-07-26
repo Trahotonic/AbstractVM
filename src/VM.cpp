@@ -3,6 +3,7 @@
 //
 
 #include <fstream>
+#include <regex>
 #include "../inc/VM.hpp"
 
 VM::VM() {}
@@ -18,13 +19,39 @@ VM& VM::operator=(VM const &src) {
 
 VM::~VM() {}
 
-void VM::readInput(std::ifstream fs) {
+void VM::readInput(int argc, char **argv)
+{
 	std::string buffer;
-	std::ifstream fs(fs);
-	while (!fs.eof()) {
-		std::getline(fs, buffer);
-		std::cout << buffer << std::endl;
+	std::cmatch result;
+	std::regex  command("(push)([ ])(int8|int16|int32|float|double)(\\()([0-9]*\\.?[0-9]*)(\\))");
+	std::regex  fl("([0-9]*\\.[0-9]*)");
+	if (argc == 2)
+	{
+		std::ifstream fs(argv[1]);
+		while (!fs.eof())
+		{
+			std::getline(fs, buffer);
+			std::cout << buffer << std::endl;
+		}
 	}
+	else
+		while (!std::cin.eof())
+		{
+			std::getline(std::cin, buffer);
+			if (std::regex_match(buffer.c_str(), result, command))
+			{
+				std::cout << "string \"" << buffer << "\" matches regex\n";
+				std::cout << "command: " << result[1] << std::endl;
+				std::cout << "data type: " << result[3] << std::endl;
+				std::cout << "value: " << result[5] << std::endl;
+				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32")
+				{
+					std::string v = result[5];
+					if (std::regex_match(v, fl))
+						std::cout << "Incompatible type and value\n";
+				}
+			}
+		}
 }
 
 void VM::add() {
