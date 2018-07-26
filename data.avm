@@ -1,2 +1,2 @@
-push int8(-255)
+push int8(128)
 dump

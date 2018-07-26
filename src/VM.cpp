@@ -89,6 +89,7 @@ void VM::readInput(int argc, char **argv)
                     throw UnknownCommand();
                 }
                 count++;
+                line++;
             }
             else if (std::regex_match(buffer.c_str(), result, op)) {
                 if (result[0] == "add")
@@ -109,6 +110,7 @@ void VM::readInput(int argc, char **argv)
                 throw InvalidInput();
             }
 			count++;
+            line++;
             if (fs.eof())
                 break ;
 		}
@@ -143,6 +145,7 @@ void VM::readInput(int argc, char **argv)
 						push(Double, result[5]);
 				}
 				count++;
+                line++;
 			}
 			else if (std::regex_match(buffer.c_str(), result, op)) {
 			    if (result[0] == "add")

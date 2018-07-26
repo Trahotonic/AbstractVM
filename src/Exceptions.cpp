@@ -7,7 +7,7 @@
 EmptyStackException::~EmptyStackException() throw() {}
 
 const char* EmptyStackException::EmptyStackException::what() const throw() {
-	return "Stack is empty\n";
+	return "Stack is empty";
 }
 
 EmptyStackException& EmptyStackException::EmptyStackException::operator=(EmptyStackException const &src)
@@ -25,7 +25,7 @@ EmptyStackException::EmptyStackException(EmptyStackException const &src) {
 TooFewOperandsException::~TooFewOperandsException() throw() {}
 
 const char* TooFewOperandsException::TooFewOperandsException::what() const throw() {
-	return "Too few operands in stack\n";
+	return "Too few operands in stack";
 }
 
 TooFewOperandsException& TooFewOperandsException::TooFewOperandsException::operator=(TooFewOperandsException const &src)
@@ -43,7 +43,7 @@ TooFewOperandsException::TooFewOperandsException(TooFewOperandsException const &
 FloatIntoIntException::~FloatIntoIntException() throw() {}
 
 const char* FloatIntoIntException::FloatIntoIntException::what() const throw() {
-	return "Invalid value\n";
+	return "Invalid value";
 }
 
 FloatIntoIntException& FloatIntoIntException::operator=(FloatIntoIntException const &src)
@@ -61,7 +61,7 @@ FloatIntoIntException::FloatIntoIntException(FloatIntoIntException const &src) {
 InvalidInput::~InvalidInput() throw() {}
 
 const char* InvalidInput::InvalidInput::what() const throw() {
-	return "Invalid input\n";
+	return "Invalid input";
 }
 
 InvalidInput& InvalidInput::operator=(InvalidInput const &src)
@@ -79,7 +79,7 @@ InvalidInput::InvalidInput(InvalidInput const &src) {
 UnknownCommand::~UnknownCommand() throw() {}
 
 const char* UnknownCommand::UnknownCommand::what() const throw() {
-	return "Unknown command\n";
+	return "Unknown command";
 }
 
 UnknownCommand& UnknownCommand::UnknownCommand::operator=(UnknownCommand const &src)
@@ -97,7 +97,7 @@ UnknownCommand::UnknownCommand(UnknownCommand const &src) {
 ValueOverflow::~ValueOverflow() throw() {}
 
 const char* ValueOverflow::ValueOverflow::what() const throw() {
-	return "Value overflow\n";
+	return "value overflow";
 }
 
 ValueOverflow& ValueOverflow::ValueOverflow::operator=(ValueOverflow const &src)
@@ -115,7 +115,7 @@ ValueOverflow::ValueOverflow(ValueOverflow const &src) {
 ValueUnderflow::~ValueUnderflow() throw() {}
 
 const char* ValueUnderflow::ValueUnderflow::what() const throw() {
-	return "Value underflow\n";
+	return "value underflow";
 }
 
 ValueUnderflow& ValueUnderflow::ValueUnderflow::operator=(ValueUnderflow const &src)
@@ -133,7 +133,7 @@ ValueUnderflow::ValueUnderflow(ValueUnderflow const &src) {
 DivisionByZero::~DivisionByZero() throw() {}
 
 const char* DivisionByZero::DivisionByZero::what() const throw() {
-	return "Division by zero\n";
+	return "Division by zero";
 }
 
 DivisionByZero& DivisionByZero::DivisionByZero::operator=(DivisionByZero const &src)
@@ -163,7 +163,7 @@ void DivisionByZero::checkZero(int c, const IOperand *one, const IOperand * two,
 NoExit::~NoExit() throw() {}
 
 const char* NoExit::NoExit::what() const throw() {
-	return "No exit command\n";
+	return "No exit command";
 }
 
 NoExit& NoExit::NoExit::operator=(NoExit const &src)
@@ -181,7 +181,7 @@ NoExit::NoExit(NoExit const &src) {
 AssertFalse::~AssertFalse() throw() {}
 
 const char* AssertFalse::AssertFalse::what() const throw() {
-	return "Assertion returned false statement\n";
+	return "Assertion returned false statement";
 }
 
 AssertFalse& AssertFalse::AssertFalse::operator=(AssertFalse const &src)

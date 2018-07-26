@@ -12,6 +12,8 @@
 # include <iostream>
 # include <string>
 
+static int line = 1;
+
 typedef enum	eOperandType {Int8, Int16, Int32, Float, Double} eOperandType;
 
 class IOperand {
