@@ -24,26 +24,44 @@ void VM::readInput(int argc, char **argv)
 	int         count = 1;
 	std::string buffer;
 	std::cmatch result;
-	std::regex  command("(push|assert)([ ])(int8|int16|int32|float|double)(\\()([+|-]?[0-9]*\\.?[0-9]*)(\\))");
+	std::regex  command("([a-z]*)([ ])(int8|int16|int32|float|double)(\\()([0-9+-]*\\.?[0-9+-]*)(\\))");
 	std::regex  op("(add|sub|mul|div|mod|dump)");
 	std::regex  fl("([+|-]?[0-9]*\\.[0-9]*)");
+	std::regex  in("([+|-]?[0-9]*[0-9]*)");
 	if (argc == 2) {
 		std::ifstream fs(argv[1]);
 		while (true) {
 			std::getline(fs, buffer);
-			if (fs.eof())
-			    break ;
             if (std::regex_match(buffer.c_str(), result, command)) {
 //				std::cout << "line \"" << buffer << "\" matches regex\n";
 //				std::cout << "command: " << result[1] << std::endl;
 //				std::cout << "data type: " << result[3] << std::endl;
 //				std::cout << "value: " << result[5] << std::endl;
+                std::string v = result[5];
                 if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32") {
-                    std::string v = result[5];
-                    if (std::regex_match(v.c_str(), fl)) {
-                        std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
+                    if (!std::regex_match(v.c_str(), in)) {
+                        std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : \"";
+                        for (int i = 1; i < static_cast<int>(result.size()); i++) {
+                            if (i != 5)
+                                std::cout << result[i];
+                            else
+                                std::cout << "\e[31m" << result[i] << "\e[0m";
+                        }
+                        std::cout << "\" - ";
                         throw FloatIntoIntException();
                     }
+                }
+                else
+                if (!std::regex_match(v.c_str(), fl)) {
+                    std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
+                    for (int i = 1; i < static_cast<int>(result.size()); i++) {
+                        if (i != 5)
+                            std::cout << result[i];
+                        else
+                            std::cout << "\e[31m" << result[i] << "\e[0m";
+                    }
+                    std::cout << "\" - ";
+                    throw FloatIntoIntException();
                 }
                 if (result[1] == "push") {
                     if (result[3] == "int8")
@@ -57,6 +75,19 @@ void VM::readInput(int argc, char **argv)
                     else
                         push(Double, result[5]);
                 }
+                else if (result[1] == "assert")
+                    std::cout << "OK\n";
+                else {
+                    std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : \"";
+                    for (int i = 1; i < static_cast<int>(result.size()); i++) {
+                        if (i != 1)
+                            std::cout << result[i];
+                        else
+                            std::cout << "\e[31m" << result[i] << "\e[0m";
+                    }
+                    std::cout << "\" - ";
+                    throw UnknownCommand();
+                }
                 count++;
             }
             else if (std::regex_match(buffer.c_str(), result, op)) {
@@ -66,7 +97,7 @@ void VM::readInput(int argc, char **argv)
                     sub(count);
                 else if (result[0] == "sub")
                     mul(count);
-                else if (result[0] == "sub")
+                else if (result[0] == "div")
                     div(count);
                 else if (result[0] == "mod")
                     mod(count);
@@ -78,6 +109,8 @@ void VM::readInput(int argc, char **argv)
                 throw InvalidInput();
             }
 			count++;
+            if (fs.eof())
+                break ;
 		}
 	}
 	else
@@ -180,7 +213,7 @@ void VM::div(int c) {
 	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
-
+	DivisionByZero::checkZero(c, one, two, '/');
 	_stack.push_front(*one / *two);
 }
 

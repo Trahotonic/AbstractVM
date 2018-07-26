@@ -6,6 +6,7 @@
 #define ABSTRACTVM_EXCEPTIONS_HPP
 
 #include <exception>
+#include "IOperand.hpp"
 
 class EmptyStackException : public virtual std::exception
 {
@@ -109,6 +110,8 @@ public:
 	~DivisionByZero(void) throw();
 
 	virtual const char* what() const throw();
+
+	static void	checkZero(int c, const IOperand * one, const IOperand * two, char op);
 };
 
 class NoExit : public virtual std::exception

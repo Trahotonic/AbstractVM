@@ -43,7 +43,7 @@ TooFewOperandsException::TooFewOperandsException(TooFewOperandsException const &
 FloatIntoIntException::~FloatIntoIntException() throw() {}
 
 const char* FloatIntoIntException::FloatIntoIntException::what() const throw() {
-	return "Incompatible type and value\n";
+	return "Invalid value\n";
 }
 
 FloatIntoIntException& FloatIntoIntException::operator=(FloatIntoIntException const &src)
@@ -97,7 +97,7 @@ UnknownCommand::UnknownCommand(UnknownCommand const &src) {
 ValueOverflow::~ValueOverflow() throw() {}
 
 const char* ValueOverflow::ValueOverflow::what() const throw() {
-	return "Unknown command\n";
+	return "Value overflow\n";
 }
 
 ValueOverflow& ValueOverflow::ValueOverflow::operator=(ValueOverflow const &src)
@@ -115,7 +115,7 @@ ValueOverflow::ValueOverflow(ValueOverflow const &src) {
 ValueUnderflow::~ValueUnderflow() throw() {}
 
 const char* ValueUnderflow::ValueUnderflow::what() const throw() {
-	return "Unknown command\n";
+	return "Value underflow\n";
 }
 
 ValueUnderflow& ValueUnderflow::ValueUnderflow::operator=(ValueUnderflow const &src)
@@ -133,7 +133,7 @@ ValueUnderflow::ValueUnderflow(ValueUnderflow const &src) {
 DivisionByZero::~DivisionByZero() throw() {}
 
 const char* DivisionByZero::DivisionByZero::what() const throw() {
-	return "Unknown command\n";
+	return "Division by zero\n";
 }
 
 DivisionByZero& DivisionByZero::DivisionByZero::operator=(DivisionByZero const &src)
@@ -148,10 +148,22 @@ DivisionByZero::DivisionByZero(DivisionByZero const &src) {
 	*this = src;
 }
 
+void DivisionByZero::checkZero(int c, const IOperand *one, const IOperand * two, char op) {
+    if ((two->getType() == Float && std::stof(two->to_string()) == 0) ||
+			(two->getType() == Double && std::stod(two->to_string()) == 0) ||
+			(two->getType() != Double && two->getType() != Float && std::stoi(two->to_string()) == 0)) {
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \"\e[31m";
+		std::cout << one->to_string() << " " << op << " " << two->to_string();
+		std::cout << "\e[0m\" - ";
+		throw DivisionByZero();
+    }
+
+}
+
 NoExit::~NoExit() throw() {}
 
 const char* NoExit::NoExit::what() const throw() {
-	return "Unknown command\n";
+	return "No exit command\n";
 }
 
 NoExit& NoExit::NoExit::operator=(NoExit const &src)
@@ -169,7 +181,7 @@ NoExit::NoExit(NoExit const &src) {
 AssertFalse::~AssertFalse() throw() {}
 
 const char* AssertFalse::AssertFalse::what() const throw() {
-	return "Unknown command\n";
+	return "Assertion returned false statement\n";
 }
 
 AssertFalse& AssertFalse::AssertFalse::operator=(AssertFalse const &src)
