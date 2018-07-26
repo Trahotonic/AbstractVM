@@ -8,40 +8,6 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-<<<<<<< Updated upstream
-				<Option working_dir="/Users/rkyslyy/avm/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="/Users/rkyslyy/avm/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/Users/rkyslyy/avm/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="abstractVM">
-				<Option output="/Users/rkyslyy/avm/cmake-build-debug/abstractVM" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/rkyslyy/avm/cmake-build-debug"/>
-=======
 				<Option working_dir="/Users/rkyslyy/avmGit/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
@@ -74,31 +40,18 @@
 			<Target title="abstractVM">
 				<Option output="/Users/rkyslyy/avmGit/cmake-build-debug/abstractVM" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/rkyslyy/avmGit/cmake-build-debug"/>
->>>>>>> Stashed changes
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-<<<<<<< Updated upstream
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 abstractVM"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="abstractVM/fast">
-				<Option output="/Users/rkyslyy/avm/cmake-build-debug/abstractVM" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/rkyslyy/avm/cmake-build-debug"/>
-=======
 					<Build command="/usr/bin/make -j4 -f &quot;/Users/rkyslyy/avmGit/cmake-build-debug/Makefile&quot;  VERBOSE=1 abstractVM"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/rkyslyy/avmGit/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/rkyslyy/avmGit/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -108,48 +61,18 @@
 			<Target title="abstractVM/fast">
 				<Option output="/Users/rkyslyy/avmGit/cmake-build-debug/abstractVM" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/rkyslyy/avmGit/cmake-build-debug"/>
->>>>>>> Stashed changes
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
 					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-<<<<<<< Updated upstream
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 abstractVM/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/rkyslyy/avm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-		</Build>
-		<Unit filename="/Users/rkyslyy/avm/inc/IOperand.hpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/inc/Operand.hpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/inc/VM.hpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/src/Operand.cpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/src/VM.cpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/src/main.cpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/CMakeLists.txt">
-=======
 					<Build command="/usr/bin/make -j4 -f &quot;/Users/rkyslyy/avmGit/cmake-build-debug/Makefile&quot;  VERBOSE=1 abstractVM/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/rkyslyy/avmGit/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/rkyslyy/avmGit/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -157,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/rkyslyy/avmGit/Converter.cpp">
+			<Option target="abstractVM"/>
+		</Unit>
+		<Unit filename="/Users/rkyslyy/avmGit/Converter.hpp">
+			<Option target="abstractVM"/>
+		</Unit>
 		<Unit filename="/Users/rkyslyy/avmGit/inc/IOperand.hpp">
 			<Option target="abstractVM"/>
 		</Unit>
@@ -176,7 +105,6 @@
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avmGit/CMakeLists.txt">
->>>>>>> Stashed changes
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

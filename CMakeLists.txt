@@ -3,4 +3,4 @@ project(abstractVM)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(abstractVM src/main.cpp inc/IOperand.hpp src/Operand.cpp inc/Operand.hpp src/VM.cpp inc/VM.hpp)
+add_executable(abstractVM src/main.cpp inc/IOperand.hpp src/Operand.cpp inc/Operand.hpp src/VM.cpp inc/VM.hpp src/Converter.cpp inc/Converter.hpp)

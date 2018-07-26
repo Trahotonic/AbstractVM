@@ -7,7 +7,7 @@
 
 #define CASTCH static_cast<char>
 #define CASTSH static_cast<short>
-#define CASTIO dynamic_cast<IOperand*>
+#define CASTIO dynamic_cast<const IOperand*>
 
 # include <iostream>
 # include <string>
@@ -22,7 +22,7 @@ public:
 	virtual IOperand const * operator-( IOperand const & rhs ) const = 0; // Difference
 	virtual IOperand const * operator*( IOperand const & rhs ) const = 0; // Product
 	virtual IOperand const * operator/( IOperand const & rhs ) const = 0; // Quotient
-//	virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
+	virtual IOperand const * operator%( IOperand const & rhs ) const = 0; // Modulo
 	virtual std::string const & toString() const = 0; // String representation of the instance
 	virtual ~IOperand() {}
 };

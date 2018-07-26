@@ -1,9 +1,3 @@
-<<<<<<< Updated upstream
-/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir
-=======
 /Users/rkyslyy/avmGit/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/rkyslyy/avmGit/cmake-build-debug/CMakeFiles/edit_cache.dir
 /Users/rkyslyy/avmGit/cmake-build-debug/CMakeFiles/abstractVM.dir
->>>>>>> Stashed changes

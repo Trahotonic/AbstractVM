@@ -17,38 +17,7 @@ VM& VM::operator=(VM const &src) {
 
 VM::~VM() {}
 
-IOperand const* VM::createOperand(eOperandType type, std::string const &value) const {
-    IOperand const	*(VM::*method[])(std::string const &value) const = {
-            &VM::createInt8,
-            &VM::createInt16,
-            &VM::createInt32,
-            &VM::createFloat,
-            &VM::createDouble
-    };
-    return ((this->*method[type])(value));
-}
-
-IOperand const* VM::createInt8(std::string const &value) const {
-    return new Operand<char>(Int8, static_cast<char>(std::stoi(value)));
-}
-
-IOperand const* VM::createInt16(std::string const &value) const {
-    return new Operand<short>(Int16, static_cast<short>(std::stoi(value)));
-}
-
-IOperand const* VM::createInt32(std::string const &value) const {
-    return new Operand<int>(Int32, std::stoi(value));
-}
-
-IOperand const* VM::createFloat(std::string const &value) const {
-    return new Operand<float>(Float, std::stof(value));
-}
-
-IOperand const* VM::createDouble(std::string const &value) const {
-    return new Operand<double>(Double, std::stod(value));
-}
-
-std::string VM::getStrSum(IOperand * one, IOperand * two) {
+std::string VM::getStrSum(const IOperand * one, const IOperand * two) {
 	int max;
 
 	if (one->getType() > two->getType())
@@ -106,25 +75,72 @@ void VM::add() {
         std::cout << "Too few elements in stack\n";
         return ;
     }
-    IOperand    *one = *_stack.begin();
+    const IOperand    *one = *_stack.begin();
     _stack.pop_front();
-    IOperand    *two = *_stack.begin();
+    const IOperand    *two = *_stack.begin();
     _stack.pop_front();
-	eOperandType max;
 
-	if (one->getType() > two->getType())
-		max = one->getType();
-	else
-		max = two->getType();
-	createOperand(max, getStrSum(one, two));
+	push(*one + *two);
 }
 
-void VM::push(IOperand * newOperand) {
+void VM::sub() {
+	if (_stack.size() < 2) {
+		std::cout << "Too few elements in stack\n";
+		return ;
+	}
+	const IOperand    *one = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+
+	push(*one - *two);
+}
+
+void VM::mul() {
+	if (_stack.size() < 2) {
+		std::cout << "Too few elements in stack\n";
+		return ;
+	}
+	const IOperand    *one = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+
+	push(*one * *two);
+}
+
+void VM::div() {
+	if (_stack.size() < 2) {
+		std::cout << "Too few elements in stack\n";
+		return ;
+	}
+	const IOperand    *one = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+
+	push(*one / *two);
+}
+
+void VM::mod() {
+	if (_stack.size() < 2) {
+		std::cout << "Too few elements in stack\n";
+		return ;
+	}
+	const IOperand    *one = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+
+	push(*one % *two);
+}
+
+void VM::push(const IOperand * newOperand) {
     _stack.push_front(newOperand);
 }
 
 void VM::dump() {
-	for (std::list<IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
+	for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
 		std::cout << CASTIO(*it)->toString() << std::endl;
 	}
 }
