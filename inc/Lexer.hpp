@@ -21,7 +21,7 @@ public:
 
     void    readInput(int argc, char ** argv);
     void    readFromFile(char * file);
-//    void    readFromSTDIN();
+    void    readFromSTDIN();
     void    analyzeLine(std::string & line);
     void    lexBra(std::vector<Token*> & list, std::string const & line);
 };

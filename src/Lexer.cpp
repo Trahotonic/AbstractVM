@@ -20,6 +20,8 @@ Lexer::~Lexer() {}
 void Lexer::readInput(int argc, char **argv) {
     if (argc == 2)
         readFromFile(argv[1]);
+    else
+        readFromSTDIN();
 }
 
 void Lexer::readFromFile(char *file) {
@@ -35,20 +37,31 @@ void Lexer::readFromFile(char *file) {
     }
 }
 
+void Lexer::readFromSTDIN() {
+    std::string     buffer;
+    while (std::getline(std::cin, buffer))
+        analyzeLine(buffer);
+    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
+        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
+            std::cout << *_tokens[j][i];
+        }
+        std::cout << std::endl;
+    }
+}
+
 void Lexer::analyzeLine(std::string &line) {
     std::cmatch         result;
     std::string         buffer = line;
-    std::regex          command("(push |assert )(.*)");
-    std::regex          dataType("(int8|int16|int32)(.*)");
+    std::regex          command("(push|assert)( )(.*)");
+    std::regex          dataType("(int8|int16|int32|float|double)(.*)");
     std::vector<Token*> list;
     if (line == "") {
         list.push_back(new Token(EMPTY_LINE, ""));
-        std::cout << *list[0] << std::endl;
-        return ;
+        return _tokens.push_back(list);
     }
     if (std::regex_match(buffer.c_str(), result, command)) {
         list.push_back(new Token(INSTRUCTION, result[1]));
-        buffer = result[2];
+        buffer = result[3];
         if (std::regex_match(buffer.c_str(), result, dataType)) {
             list.push_back(new Token(DATATYPE, result[1]));
             buffer = result[2];
@@ -69,10 +82,8 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     std::regex          comment("( ;.*)");
     std::cmatch         result;
     std::string         buffer;
-    if (line == "") {
-        list.push_back(new Token(NOARGS, ""));
-        return ;
-    }
+    if (line == "")
+        return list.push_back(new Token(NOARGS, ""));
     if (std::regex_match(line.c_str(), result, valueInPar)) {
         list.push_back(new Token(OPENBRACKET, "("));
         list.push_back(new Token(VALUE, result[2]));
