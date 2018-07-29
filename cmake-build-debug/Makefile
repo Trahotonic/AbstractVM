@@ -231,6 +231,33 @@ src/Lexer.cpp.s:
 	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Lexer.cpp.s
 .PHONY : src/Lexer.cpp.s
 
+src/MethodData.o: src/MethodData.cpp.o
+
+.PHONY : src/MethodData.o
+
+# target to build an object file
+src/MethodData.cpp.o:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/MethodData.cpp.o
+.PHONY : src/MethodData.cpp.o
+
+src/MethodData.i: src/MethodData.cpp.i
+
+.PHONY : src/MethodData.i
+
+# target to preprocess a source file
+src/MethodData.cpp.i:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/MethodData.cpp.i
+.PHONY : src/MethodData.cpp.i
+
+src/MethodData.s: src/MethodData.cpp.s
+
+.PHONY : src/MethodData.s
+
+# target to generate assembly for a file
+src/MethodData.cpp.s:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/MethodData.cpp.s
+.PHONY : src/MethodData.cpp.s
+
 src/Operand.o: src/Operand.cpp.o
 
 .PHONY : src/Operand.o
@@ -257,6 +284,33 @@ src/Operand.s: src/Operand.cpp.s
 src/Operand.cpp.s:
 	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Operand.cpp.s
 .PHONY : src/Operand.cpp.s
+
+src/Parser.o: src/Parser.cpp.o
+
+.PHONY : src/Parser.o
+
+# target to build an object file
+src/Parser.cpp.o:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Parser.cpp.o
+.PHONY : src/Parser.cpp.o
+
+src/Parser.i: src/Parser.cpp.i
+
+.PHONY : src/Parser.i
+
+# target to preprocess a source file
+src/Parser.cpp.i:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Parser.cpp.i
+.PHONY : src/Parser.cpp.i
+
+src/Parser.s: src/Parser.cpp.s
+
+.PHONY : src/Parser.s
+
+# target to generate assembly for a file
+src/Parser.cpp.s:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Parser.cpp.s
+.PHONY : src/Parser.cpp.s
 
 src/Token.o: src/Token.cpp.o
 
@@ -360,9 +414,15 @@ help:
 	@echo "... src/Lexer.o"
 	@echo "... src/Lexer.i"
 	@echo "... src/Lexer.s"
+	@echo "... src/MethodData.o"
+	@echo "... src/MethodData.i"
+	@echo "... src/MethodData.s"
 	@echo "... src/Operand.o"
 	@echo "... src/Operand.i"
 	@echo "... src/Operand.s"
+	@echo "... src/Parser.o"
+	@echo "... src/Parser.i"
+	@echo "... src/Parser.s"
 	@echo "... src/Token.o"
 	@echo "... src/Token.i"
 	@echo "... src/Token.s"

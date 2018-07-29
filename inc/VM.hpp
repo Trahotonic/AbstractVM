@@ -9,6 +9,7 @@
 #include "Exceptions.hpp"
 #include "Operand.hpp"
 #include "Lexer.hpp"
+#include "Parser.hpp"
 
 class VM {
 private:
@@ -21,6 +22,7 @@ public:
 	~VM();
 
 	void                    push(eOperandType, std::string);
+	void                    assertV(eOperandType, std::string);
 	void                    dump();
 	void                    add(int);
 	void                    sub(int);

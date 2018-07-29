@@ -10,7 +10,8 @@ Token::Token(Token const &src) {
     *this = src;
 }
 
-Token::Token(eTokens type, std::string const &str) : _type(type), _value(str){}
+Token::Token(eTokens type, std::string const &str) : _type(type), _value(str) {
+}
 
 Token& Token::operator=(Token const &src) {
     _type = src._type;

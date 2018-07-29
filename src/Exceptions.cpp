@@ -79,7 +79,7 @@ InvalidInput::InvalidInput(InvalidInput const &src) {
 UnknownCommand::~UnknownCommand() throw() {}
 
 const char* UnknownCommand::UnknownCommand::what() const throw() {
-	return "Unknown command";
+	return "Unknown instruction";
 }
 
 UnknownCommand& UnknownCommand::UnknownCommand::operator=(UnknownCommand const &src)
@@ -193,6 +193,24 @@ AssertFalse& AssertFalse::AssertFalse::operator=(AssertFalse const &src)
 AssertFalse::AssertFalse() {}
 
 AssertFalse::AssertFalse(AssertFalse const &src) {
+	*this = src;
+}
+
+UnknownDataType::~UnknownDataType() throw() {}
+
+const char* UnknownDataType::UnknownDataType::what() const throw() {
+	return "Unknown data type";
+}
+
+UnknownDataType& UnknownDataType::UnknownDataType::operator=(UnknownDataType const &src)
+{
+	(void)src;
+	return *this;
+}
+
+UnknownDataType::UnknownDataType() {}
+
+UnknownDataType::UnknownDataType(UnknownDataType const &src) {
 	*this = src;
 }
 

@@ -140,4 +140,17 @@ public:
 	virtual const char* what() const throw();
 };
 
+class UnknownDataType : public virtual std::exception
+{
+public:
+	UnknownDataType(void);
+	UnknownDataType(UnknownDataType const & src);
+
+	UnknownDataType	&operator=(UnknownDataType const & src);
+
+	~UnknownDataType(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

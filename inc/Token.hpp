@@ -20,7 +20,8 @@ typedef enum eTokens {  INSTRUCTION = 0,
                         EMPTY_BRACKETS,
                         NOARGS,
                         EXCESS_SYMBOLS,
-                        EMPTY_LINE}
+                        EMPTY_LINE,
+                        OK}
                         eTokens;
 
 class Token {

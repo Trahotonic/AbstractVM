@@ -43,7 +43,15 @@ int main(int argc, char **argv)
 //    else {
 //
 //    }
-        Lexer lexer;
+        Lexer   lexer;
         lexer.readInput(argc, argv);
+        Parser  parser;
+        parser.setTokens(lexer.getTokens());
+        try{
+            parser.parseTokens();
+        }
+        catch (std::exception & e) {
+            std::cout << e.what() << std::endl;
+        }
     return 0;
 }

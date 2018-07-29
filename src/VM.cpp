@@ -237,6 +237,13 @@ void VM::push(eOperandType type, std::string value) {
 	   _stack.push_front(_factory.createOperand(type, value));
 }
 
+void VM::assertV(eOperandType type, std::string str) {
+    if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() == type &&
+        dynamic_cast<const IOperand*>(*_stack.begin())->to_string() == str)
+        return ;
+    throw AssertFalse();
+}
+
 void VM::pop() {
 	if (_stack.empty())
 		throw EmptyStackException();

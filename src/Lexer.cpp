@@ -17,6 +17,10 @@ Lexer& Lexer::operator=(Lexer const &src) {
 
 Lexer::~Lexer() {}
 
+std::vector<std::vector<Token*> > Lexer::getTokens() {
+    return _tokens;
+}
+
 void Lexer::readInput(int argc, char **argv) {
     if (argc == 2)
         readFromFile(argv[1]);
@@ -39,8 +43,9 @@ void Lexer::readFromFile(char *file) {
 
 void Lexer::readFromSTDIN() {
     std::string     buffer;
-    while (std::getline(std::cin, buffer))
+    while (std::getline(std::cin, buffer)) {
         analyzeLine(buffer);
+    }
     for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
         for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
             std::cout << *_tokens[j][i];
@@ -52,14 +57,17 @@ void Lexer::readFromSTDIN() {
 void Lexer::analyzeLine(std::string &line) {
     std::cmatch         result;
     std::string         buffer = line;
-    std::regex          command("(push|assert)( )(.*)");
+    std::regex          argInstr("(push|assert)( )(.*)");
+    std::regex          nonArgInstr("(add|sub|mul|div|mod|pop|dump|print|exit)(.*)");
     std::regex          dataType("(int8|int16|int32|float|double)(.*)");
+    std::regex          brackets("(\\(.*)\\))");
+    std::regex          comment("( ;.*)");
     std::vector<Token*> list;
-    if (line == "") {
+    if (line.empty()) {
         list.push_back(new Token(EMPTY_LINE, ""));
         return _tokens.push_back(list);
     }
-    if (std::regex_match(buffer.c_str(), result, command)) {
+    if (std::regex_match(buffer.c_str(), result, argInstr)) {
         list.push_back(new Token(INSTRUCTION, result[1]));
         buffer = result[3];
         if (std::regex_match(buffer.c_str(), result, dataType)) {
@@ -67,8 +75,17 @@ void Lexer::analyzeLine(std::string &line) {
             buffer = result[2];
             lexBra(list, buffer);
         }
-        else
+        else {
             list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
+            if (!std::regex_match(buffer.c_str(), result, brackets))
+                list.push_back(new Token(NOARGS, ""));
+        }
+    }
+    else if (std::regex_match(buffer.c_str(), result, nonArgInstr)) {
+        list.push_back(new Token(INSTRUCTION, result[1]));
+        buffer = result[2];
+        if (buffer != "" && !std::regex_match(buffer.c_str(), result, comment))
+            list.push_back(new Token(EXCESS_SYMBOLS, buffer));
     }
     else
         list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));

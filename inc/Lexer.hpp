@@ -12,18 +12,19 @@
 # include "Token.hpp"
 
 class Lexer {
-    std::vector<std::vector<Token*> >  _tokens;
+    std::vector<std::vector<Token*> >   _tokens;
+    void                                readFromFile(char * file);
+    void                                readFromSTDIN();
+    void                                analyzeLine(std::string & line);
+    void                                lexBra(std::vector<Token*> & list, std::string const & line);
 public:
     Lexer();
     Lexer(Lexer const & src);
     Lexer   &operator=(Lexer const & src);
     ~Lexer();
 
-    void    readInput(int argc, char ** argv);
-    void    readFromFile(char * file);
-    void    readFromSTDIN();
-    void    analyzeLine(std::string & line);
-    void    lexBra(std::vector<Token*> & list, std::string const & line);
+    void                                readInput(int argc, char ** argv);
+    std::vector<std::vector<Token*> >   getTokens();
 };
 
 

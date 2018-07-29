@@ -97,7 +97,13 @@
 		<Unit filename="/Users/rkyslyy/avm/inc/Lexer.hpp">
 			<Option target="abstractVM"/>
 		</Unit>
+		<Unit filename="/Users/rkyslyy/avm/inc/MethodData.hpp">
+			<Option target="abstractVM"/>
+		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/inc/Operand.hpp">
+			<Option target="abstractVM"/>
+		</Unit>
+		<Unit filename="/Users/rkyslyy/avm/inc/Parser.hpp">
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/inc/Token.hpp">
@@ -118,7 +124,13 @@
 		<Unit filename="/Users/rkyslyy/avm/src/Lexer.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
+		<Unit filename="/Users/rkyslyy/avm/src/MethodData.cpp">
+			<Option target="abstractVM"/>
+		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/src/Operand.cpp">
+			<Option target="abstractVM"/>
+		</Unit>
+		<Unit filename="/Users/rkyslyy/avm/src/Parser.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/src/Token.cpp">
