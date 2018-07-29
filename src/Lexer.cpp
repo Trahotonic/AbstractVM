@@ -25,14 +25,14 @@ void Lexer::readInput(int argc, char **argv) {
 void Lexer::readFromFile(char *file) {
     std::ifstream   is(file);
     std::string     buffer;
-//    std::cmatch     result;
-//    std::regex      argInstr("([a-z]*)([ ])(int8|int16|int32|float|double)(\\()([0-9+-]*\\.?[0-9+-]*)(\\)[ ?;.*]?)");
-//    std::regex      nonArgInstr("(add|sub|mul|div|mod|dump|pop|print|exit)");
-//    std::regex      comment("(;.*)");
-//    std::regex      fl("([+|-]?[0-9]*\\.[0-9]*)");
-//    std::regex      in("([+|-]?[0-9]*[0-9]*)");
-    std::getline(is, buffer);
-    analyzeLine(buffer);
+    while (std::getline(is, buffer))
+        analyzeLine(buffer);
+    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
+        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
+            std::cout << *_tokens[j][i];
+        }
+        std::cout << std::endl;
+    }
 }
 
 void Lexer::analyzeLine(std::string &line) {
@@ -59,9 +59,6 @@ void Lexer::analyzeLine(std::string &line) {
     }
     else
         list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
-    for (int i = 0; i < static_cast<int>(list.size()); ++i) {
-        std::cout << *list[i] << std::endl;
-    }
     _tokens.push_back(list);
 }
 

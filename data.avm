@@ -1,1 +1,2 @@
 assert int8(42) ;comment
+push int32(10)
