@@ -7,7 +7,9 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/rkyslyy/avm/src/Converter.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Converter.cpp.o"
   "/Users/rkyslyy/avm/src/Exceptions.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Exceptions.cpp.o"
   "/Users/rkyslyy/avm/src/Factory.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Factory.cpp.o"
+  "/Users/rkyslyy/avm/src/Lexer.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Lexer.cpp.o"
   "/Users/rkyslyy/avm/src/Operand.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Operand.cpp.o"
+  "/Users/rkyslyy/avm/src/Token.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/Token.cpp.o"
   "/Users/rkyslyy/avm/src/VM.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/VM.cpp.o"
   "/Users/rkyslyy/avm/src/main.cpp" "/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles/abstractVM.dir/src/main.cpp.o"
   )

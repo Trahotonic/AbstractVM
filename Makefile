@@ -1,10 +1,10 @@
 CXX = clang++
 
-CXXFLAGS = -Wall -Werror -Wextra
+CXXFLAGS = -Wall -Werror -Wextra -std=c++11
 
 NAME = abstractVM
 
-SRC = ./src/Exceptions.cpp ./src/Factory.cpp ./src/VM.cpp ./src/Converter.cpp ./src/main.cpp
+SRC = ./src/Exceptions.cpp ./src/Factory.cpp ./src/Token.cpp ./src/Lexer.cpp ./src/VM.cpp ./src/Converter.cpp ./src/main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

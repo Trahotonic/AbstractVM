@@ -1,4 +1,1 @@
-push int8(100)
-push int8(-124)
-sub
-dump
+assert int8(42) ;comment

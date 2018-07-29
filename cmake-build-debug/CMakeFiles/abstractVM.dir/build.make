@@ -201,6 +201,54 @@ CMakeFiles/abstractVM.dir/src/Factory.cpp.o.provides: CMakeFiles/abstractVM.dir/
 CMakeFiles/abstractVM.dir/src/Factory.cpp.o.provides.build: CMakeFiles/abstractVM.dir/src/Factory.cpp.o
 
 
+CMakeFiles/abstractVM.dir/src/Lexer.cpp.o: CMakeFiles/abstractVM.dir/flags.make
+CMakeFiles/abstractVM.dir/src/Lexer.cpp.o: ../src/Lexer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/abstractVM.dir/src/Lexer.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/abstractVM.dir/src/Lexer.cpp.o -c /Users/rkyslyy/avm/src/Lexer.cpp
+
+CMakeFiles/abstractVM.dir/src/Lexer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/abstractVM.dir/src/Lexer.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rkyslyy/avm/src/Lexer.cpp > CMakeFiles/abstractVM.dir/src/Lexer.cpp.i
+
+CMakeFiles/abstractVM.dir/src/Lexer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/abstractVM.dir/src/Lexer.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rkyslyy/avm/src/Lexer.cpp -o CMakeFiles/abstractVM.dir/src/Lexer.cpp.s
+
+CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.requires:
+
+.PHONY : CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.requires
+
+CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.provides: CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.requires
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.provides.build
+.PHONY : CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.provides
+
+CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.provides.build: CMakeFiles/abstractVM.dir/src/Lexer.cpp.o
+
+
+CMakeFiles/abstractVM.dir/src/Token.cpp.o: CMakeFiles/abstractVM.dir/flags.make
+CMakeFiles/abstractVM.dir/src/Token.cpp.o: ../src/Token.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/abstractVM.dir/src/Token.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/abstractVM.dir/src/Token.cpp.o -c /Users/rkyslyy/avm/src/Token.cpp
+
+CMakeFiles/abstractVM.dir/src/Token.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/abstractVM.dir/src/Token.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rkyslyy/avm/src/Token.cpp > CMakeFiles/abstractVM.dir/src/Token.cpp.i
+
+CMakeFiles/abstractVM.dir/src/Token.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/abstractVM.dir/src/Token.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rkyslyy/avm/src/Token.cpp -o CMakeFiles/abstractVM.dir/src/Token.cpp.s
+
+CMakeFiles/abstractVM.dir/src/Token.cpp.o.requires:
+
+.PHONY : CMakeFiles/abstractVM.dir/src/Token.cpp.o.requires
+
+CMakeFiles/abstractVM.dir/src/Token.cpp.o.provides: CMakeFiles/abstractVM.dir/src/Token.cpp.o.requires
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/src/Token.cpp.o.provides.build
+.PHONY : CMakeFiles/abstractVM.dir/src/Token.cpp.o.provides
+
+CMakeFiles/abstractVM.dir/src/Token.cpp.o.provides.build: CMakeFiles/abstractVM.dir/src/Token.cpp.o
+
+
 # Object files for target abstractVM
 abstractVM_OBJECTS = \
 "CMakeFiles/abstractVM.dir/src/main.cpp.o" \
@@ -208,7 +256,9 @@ abstractVM_OBJECTS = \
 "CMakeFiles/abstractVM.dir/src/VM.cpp.o" \
 "CMakeFiles/abstractVM.dir/src/Converter.cpp.o" \
 "CMakeFiles/abstractVM.dir/src/Exceptions.cpp.o" \
-"CMakeFiles/abstractVM.dir/src/Factory.cpp.o"
+"CMakeFiles/abstractVM.dir/src/Factory.cpp.o" \
+"CMakeFiles/abstractVM.dir/src/Lexer.cpp.o" \
+"CMakeFiles/abstractVM.dir/src/Token.cpp.o"
 
 # External object files for target abstractVM
 abstractVM_EXTERNAL_OBJECTS =
@@ -219,9 +269,11 @@ abstractVM: CMakeFiles/abstractVM.dir/src/VM.cpp.o
 abstractVM: CMakeFiles/abstractVM.dir/src/Converter.cpp.o
 abstractVM: CMakeFiles/abstractVM.dir/src/Exceptions.cpp.o
 abstractVM: CMakeFiles/abstractVM.dir/src/Factory.cpp.o
+abstractVM: CMakeFiles/abstractVM.dir/src/Lexer.cpp.o
+abstractVM: CMakeFiles/abstractVM.dir/src/Token.cpp.o
 abstractVM: CMakeFiles/abstractVM.dir/build.make
 abstractVM: CMakeFiles/abstractVM.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable abstractVM"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/rkyslyy/avm/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable abstractVM"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/abstractVM.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -235,6 +287,8 @@ CMakeFiles/abstractVM.dir/requires: CMakeFiles/abstractVM.dir/src/VM.cpp.o.requi
 CMakeFiles/abstractVM.dir/requires: CMakeFiles/abstractVM.dir/src/Converter.cpp.o.requires
 CMakeFiles/abstractVM.dir/requires: CMakeFiles/abstractVM.dir/src/Exceptions.cpp.o.requires
 CMakeFiles/abstractVM.dir/requires: CMakeFiles/abstractVM.dir/src/Factory.cpp.o.requires
+CMakeFiles/abstractVM.dir/requires: CMakeFiles/abstractVM.dir/src/Lexer.cpp.o.requires
+CMakeFiles/abstractVM.dir/requires: CMakeFiles/abstractVM.dir/src/Token.cpp.o.requires
 
 .PHONY : CMakeFiles/abstractVM.dir/requires
 

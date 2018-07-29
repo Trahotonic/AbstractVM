@@ -8,6 +8,7 @@
 #include <list>
 #include "Exceptions.hpp"
 #include "Operand.hpp"
+#include "Lexer.hpp"
 
 class VM {
 private:
