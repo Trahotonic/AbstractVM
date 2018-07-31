@@ -214,3 +214,93 @@ UnknownDataType::UnknownDataType(UnknownDataType const &src) {
 	*this = src;
 }
 
+NoOpenBracket::~NoOpenBracket() throw() {}
+
+const char* NoOpenBracket::NoOpenBracket::what() const throw() {
+	return "Missing opening bracket";
+}
+
+NoOpenBracket& NoOpenBracket::NoOpenBracket::operator=(NoOpenBracket const &src)
+{
+	(void)src;
+	return *this;
+}
+
+NoOpenBracket::NoOpenBracket() {}
+
+NoOpenBracket::NoOpenBracket(NoOpenBracket const &src) {
+	*this = src;
+}
+
+NoCloseBracket::~NoCloseBracket() throw() {}
+
+const char* NoCloseBracket::NoCloseBracket::what() const throw() {
+	return "Missing closing bracket";
+}
+
+NoCloseBracket& NoCloseBracket::NoCloseBracket::operator=(NoCloseBracket const &src)
+{
+	(void)src;
+	return *this;
+}
+
+NoCloseBracket::NoCloseBracket() {}
+
+NoCloseBracket::NoCloseBracket(NoCloseBracket const &src) {
+	*this = src;
+}
+
+
+EmptyBrackets::~EmptyBrackets() throw() {}
+
+const char* EmptyBrackets::EmptyBrackets::what() const throw() {
+	return "Empty brackets";
+}
+
+EmptyBrackets& EmptyBrackets::EmptyBrackets::operator=(EmptyBrackets const &src)
+{
+	(void)src;
+	return *this;
+}
+
+EmptyBrackets::EmptyBrackets() {}
+
+EmptyBrackets::EmptyBrackets(EmptyBrackets const &src) {
+	*this = src;
+}
+
+NoArgs::~NoArgs() throw() {}
+
+const char* NoArgs::NoArgs::what() const throw() {
+	return "No arguments provided";
+}
+
+NoArgs& NoArgs::NoArgs::operator=(NoArgs const &src)
+{
+	(void)src;
+	return *this;
+}
+
+NoArgs::NoArgs() {}
+
+NoArgs::NoArgs(NoArgs const &src) {
+	*this = src;
+}
+
+Excess::~Excess() throw() {}
+
+const char* Excess::Excess::what() const throw() {
+	return "Excess symbols in the end of line";
+}
+
+Excess& Excess::Excess::operator=(Excess const &src)
+{
+	(void)src;
+	return *this;
+}
+
+Excess::Excess() {}
+
+Excess::Excess(Excess const &src) {
+	*this = src;
+}

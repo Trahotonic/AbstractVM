@@ -153,4 +153,69 @@ public:
 	virtual const char* what() const throw();
 };
 
+class NoOpenBracket : public virtual std::exception
+{
+public:
+	NoOpenBracket(void);
+	NoOpenBracket(NoOpenBracket const & src);
+
+	NoOpenBracket	&operator=(NoOpenBracket const & src);
+
+	~NoOpenBracket(void) throw();
+
+	virtual const char* what() const throw();
+};
+
+class NoCloseBracket : public virtual std::exception
+{
+public:
+    NoCloseBracket(void);
+    NoCloseBracket(NoCloseBracket const & src);
+
+    NoCloseBracket	&operator=(NoCloseBracket const & src);
+
+    ~NoCloseBracket(void) throw();
+
+    virtual const char* what() const throw();
+};
+
+class EmptyBrackets : public virtual std::exception
+{
+public:
+    EmptyBrackets(void);
+    EmptyBrackets(EmptyBrackets const & src);
+
+    EmptyBrackets	&operator=(EmptyBrackets const & src);
+
+    ~EmptyBrackets(void) throw();
+
+    virtual const char* what() const throw();
+};
+
+class NoArgs : public virtual std::exception
+{
+public:
+    NoArgs(void);
+    NoArgs(NoArgs const & src);
+
+    NoArgs	&operator=(NoArgs const & src);
+
+    ~NoArgs(void) throw();
+
+    virtual const char* what() const throw();
+};
+
+class Excess : public virtual std::exception
+{
+public:
+    Excess(void);
+    Excess(Excess const & src);
+
+    Excess	&operator=(Excess const & src);
+
+    ~Excess(void) throw();
+
+    virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

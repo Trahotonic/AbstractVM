@@ -26,7 +26,13 @@ void Parser::setTokens(std::vector<std::vector<Token *> > vec) {
 
 void Parser::parseTokens() {
     for (int i = 0; i < static_cast<int>(_tokens.size()); ++i) {
-        handleError(_tokens[i], i + 1);
+        std::cout << i << " " << _tokens.size() << std::endl;
+        try {
+            handleError(_tokens[i], i + 1);
+        }
+        catch (std::exception & e) {
+            std::cout << e.what() << std::endl;
+        }
     }
 }
 
@@ -47,12 +53,59 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
         std::cout << tokens[0]->getValue() << " ";
         printFirstRed(tokens[1]->getValue());
-        std::cout << UnknownDataType().what() << std::endl;
-        if (noArgsExist(tokens)) {
-            std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
-            std::cout << tokens[0]->getValue() << " " << tokens[1]->getValue() << "\" - ";
-            std::cout << "Missing argument in brackets\n";
-        }
+        throw UnknownDataType();
+    }
+    else if (worst == MISSING_OPENBRACKET) {
+        if (!_error)
+            _error = true;
+        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[1]->getValue();
+        printFirstRed(tokens[2]->getValue());
+        throw NoOpenBracket();
+    }
+    else if (worst == MISSING_CLOSEBRACKET) {
+        if (!_error)
+            _error = true;
+        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[1]->getValue();
+        std::cout << tokens[2]->getValue();
+        std::cout << tokens[3]->getValue();
+        printFirstRed(tokens[4]->getValue());
+        throw NoCloseBracket();
+    }
+    else if (worst == EMPTY_BRACKETS) {
+        if (!_error)
+            _error = true;
+        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[1]->getValue();
+        printFirstRed(tokens[2]->getValue());
+        throw EmptyBrackets();
+    }
+    else if (worst == NOARGS) {
+        if (!_error)
+            _error = true;
+        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[1]->getValue();
+        printFirstRed(tokens[2]->getValue());
+        throw NoArgs();
+    }
+    else if (worst == EXCESS_SYMBOLS) {
+        if (!_error)
+            _error = true;
+        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[1]->getValue();
+        std::cout << tokens[2]->getValue();
+        std::cout << tokens[3]->getValue();
+        std::cout << tokens[4]->getValue();
+        std::cout << "\e[31m";
+        std::cout << tokens[5]->getValue();
+        std::cout << "\e[0m\" - ";
+        throw Excess();
     }
 }
 

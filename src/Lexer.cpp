@@ -75,11 +75,8 @@ void Lexer::analyzeLine(std::string &line) {
             buffer = result[2];
             lexBra(list, buffer);
         }
-        else {
+        else
             list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
-            if (!std::regex_match(buffer.c_str(), result, brackets))
-                list.push_back(new Token(NOARGS, ""));
-        }
     }
     else if (std::regex_match(buffer.c_str(), result, nonArgInstr)) {
         list.push_back(new Token(INSTRUCTION, result[1]));
@@ -97,10 +94,11 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     std::regex          emptyPar("(\\()(\\))(.*)");
     std::regex          openParExists("(\\()(.*)");
     std::regex          comment("( ;.*)");
+    std::regex          close("(.*)(\\)(.*))");
     std::cmatch         result;
     std::string         buffer;
     if (line == "")
-        return list.push_back(new Token(NOARGS, ""));
+        return list.push_back(new Token(NOARGS, "!"));
     if (std::regex_match(line.c_str(), result, valueInPar)) {
         list.push_back(new Token(OPENBRACKET, "("));
         list.push_back(new Token(VALUE, result[2]));
@@ -111,7 +109,7 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
                 list.push_back(new Token(EXCESS_SYMBOLS, buffer));
     }
     else if (std::regex_match(line.c_str(), result, emptyPar)) {
-        list.push_back(new Token(EMPTY_BRACKETS, ""));
+        list.push_back(new Token(EMPTY_BRACKETS, "()"));
         buffer = result[3];
         if (buffer != "")
             if (!std::regex_match(buffer.c_str(), result, comment))
@@ -120,8 +118,8 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     else if (std::regex_match(line.c_str(), result, openParExists)) {
         list.push_back(new Token(OPENBRACKET, "("));
         list.push_back(new Token(VALUE, result[2]));
-        list.push_back(new Token(MISSING_CLOSEBRACKET, ""));
+        list.push_back(new Token(MISSING_CLOSEBRACKET, "!"));
     }
     else
-        list.push_back(new Token(MISSING_OPENBRACKET, ""));
+        list.push_back(new Token(MISSING_OPENBRACKET, line));
 }
