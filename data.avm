@@ -1,5 +1,1 @@
-push int32(42); comment
-push float()
-pt int8(3)
-assert int23(1)
-q
+push int32(42) ; comment

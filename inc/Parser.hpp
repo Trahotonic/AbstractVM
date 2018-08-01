@@ -29,7 +29,7 @@ public:
     void        handleError(std::vector<Token*>, int);
     eTokens     getWorstToken(std::vector<Token*>);
     void        printFirstRed(std::string);
-    bool        noArgsExist(std::vector<Token*>);
+    void        createMethodData(std::vector<Token*>);
 };
 
 #endif //ABSTRACTVM_PARSER_HPP

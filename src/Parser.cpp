@@ -136,9 +136,13 @@ void Parser::printFirstRed(std::string line) {
     std::cout <<  "\" - ";
 }
 
-bool Parser::noArgsExist(std::vector<Token *> tokens) {
-    for (int i = 0; i < static_cast<int>(tokens.size()); ++i)
-        if (tokens[i]->getType() == NOARGS)
-            return true;
-    return false;
+void Parser::createMethodData(std::vector<Token *> tokens) {
+    if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
+        eOperandType    type;
+        if (tokens[1] == "int8")
+            type = Int8;
+        else if (tokens[1] == "int16")
+            type = Int16;
+        else if ()
+    }
 }
