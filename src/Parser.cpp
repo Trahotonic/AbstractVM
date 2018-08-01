@@ -26,7 +26,6 @@ void Parser::setTokens(std::vector<std::vector<Token *> > vec) {
 
 void Parser::parseTokens() {
     for (int i = 0; i < static_cast<int>(_tokens.size()); ++i) {
-        std::cout << i << " " << _tokens.size() << std::endl;
         try {
             handleError(_tokens[i], i + 1);
         }
@@ -34,12 +33,15 @@ void Parser::parseTokens() {
             std::cout << e.what() << std::endl;
         }
     }
+    for (int j = 0; j < (int)_methodDatas.size(); ++j) {
+        std::cout << _methodDatas[j]->getInstr() << " " << _methodDatas[j]->getType() << " " << _methodDatas[j]->getValue() << std::endl;
+    }
 }
 
 void Parser::handleError(std::vector<Token*> tokens, int i) {
     eTokens worst = getWorstToken(tokens);
     if (worst == OK)
-        return ;
+        createMethodData(tokens);
     else if (worst == UNKNOWN_INSTRUCTION) {
         if (!_error)
             _error = true;
@@ -97,13 +99,19 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         if (!_error)
             _error = true;
         std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
-        std::cout << tokens[0]->getValue() << " ";
-        std::cout << tokens[1]->getValue();
-        std::cout << tokens[2]->getValue();
-        std::cout << tokens[3]->getValue();
-        std::cout << tokens[4]->getValue();
-        std::cout << "\e[31m";
-        std::cout << tokens[5]->getValue();
+        if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
+            std::cout << tokens[0]->getValue() << " ";
+            std::cout << tokens[1]->getValue();
+            std::cout << tokens[2]->getValue();
+            std::cout << tokens[3]->getValue();
+            std::cout << tokens[4]->getValue();
+            std::cout << "\e[31m";
+            std::cout << tokens[5]->getValue();
+        }
+        else {
+            std::cout << tokens[0]->getValue() << " \e[31m";
+            std::cout << tokens[1]->getValue();
+        }
         std::cout << "\e[0m\" - ";
         throw Excess();
     }
@@ -137,12 +145,27 @@ void Parser::printFirstRed(std::string line) {
 }
 
 void Parser::createMethodData(std::vector<Token *> tokens) {
+    std::regex  i("(-?[0-9]+)");
+    std::regex  f("(-?[0-9]+[\\.]?[0-9]+)");
+
+    std::map<std::string, eOperandType>	typeMap =
+            {{"int8", Int8},
+             {"int16", Int16},
+             {"int32", Int32},
+             {"float", Float},
+             {"double", Double}};
+    if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert")
+        if (typeMap[tokens[1]->getValue()] == Int8 ||
+        typeMap[tokens[1]->getValue()] == Int16 ||
+        typeMap[tokens[1]->getValue()] == Int32)
+            if (!std::regex_match(tokens[0]->getValue(), i))
+                throw InvalidInput();
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
-        eOperandType    type;
-        if (tokens[1] == "int8")
-            type = Int8;
-        else if (tokens[1] == "int16")
-            type = Int16;
-        else if ()
+        _methodDatas.push_back(new MethodData(tokens[0]->getValue(),
+                                              typeMap[tokens[1]->getValue()],
+                                              tokens[3]->getValue()));
+    }
+    else {
+        _methodDatas.push_back(new MethodData(tokens[0]->getValue(), Int8, ""));
     }
 }

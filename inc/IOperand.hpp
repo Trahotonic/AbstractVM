@@ -17,9 +17,6 @@ static int line = 1;
 
 typedef enum	eOperandType {Int8, Int16, Int32, Float, Double} eOperandType;
 
-std::map<std::string, eOperandType>	map = {{"int8", Int8},
-		{"int16", Int16}, {"int32", Int32}, {"float", Float}, {"duble", Double}};
-
 class IOperand {
 public:
 	virtual int getPrecision() const = 0; // Precision of the type of the instance

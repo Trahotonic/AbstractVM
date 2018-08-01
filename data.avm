@@ -1,1 +1,2 @@
-push int32(42) ; comment
+add
+assert int32(42.32)
