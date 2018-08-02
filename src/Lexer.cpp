@@ -102,7 +102,7 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     if (std::regex_match(line.c_str(), result, valueInPar)) {
         list.push_back(new Token(OPENBRACKET, "("));
         list.push_back(new Token(VALUE, result[2]));
-        list.push_back(new Token(CLOSEBRACKET, ")"));
+        list.push_back(new Token(CLOSEBRACKET, result[3]));
         buffer = result[4];
         if (buffer != "")
             if (!std::regex_match(buffer.c_str(), result, comment))

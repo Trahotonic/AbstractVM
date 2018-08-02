@@ -41,7 +41,7 @@ void Parser::parseTokens() {
 void Parser::handleError(std::vector<Token*> tokens, int i) {
     eTokens worst = getWorstToken(tokens);
     if (worst == OK)
-        createMethodData(tokens);
+        createMethodData(tokens, i);
     else if (worst == UNKNOWN_INSTRUCTION) {
         if (!_error)
             _error = true;
@@ -144,8 +144,8 @@ void Parser::printFirstRed(std::string line) {
     std::cout <<  "\" - ";
 }
 
-void Parser::createMethodData(std::vector<Token *> tokens) {
-    std::regex  i("(-?[0-9]+)");
+void Parser::createMethodData(std::vector<Token *> tokens, int n) {
+    std::regex  i("(\\-?[0-9]+)");
     std::regex  f("(-?[0-9]+[\\.]?[0-9]+)");
 
     std::map<std::string, eOperandType>	typeMap =
@@ -158,8 +158,12 @@ void Parser::createMethodData(std::vector<Token *> tokens) {
         if (typeMap[tokens[1]->getValue()] == Int8 ||
         typeMap[tokens[1]->getValue()] == Int16 ||
         typeMap[tokens[1]->getValue()] == Int32)
-            if (!std::regex_match(tokens[0]->getValue(), i))
+            if (!std::regex_match(tokens[3]->getValue(), i)) {
+	            std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
+	            std::cout << tokens[0]->getValue() << " " << tokens[1]->getValue() << tokens[2]->getValue()
+	                      << "\e[31m" << tokens[3]->getValue() << "\e[0m" << tokens[4]->getValue() << "\" - ";
                 throw InvalidInput();
+            }
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
         _methodDatas.push_back(new MethodData(tokens[0]->getValue(),
                                               typeMap[tokens[1]->getValue()],
