@@ -59,7 +59,7 @@ void Lexer::analyzeLine(std::string &line) {
     std::cmatch         result;
     std::string         buffer = line;
     std::regex          argInstr("(push|assert)( )(.*)");
-    std::regex          nonArgInstr("(add|sub|mul|div|mod|pop|dump|print|exit)(.*)");
+    std::regex          nonArgInstr("([\\t\\s]*)(add|sub|mul|div|mod|pop|dump|print|exit)(.*)");
     std::regex          dataType("(int8|int16|int32|float|double)(.*)");
     std::regex          brackets("(\\(.*)\\))");
     std::regex          excess("([\\t\\s]*)(.+)");
@@ -83,14 +83,14 @@ void Lexer::analyzeLine(std::string &line) {
             list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
     }
     else if (std::regex_match(buffer.c_str(), result, nonArgInstr)) {
-        if (std::regex_match(static_cast<std::string>(result[2]).c_str(), whitespaces) ||
-            std::regex_match(static_cast<std::string>(result[2]).c_str(), comment)) {
-            list.push_back(new Token(INSTRUCTION, result[1]));
+        if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespaces) ||
+            std::regex_match(static_cast<std::string>(result[3]).c_str(), comment)) {
+            list.push_back(new Token(INSTRUCTION, result[2]));
         }
-        else if (std::regex_match(static_cast<std::string>(result[2]).c_str(), whitespacesTrash)){
-            list.push_back(new Token(INSTRUCTION, result[1]));
-            std::regex_match(static_cast<std::string>(result[2]).c_str(), result, whitespacesTrash);
-            list.push_back(new Token(EXCESS_SYMBOLS, result[2]));
+        else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespacesTrash)){
+            list.push_back(new Token(INSTRUCTION, result[2]));
+            std::regex_match(static_cast<std::string>(result[3]).c_str(), result, whitespacesTrash);
+            list.push_back(new Token(EXCESS_SYMBOLS, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
         }
         else
             list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
