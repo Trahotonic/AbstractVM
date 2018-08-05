@@ -15,6 +15,8 @@ class VM {
 private:
 	std::list<const IOperand*>      _stack;
 	Factory                         _factory;
+	Lexer							_lexer;
+	Parser							_parser;
 public:
 	VM();
 	VM(VM const & src);
@@ -22,15 +24,16 @@ public:
 	~VM();
 
 	void                    push(eOperandType, std::string);
-	void                    assertV(eOperandType, std::string);
-	void                    dump();
+	void                    assertV(eOperandType, std::string, int);
+	void                    dump(int);
 	void                    add(int);
 	void                    sub(int);
 	void                    mul(int);
 	void                    div(int);
 	void                    mod(int);
-	void                    pop();
+	void                    pop(int);
 	void                    readInput(int, char**);
+	void					run();
 };
 
 #endif //ABSTRACTVM_VM_HPP

@@ -17,6 +17,10 @@ class Parser {
     std::vector<std::vector<Token*> >   _tokens;
     std::vector<MethodData*>            _methodDatas;
     bool                                _error;
+    void                                handleError(std::vector<Token*>, int);
+    eTokens                             getWorstToken(std::vector<Token*>);
+    void                                printFirstRed(std::string);
+    void                                createMethodData(std::vector<Token*>, int);
 public:
     Parser();
     Parser(VM*);
@@ -24,12 +28,9 @@ public:
     Parser  &operator=(Parser const & src);
     ~Parser();
 
-    void        setTokens(std::vector<std::vector<Token*> >);
-    void        parseTokens();
-    void        handleError(std::vector<Token*>, int);
-    eTokens     getWorstToken(std::vector<Token*>);
-    void        printFirstRed(std::string);
-    void        createMethodData(std::vector<Token*>, int);
+    void                        setTokens(std::vector<std::vector<Token*> >);
+    void                        parseTokens();
+    std::vector<MethodData*>    getMethodDatas();
 };
 
 #endif //ABSTRACTVM_PARSER_HPP

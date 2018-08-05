@@ -10,10 +10,16 @@ MethodData::MethodData(MethodData const &src) {
     *this = src;
 }
 
-MethodData::MethodData(std::string instr, eOperandType type, std::string value) :
+MethodData::MethodData(std::string instr, eOperandType type, std::string value, int n) :
         _instruction(instr),
         _type(type),
-        _value(value)
+        _value(value),
+        _line(n)
+{}
+
+MethodData::MethodData(std::string instr, int n) :
+        _instruction(instr),
+        _line(n)
 {}
 
 MethodData& MethodData::operator=(MethodData const &src) {
@@ -33,4 +39,8 @@ eOperandType MethodData::getType() {
 
 std::string MethodData::getValue() {
     return _value;
+}
+
+int MethodData::getLine() {
+    return _line;
 }

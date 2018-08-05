@@ -19,153 +19,10 @@ VM& VM::operator=(VM const &src) {
 
 VM::~VM() {}
 
-void VM::readInput(int argc, char **argv)
-{
-	int         count = 1;
-	std::string buffer;
-	std::cmatch result;
-	std::regex  command("([a-z]*)([ ])(int8|int16|int32|float|double)(\\()([0-9+-]*\\.?[0-9+-]*)(\\))");
-	std::regex  op("(add|sub|mul|div|mod|dump)");
-	std::regex  fl("([+|-]?[0-9]*\\.[0-9]*)");
-	std::regex  in("([+|-]?[0-9]*[0-9]*)");
-	if (argc == 2) {
-		std::ifstream fs(argv[1]);
-		while (true) {
-			std::getline(fs, buffer);
-            if (std::regex_match(buffer.c_str(), result, command)) {
-//				std::cout << "line \"" << buffer << "\" matches regex\n";
-//				std::cout << "command: " << result[1] << std::endl;
-//				std::cout << "data type: " << result[3] << std::endl;
-//				std::cout << "value: " << result[5] << std::endl;
-                std::string v = result[5];
-                if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32") {
-                    if (!std::regex_match(v.c_str(), in)) {
-                        std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : \"";
-                        for (int i = 1; i < static_cast<int>(result.size()); i++) {
-                            if (i != 5)
-                                std::cout << result[i];
-                            else
-                                std::cout << "\e[31m" << result[i] << "\e[0m";
-                        }
-                        std::cout << "\" - ";
-                        throw FloatIntoIntException();
-                    }
-                }
-                else
-                if (!std::regex_match(v.c_str(), fl)) {
-                    std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
-                    for (int i = 1; i < static_cast<int>(result.size()); i++) {
-                        if (i != 5)
-                            std::cout << result[i];
-                        else
-                            std::cout << "\e[31m" << result[i] << "\e[0m";
-                    }
-                    std::cout << "\" - ";
-                    throw FloatIntoIntException();
-                }
-                if (result[1] == "push") {
-                    if (result[3] == "int8")
-                        push(Int8, result[5]);
-                    else if (result[3] == "int16")
-                        push(Int16, result[5]);
-                    else if (result[3] == "int32")
-                        push(Int32, result[5]);
-                    else if (result[3] == "float")
-                        push(Float, result[5]);
-                    else
-                        push(Double, result[5]);
-                }
-                else if (result[1] == "assert")
-                    std::cout << "OK\n";
-                else {
-                    std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : \"";
-                    for (int i = 1; i < static_cast<int>(result.size()); i++) {
-                        if (i != 1)
-                            std::cout << result[i];
-                        else
-                            std::cout << "\e[31m" << result[i] << "\e[0m";
-                    }
-                    std::cout << "\" - ";
-                    throw UnknownCommand();
-                }
-                count++;
-                line++;
-            }
-            else if (std::regex_match(buffer.c_str(), result, op)) {
-                if (result[0] == "add")
-                    add(count);
-                else if (result[0] == "sub")
-                    sub(count);
-                else if (result[0] == "sub")
-                    mul(count);
-                else if (result[0] == "div")
-                    div(count);
-                else if (result[0] == "mod")
-                    mod(count);
-                else
-                    dump();
-            }
-            else {
-                std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
-                throw InvalidInput();
-            }
-			count++;
-            line++;
-            if (fs.eof())
-                break ;
-		}
-	}
-	else
-		while (true) {
-			std::getline(std::cin, buffer);
-			if (std::cin.eof())
-				break ;
-			if (std::regex_match(buffer.c_str(), result, command)) {
-//				std::cout << "line \"" << buffer << "\" matches regex\n";
-//				std::cout << "command: " << result[1] << std::endl;
-//				std::cout << "data type: " << result[3] << std::endl;
-//				std::cout << "value: " << result[5] << std::endl;
-				if (result[3] == "int8" || result[3] == "int16" || result[3] == "int32") {
-					std::string v = result[5];
-					if (std::regex_match(v.c_str(), fl)) {
-						std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
-						throw FloatIntoIntException();
-					}
-				}
-				if (result[1] == "push") {
-					if (result[3] == "int8")
-						push(Int8, result[5]);
-					else if (result[3] == "int16")
-						push(Int16, result[5]);
-					else if (result[3] == "int32")
-						push(Int32, result[5]);
-					else if (result[3] == "float")
-						push(Float, result[5]);
-					else
-						push(Double, result[5]);
-				}
-				count++;
-                line++;
-			}
-			else if (std::regex_match(buffer.c_str(), result, op)) {
-			    if (result[0] == "add")
-			        add(count);
-			    else if (result[0] == "sub")
-			        sub(count);
-                else if (result[0] == "sub")
-                    mul(count);
-                else if (result[0] == "sub")
-                    div(count);
-                else if (result[0] == "mod")
-                    mod(count);
-                else
-                    dump();
-			}
-			else {
-				std::cout << "\e[4mLine " << count << "\e[24m : \e[31mError\e[0m : ";
-				throw InvalidInput();
-			}
-		}
+void VM::readInput(int argc, char **argv) {
+	_lexer.readInput(argc, argv);
+	_parser.setTokens(_lexer.getTokens());
+	_parser.parseTokens();
 }
 
 void VM::add(int c) {
@@ -237,21 +94,58 @@ void VM::push(eOperandType type, std::string value) {
 	   _stack.push_front(_factory.createOperand(type, value));
 }
 
-void VM::assertV(eOperandType type, std::string str) {
+void VM::assertV(eOperandType type, std::string str, int c) {
+	if (_stack.empty()) {
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot assert\e[24m - ";
+		throw EmptyStackException();
+	}
     if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() == type &&
         dynamic_cast<const IOperand*>(*_stack.begin())->to_string() == str)
         return ;
     throw AssertFalse();
 }
 
-void VM::pop() {
-	if (_stack.empty())
+void VM::pop(int c) {
+	if (_stack.empty()) {
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot pop\e[24m - ";
 		throw EmptyStackException();
+	}
 	_stack.pop_front();
 }
 
-void VM::dump() {
+void VM::dump(int c) {
+	if (_stack.empty()) {
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot dump\e[24m - ";
+		throw EmptyStackException();
+	}
 	for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
 		std::cout << CASTIO(*it)->to_string() << std::endl;
+	}
+}
+
+void VM::run() {
+	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
+	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
+		if (methodDatas[i]->getInstr() == "push")
+			push(methodDatas[i]->getType(), methodDatas[i]->getValue());
+		else if (methodDatas[i]->getInstr() == "assert") {
+			assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(), methodDatas[i]->getLine());
+		}
+		else if (methodDatas[i]->getInstr() == "add")
+			add(methodDatas[i]->getLine());
+		else if (methodDatas[i]->getInstr() == "sub")
+			sub(methodDatas[i]->getLine());
+		else if (methodDatas[i]->getInstr() == "mul")
+			mul(methodDatas[i]->getLine());
+		else if (methodDatas[i]->getInstr() == "div")
+			div(methodDatas[i]->getLine());
+		else if (methodDatas[i]->getInstr() == "mod")
+			mod(methodDatas[i]->getLine());
+        else if (methodDatas[i]->getInstr() == "dump")
+            dump(methodDatas[i]->getLine());
+        else if (methodDatas[i]->getInstr() == "mod")
+            mod(methodDatas[i]->getLine());
+		else if (methodDatas[i]->getInstr() == "pop")
+			pop(methodDatas[i]->getLine());
 	}
 }

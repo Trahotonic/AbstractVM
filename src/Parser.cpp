@@ -33,9 +33,9 @@ void Parser::parseTokens() {
             std::cout << e.what() << std::endl;
         }
     }
-    for (int j = 0; j < (int)_methodDatas.size(); ++j) {
-        std::cout << _methodDatas[j]->getInstr() << " " << _methodDatas[j]->getType() << " " << _methodDatas[j]->getValue() << std::endl;
-    }
+//    for (int j = 0; j < (int)_methodDatas.size(); ++j) {
+//        std::cout << _methodDatas[j]->getInstr() << " " << _methodDatas[j]->getType() << " " << _methodDatas[j]->getValue() << std::endl;
+//    }
 }
 
 void Parser::handleError(std::vector<Token*> tokens, int i) {
@@ -185,8 +185,12 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
         _methodDatas.push_back(new MethodData(tokens[0]->getValue(),
                                               typeMap[tokens[1]->getValue()],
-                                              tokens[3]->getValue()));
+                                              tokens[3]->getValue(), n));
     }
     else
-        _methodDatas.push_back(new MethodData(tokens[0]->getValue(), Int8, ""));
+        _methodDatas.push_back(new MethodData(tokens[0]->getValue(), n));
+}
+
+std::vector<MethodData*> Parser::getMethodDatas() {
+    return _methodDatas;
 }

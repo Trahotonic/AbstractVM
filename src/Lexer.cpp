@@ -34,12 +34,12 @@ void Lexer::readFromFile(char *file) {
     std::string     buffer;
     while (std::getline(is, buffer))
         analyzeLine(buffer);
-    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
-        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
-            std::cout << *_tokens[j][i];
-        }
-        std::cout << std::endl;
-    }
+//    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
+//        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
+//            std::cout << *_tokens[j][i];
+//        }
+//        std::cout << std::endl;
+//    }
 }
 
 void Lexer::readFromSTDIN() {
@@ -72,15 +72,6 @@ void Lexer::analyzeLine(std::string &line) {
         return _tokens.push_back(list);
     }
     if (std::regex_match(buffer.c_str(), result, argInstr)) {
-//        list.push_back(new Token(INSTRUCTION, result[2]));
-//        buffer = result[3];
-//        if (std::regex_match(buffer.c_str(), result, dataType)) {
-//            list.push_back(new Token(DATATYPE, result[2]));
-//            buffer = result[3];
-//            lexBra(list, buffer);
-//        }
-//        else
-//            list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
         if (std::regex_match(static_cast<std::string>(result[3]), whitespaces)) {
             list.push_back(new Token(INSTRUCTION, result[2]));
             list.push_back(new Token(MISSING_DATATYPE, "!"));
