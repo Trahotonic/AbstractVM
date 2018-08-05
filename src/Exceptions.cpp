@@ -304,3 +304,21 @@ Excess::Excess() {}
 Excess::Excess(Excess const &src) {
 	*this = src;
 }
+
+MissingDataType::~MissingDataType() throw() {}
+
+const char* MissingDataType::MissingDataType::what() const throw() {
+	return "Missing data type";
+}
+
+MissingDataType& MissingDataType::MissingDataType::operator=(MissingDataType const &src)
+{
+	(void)src;
+	return *this;
+}
+
+MissingDataType::MissingDataType() {}
+
+MissingDataType::MissingDataType(MissingDataType const &src) {
+	*this = src;
+}

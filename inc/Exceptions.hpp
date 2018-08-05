@@ -218,4 +218,17 @@ public:
     virtual const char* what() const throw();
 };
 
+class MissingDataType : public virtual std::exception
+{
+public:
+	MissingDataType(void);
+	MissingDataType(MissingDataType const & src);
+
+	MissingDataType	&operator=(MissingDataType const & src);
+
+	~MissingDataType(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

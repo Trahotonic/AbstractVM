@@ -53,7 +53,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         if (!_error)
             _error = true;
         std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
-        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[0]->getValue();
         printFirstRed(tokens[1]->getValue());
         throw UnknownDataType();
     }
@@ -115,6 +115,15 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         std::cout << "\e[0m\" - ";
         throw Excess();
     }
+    else if (worst == MISSING_DATATYPE) {
+        if (!_error)
+            _error = true;
+        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+        std::cout << tokens[0]->getValue() << " \e[31m";
+        std::cout << tokens[1]->getValue() ;
+        std::cout << "\e[0m\" - ";
+        throw MissingDataType();
+    }
 }
 
 eTokens Parser::getWorstToken(std::vector<Token *> tokens) {
@@ -125,20 +134,29 @@ eTokens Parser::getWorstToken(std::vector<Token *> tokens) {
                 tokens[i]->getType() == MISSING_CLOSEBRACKET ||
                 tokens[i]->getType() == EMPTY_BRACKETS ||
                 tokens[i]->getType() == NOARGS ||
-                tokens[i]->getType() == EXCESS_SYMBOLS)
+                tokens[i]->getType() == EXCESS_SYMBOLS ||
+                tokens[i]->getType() == MISSING_DATATYPE)
             return tokens[i]->getType();
     }
     return OK;
 }
 
 void Parser::printFirstRed(std::string line) {
-    bool    red = true;
+//    for (int i = 0; i < static_cast<int>(line.length()); ++i) {
+//        std::cout << line[i];
+//        if (((isblank(line[i]) || line[i + 1] == '(') && red) || i + 1 == static_cast<int>(line.length())) {
+//            std::cout << "\e[0m";
+//            red = false;
+//        }
+//    }
+    size_t i = 0;
+    while (isblank(line[i]))
+        std::cout << line[i++];
     std::cout << "\e[31m";
-    for (int i = 0; i < static_cast<int>(line.length()); ++i) {
-        std::cout << line[i];
-        if (((isblank(line[i]) || line[i + 1] == '(') && red) || i + 1 == static_cast<int>(line.length())) {
+    while (i < static_cast<size_t>(line.size())) {
+        std::cout << line[i++];
+        if (i >= static_cast<size_t>(line.size()) || isblank(line[i]) || line[i] == '(') {
             std::cout << "\e[0m";
-            red = false;
         }
     }
     std::cout <<  "\" - ";

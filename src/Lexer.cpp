@@ -60,7 +60,7 @@ void Lexer::analyzeLine(std::string &line) {
     std::string         buffer = line;
     std::regex          argInstr("([\\t\\s]*)(push|assert)(.*)");
     std::regex          nonArgInstr("([\\t\\s]*)(add|sub|mul|div|mod|pop|dump|print|exit)(.*)");
-    std::regex          dataType("([\\t\\s]*)(int8|int16|int32|float|double)(.*)");
+    std::regex          dataType("([\\t\\s]+)(int8|int16|int32|float|double)(.*)");
     std::regex          brackets("(\\(.*)\\))");
     std::regex          excess("([\\t\\s]*)(.+)");
     std::regex          comment("( ;.*)");
@@ -72,15 +72,33 @@ void Lexer::analyzeLine(std::string &line) {
         return _tokens.push_back(list);
     }
     if (std::regex_match(buffer.c_str(), result, argInstr)) {
-        list.push_back(new Token(INSTRUCTION, result[2]));
-        buffer = result[3];
-        if (std::regex_match(buffer.c_str(), result, dataType)) {
+//        list.push_back(new Token(INSTRUCTION, result[2]));
+//        buffer = result[3];
+//        if (std::regex_match(buffer.c_str(), result, dataType)) {
+//            list.push_back(new Token(DATATYPE, result[2]));
+//            buffer = result[3];
+//            lexBra(list, buffer);
+//        }
+//        else
+//            list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
+        if (std::regex_match(static_cast<std::string>(result[3]), whitespaces)) {
+            list.push_back(new Token(INSTRUCTION, result[2]));
+            list.push_back(new Token(MISSING_DATATYPE, "!"));
+        }
+        else if (!isblank(static_cast<std::string>(result[3])[0])) {
+            list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
+        }
+        else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), dataType)) {
+            list.push_back(new Token(INSTRUCTION, result[2]));
+            std::regex_match(static_cast<std::string>(result[3]).c_str(), result, dataType);
             list.push_back(new Token(DATATYPE, result[2]));
             buffer = result[3];
             lexBra(list, buffer);
         }
-        else
-            list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
+        else {
+            list.push_back(new Token(INSTRUCTION, result[2]));
+            list.push_back(new Token(UNKNOWN_DATATYPE, result[3]));
+        }
     }
     else if (std::regex_match(buffer.c_str(), result, nonArgInstr)) {
         if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespaces) ||

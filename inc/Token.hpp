@@ -21,6 +21,7 @@ typedef enum eTokens {  INSTRUCTION = 0,
                         NOARGS,
                         EXCESS_SYMBOLS,
                         EMPTY_LINE,
+                        MISSING_DATATYPE,
                         OK}
                         eTokens;
 
