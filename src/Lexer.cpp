@@ -58,9 +58,9 @@ void Lexer::readFromSTDIN() {
 void Lexer::analyzeLine(std::string &line) {
     std::cmatch         result;
     std::string         buffer = line;
-    std::regex          argInstr("(push|assert)( )(.*)");
+    std::regex          argInstr("([\\t\\s]*)(push|assert)(.*)");
     std::regex          nonArgInstr("([\\t\\s]*)(add|sub|mul|div|mod|pop|dump|print|exit)(.*)");
-    std::regex          dataType("(int8|int16|int32|float|double)(.*)");
+    std::regex          dataType("([\\t\\s]*)(int8|int16|int32|float|double)(.*)");
     std::regex          brackets("(\\(.*)\\))");
     std::regex          excess("([\\t\\s]*)(.+)");
     std::regex          comment("( ;.*)");
@@ -72,11 +72,11 @@ void Lexer::analyzeLine(std::string &line) {
         return _tokens.push_back(list);
     }
     if (std::regex_match(buffer.c_str(), result, argInstr)) {
-        list.push_back(new Token(INSTRUCTION, result[1]));
+        list.push_back(new Token(INSTRUCTION, result[2]));
         buffer = result[3];
         if (std::regex_match(buffer.c_str(), result, dataType)) {
-            list.push_back(new Token(DATATYPE, result[1]));
-            buffer = result[2];
+            list.push_back(new Token(DATATYPE, result[2]));
+            buffer = result[3];
             lexBra(list, buffer);
         }
         else
@@ -94,23 +94,6 @@ void Lexer::analyzeLine(std::string &line) {
         }
         else
             list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
-//        std::cout << buffer << std::endl;
-//        if (result[2] == "" || std::regex_match(static_cast<std::string>(result[2]).c_str(), comment)) {
-//            list.push_back(new Token(INSTRUCTION, result[1]));
-//        }
-//        else {
-//            buffer = result[2];
-//            if (std::regex_match(buffer.c_str(), result, excess)) {
-//                list.push_back(new Token(EXCESS_SYMBOLS, result[1]));
-//                list.push_back(new Token(EXCESS_SYMBOLS, result[2]));
-//            }
-//            else {
-//                list.push_back(new Token(UNKNOWN_INSTRUCTION, line));
-//            }
-//        }
-//        buffer = result[2];
-//        if (buffer != "" && !std::regex_match(buffer.c_str(), result, comment))
-//            list.push_back(new Token(EXCESS_SYMBOLS, buffer));
     }
     else
         list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));

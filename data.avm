@@ -1,2 +1,1 @@
-add
-assert int32(42) ; comment
+assert int32(-42.3) ; comment

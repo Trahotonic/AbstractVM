@@ -169,7 +169,6 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
                                               typeMap[tokens[1]->getValue()],
                                               tokens[3]->getValue()));
     }
-    else {
+    else
         _methodDatas.push_back(new MethodData(tokens[0]->getValue(), Int8, ""));
-    }
 }
