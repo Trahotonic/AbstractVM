@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/abstractVM.dir/src/main.cpp.o"
-  "CMakeFiles/abstractVM.dir/src/Operand.cpp.o"
   "CMakeFiles/abstractVM.dir/src/VM.cpp.o"
   "CMakeFiles/abstractVM.dir/src/Converter.cpp.o"
   "CMakeFiles/abstractVM.dir/src/Exceptions.cpp.o"

@@ -127,9 +127,6 @@
 		<Unit filename="/Users/rkyslyy/avm/src/MethodData.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/src/Operand.cpp">
-			<Option target="abstractVM"/>
-		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/src/Parser.cpp">
 			<Option target="abstractVM"/>
 		</Unit>

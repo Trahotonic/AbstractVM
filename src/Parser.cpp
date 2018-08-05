@@ -109,7 +109,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
             std::cout << tokens[5]->getValue();
         }
         else {
-            std::cout << tokens[0]->getValue() << " \e[31m";
+            std::cout << tokens[0]->getValue() << "\e[31m";
             std::cout << tokens[1]->getValue();
         }
         std::cout << "\e[0m\" - ";
@@ -156,8 +156,8 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
              {"double", Double}};
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert")
         if (typeMap[tokens[1]->getValue()] == Int8 ||
-        typeMap[tokens[1]->getValue()] == Int16 ||
-        typeMap[tokens[1]->getValue()] == Int32)
+            typeMap[tokens[1]->getValue()] == Int16 ||
+            typeMap[tokens[1]->getValue()] == Int32)
             if (!std::regex_match(tokens[3]->getValue(), i)) {
 	            std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
 	            std::cout << tokens[0]->getValue() << " " << tokens[1]->getValue() << tokens[2]->getValue()

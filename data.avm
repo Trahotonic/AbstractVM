@@ -1,2 +1,2 @@
-add
+addq 32
 assert int32(42) ; comment
