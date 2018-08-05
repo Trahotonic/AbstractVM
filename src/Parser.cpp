@@ -34,7 +34,7 @@ void Parser::parseTokens() {
         }
     }
 //    for (int j = 0; j < (int)_methodDatas.size(); ++j) {
-//        std::cout << _methodDatas[j]->getInstr() << " " << _methodDatas[j]->getType() << " " << _methodDatas[j]->getValue() << std::endl;
+//        std::cout << _methodDatas[j]->getInstr() << " " << _methodDatas[j]->getType() << " " << _methodDatas[j]->getValue() << _methodDatas[j]->getLine() << std::endl;
 //    }
 }
 
@@ -142,13 +142,6 @@ eTokens Parser::getWorstToken(std::vector<Token *> tokens) {
 }
 
 void Parser::printFirstRed(std::string line) {
-//    for (int i = 0; i < static_cast<int>(line.length()); ++i) {
-//        std::cout << line[i];
-//        if (((isblank(line[i]) || line[i + 1] == '(') && red) || i + 1 == static_cast<int>(line.length())) {
-//            std::cout << "\e[0m";
-//            red = false;
-//        }
-//    }
     size_t i = 0;
     while (isblank(line[i]))
         std::cout << line[i++];

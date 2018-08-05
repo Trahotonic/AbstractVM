@@ -99,10 +99,13 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot assert\e[24m - ";
 		throw EmptyStackException();
 	}
-    if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() == type &&
-        dynamic_cast<const IOperand*>(*_stack.begin())->to_string() == str)
-        return ;
-    throw AssertFalse();
+	const IOperand *tmp = _factory.createOperand(type, str);
+    if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
+        dynamic_cast<const IOperand*>(*_stack.begin())->to_string() != str) {
+        delete tmp;
+        throw AssertFalse();
+    }
+    return delete tmp;
 }
 
 void VM::_pop(int c) {
@@ -128,9 +131,8 @@ void VM::run() {
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
 		if (methodDatas[i]->getInstr() == "push")
 			_push(methodDatas[i]->getType(), methodDatas[i]->getValue());
-		else if (methodDatas[i]->getInstr() == "assert") {
+		else if (methodDatas[i]->getInstr() == "assert")
 			_assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(), methodDatas[i]->getLine());
-		}
 		else if (methodDatas[i]->getInstr() == "add")
 			_add(methodDatas[i]->getLine());
 		else if (methodDatas[i]->getInstr() == "sub")
