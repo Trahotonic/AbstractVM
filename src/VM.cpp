@@ -25,9 +25,9 @@ void VM::readInput(int argc, char **argv) {
 	_parser.parseTokens();
 }
 
-void VM::add(int c) {
+void VM::_add(int c) {
     if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot add\e[24m - ";
         throw TooFewOperandsException();
     }
     const IOperand    *one = *_stack.begin();
@@ -38,9 +38,9 @@ void VM::add(int c) {
 	_stack.push_front(*one + *two);
 }
 
-void VM::sub(int c) {
+void VM::_sub(int c) {
     if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot subtract\e[24m - ";
         throw TooFewOperandsException();
     }
 	const IOperand    *one = *_stack.begin();
@@ -51,9 +51,9 @@ void VM::sub(int c) {
 	_stack.push_front(*one - *two);
 }
 
-void VM::mul(int c) {
+void VM::_mul(int c) {
     if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot multiply\e[24m - ";
         throw TooFewOperandsException();
     }
 	const IOperand    *one = *_stack.begin();
@@ -64,9 +64,9 @@ void VM::mul(int c) {
 	_stack.push_front(*one * *two);
 }
 
-void VM::div(int c) {
+void VM::_div(int c) {
     if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot divide\e[24m - ";
         throw TooFewOperandsException();
     }
 	const IOperand    *one = *_stack.begin();
@@ -77,9 +77,9 @@ void VM::div(int c) {
 	_stack.push_front(*one / *two);
 }
 
-void VM::mod(int c) {
+void VM::_mod(int c) {
     if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot modulo\e[24m - ";
         throw TooFewOperandsException();
     }
 	const IOperand    *one = *_stack.begin();
@@ -90,11 +90,11 @@ void VM::mod(int c) {
 	_stack.push_front(*one % *two);
 }
 
-void VM::push(eOperandType type, std::string value) {
+void VM::_push(eOperandType type, std::string value) {
 	   _stack.push_front(_factory.createOperand(type, value));
 }
 
-void VM::assertV(eOperandType type, std::string str, int c) {
+void VM::_assertV(eOperandType type, std::string str, int c) {
 	if (_stack.empty()) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot assert\e[24m - ";
 		throw EmptyStackException();
@@ -105,7 +105,7 @@ void VM::assertV(eOperandType type, std::string str, int c) {
     throw AssertFalse();
 }
 
-void VM::pop(int c) {
+void VM::_pop(int c) {
 	if (_stack.empty()) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot pop\e[24m - ";
 		throw EmptyStackException();
@@ -113,7 +113,7 @@ void VM::pop(int c) {
 	_stack.pop_front();
 }
 
-void VM::dump(int c) {
+void VM::_dump(int c) {
 	if (_stack.empty()) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot dump\e[24m - ";
 		throw EmptyStackException();
@@ -127,25 +127,25 @@ void VM::run() {
 	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
 		if (methodDatas[i]->getInstr() == "push")
-			push(methodDatas[i]->getType(), methodDatas[i]->getValue());
+			_push(methodDatas[i]->getType(), methodDatas[i]->getValue());
 		else if (methodDatas[i]->getInstr() == "assert") {
-			assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(), methodDatas[i]->getLine());
+			_assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(), methodDatas[i]->getLine());
 		}
 		else if (methodDatas[i]->getInstr() == "add")
-			add(methodDatas[i]->getLine());
+			_add(methodDatas[i]->getLine());
 		else if (methodDatas[i]->getInstr() == "sub")
-			sub(methodDatas[i]->getLine());
+			_sub(methodDatas[i]->getLine());
 		else if (methodDatas[i]->getInstr() == "mul")
-			mul(methodDatas[i]->getLine());
+			_mul(methodDatas[i]->getLine());
 		else if (methodDatas[i]->getInstr() == "div")
-			div(methodDatas[i]->getLine());
+			_div(methodDatas[i]->getLine());
 		else if (methodDatas[i]->getInstr() == "mod")
-			mod(methodDatas[i]->getLine());
+			_mod(methodDatas[i]->getLine());
         else if (methodDatas[i]->getInstr() == "dump")
-            dump(methodDatas[i]->getLine());
+            _dump(methodDatas[i]->getLine());
         else if (methodDatas[i]->getInstr() == "mod")
-            mod(methodDatas[i]->getLine());
+            _mod(methodDatas[i]->getLine());
 		else if (methodDatas[i]->getInstr() == "pop")
-			pop(methodDatas[i]->getLine());
+			_pop(methodDatas[i]->getLine());
 	}
 }

@@ -1,1 +1,5 @@
-assert int32(2)
+push int32(2)
+push float(3.2)
+add
+add
+dump
