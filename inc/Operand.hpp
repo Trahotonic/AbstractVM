@@ -24,8 +24,8 @@ private:
 	Factory         _factory;
 
 public:
-	Operand() : _type(Int8), _value(0), _str(toString(_value)) {}
-	Operand(eOperandType type, T value) : _type(type), _value(value), _str(toString(_value)) {}
+	Operand() : _type(Int8), _value(0), _str(to_string(_value)) {}
+	Operand(eOperandType type, T value) : _type(type), _value(value), _str(to_string(_value)) {}
 	Operand(Operand const &src) {
 		*this = src;
 	}
@@ -38,7 +38,7 @@ public:
 	~Operand() {}
 
 	template <typename X>
-	std::string toString(const X a_value)
+	std::string to_string(const X a_value)
 	{
 		std::ostringstream out;
 		if (typeid(a_value) == typeid(char))
@@ -48,7 +48,7 @@ public:
 		return out.str();
 	}
 
-	std::string const & to_string() const {
+	std::string const & toString() const {
 		return _str;
 	}
 

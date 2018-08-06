@@ -26,7 +26,13 @@ eTokens Token::getType() const {
 }
 
 std::string Token::getValue() const {
-    return _value;
+    size_t i = 0;
+	std::string ret = "";
+	while (isblank(_value[i]))
+		i++;
+	while (i < _value.length())
+		ret += _value[i++];
+    return ret;
 }
 
 std::ostream	&operator<<(std::ostream & o, Token const & src) {

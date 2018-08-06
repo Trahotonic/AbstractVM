@@ -34,12 +34,12 @@ void Lexer::readFromFile(char *file) {
     std::string     buffer;
     while (std::getline(is, buffer))
         analyzeLine(buffer);
-//    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
-//        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
-//            std::cout << *_tokens[j][i];
-//        }
-//        std::cout << std::endl;
-//    }
+    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
+        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
+            std::cout << *_tokens[j][i];
+        }
+        std::cout << std::endl;
+    }
 }
 
 void Lexer::readFromSTDIN() {
@@ -82,7 +82,7 @@ void Lexer::analyzeLine(std::string &line) {
         else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), dataType)) {
             list.push_back(new Token(INSTRUCTION, result[2]));
             std::regex_match(static_cast<std::string>(result[3]).c_str(), result, dataType);
-            list.push_back(new Token(DATATYPE, result[2]));
+            list.push_back(new Token(DATATYPE, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
             buffer = result[3];
             lexBra(list, buffer);
         }
@@ -117,6 +117,7 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     std::regex          close("(.*)(\\)(.*))");
     std::cmatch         result;
     std::string         buffer;
+	std::cout << line << std::endl;
     if (line == "")
         return list.push_back(new Token(NOARGS, "!"));
     if (std::regex_match(line.c_str(), result, valueInPar)) {
@@ -140,6 +141,11 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
         list.push_back(new Token(VALUE, result[2]));
         list.push_back(new Token(MISSING_CLOSEBRACKET, "!"));
     }
-    else
+    else if (!isblank(line[0])) {
+		buffer = list.back()->getValue() + line;
+	    list.pop_back();
+	    list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
+    }
+	else
         list.push_back(new Token(MISSING_OPENBRACKET, line));
 }

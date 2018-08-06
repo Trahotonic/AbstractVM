@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <regex>
+#include <cfloat>
 #include "../inc/VM.hpp"
 
 VM::VM() {}
@@ -95,17 +96,39 @@ void VM::_push(eOperandType type, std::string value) {
 }
 
 void VM::_assertV(eOperandType type, std::string str, int c) {
+	std::map<eOperandType, std::string> types = {
+			{Int8, "int8"},
+			{Int16, "int16"},
+			{Int32, "int32"},
+			{Float, "float"},
+			{Double, "double"}
+	};
+	if ((type == Int8 && std::stol(str) > CHAR_MAX) || (type == Int16 && std::stol(str) > SHRT_MAX)
+	    || (type == Int32 && std::stol(str) > INT32_MAX) || (type == Float && std::stof(str) > FLT_MAX)
+	    || (type == Double && std::stod(str) > DBL_MAX)) {
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mInvalid assertion argument\e[24m [\e[31m";
+		std::cout << str << "\e[0m] - ";
+		throw ValueOverflow();
+	}
+	if ((type == Int8 && std::stol(str) < CHAR_MIN) || (type == Int16 && std::stol(str) < SHRT_MIN)
+	    || (type == Int32 && std::stol(str) < INT32_MIN) || (type == Float && std::stof(str) < FLT_MIN)
+	    || (type == Double && std::stod(str) < DBL_MIN)) {
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mInvalid assertion argument\e[24m [\e[31m";
+		std::cout << str << "\e[0m] - ";
+		throw ValueUnderflow();
+	}
 	if (_stack.empty()) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot assert\e[24m - ";
 		throw EmptyStackException();
 	}
-	const IOperand *tmp = _factory.createOperand(type, str);
     if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
-        dynamic_cast<const IOperand*>(*_stack.begin())->to_string() != str) {
-        delete tmp;
-        throw AssertFalse();
+        dynamic_cast<const IOperand*>(*_stack.begin())->toString() != str) {
+	    std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+	    std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
+	              << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
+	              << "\e[0m) and (\e[33m" << types[type] << " " << str << "\e[0m) - ";
+	    throw AssertFalse();
     }
-    return delete tmp;
 }
 
 void VM::_pop(int c) {
@@ -122,7 +145,7 @@ void VM::_dump(int c) {
 		throw EmptyStackException();
 	}
 	for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
-		std::cout << CASTIO(*it)->to_string() << std::endl;
+		std::cout << CASTIO(*it)->toString() << std::endl;
 	}
 }
 

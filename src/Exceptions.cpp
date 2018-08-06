@@ -149,11 +149,11 @@ DivisionByZero::DivisionByZero(DivisionByZero const &src) {
 }
 
 void DivisionByZero::checkZero(int c, const IOperand *one, const IOperand * two, char op) {
-    if ((two->getType() == Float && std::stof(two->to_string()) == 0) ||
-			(two->getType() == Double && std::stod(two->to_string()) == 0) ||
-			(two->getType() != Double && two->getType() != Float && std::stoi(two->to_string()) == 0)) {
+    if ((two->getType() == Float && std::stof(two->toString()) == 0) ||
+			(two->getType() == Double && std::stod(two->toString()) == 0) ||
+			(two->getType() != Double && two->getType() != Float && std::stoi(two->toString()) == 0)) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : [";
-		std::cout << one->to_string() << " " << op << " \e[31m" << two->to_string();
+		std::cout << one->toString() << " " << op << " \e[31m" << two->toString();
 		std::cout << "\e[0m] - ";
 		throw DivisionByZero();
     }

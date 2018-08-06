@@ -3,6 +3,7 @@
 //
 
 #include <climits>
+#include <cfloat>
 #include "../inc/Factory.hpp"
 #include "../inc/Operand.hpp"
 #include "../inc/Exceptions.hpp"
@@ -62,9 +63,17 @@ IOperand const* Factory::createInt32(std::string const &value) const {
 }
 
 IOperand const* Factory::createFloat(std::string const &value) const {
+	if (std::stof(value) > FLT_MAX)
+		throw ValueOverflow();
+	if (std::stof(value) < FLT_MIN)
+		throw ValueOverflow();
 	return new Operand<float>(Float, std::stof(value));
 }
 
 IOperand const* Factory::createDouble(std::string const &value) const {
+	if (std::stod(value) > DBL_MAX)
+		throw ValueOverflow();
+	if (std::stod(value) < DBL_MIN)
+		throw ValueUnderflow();
 	return new Operand<double>(Double, std::stod(value));
 }
