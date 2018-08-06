@@ -34,12 +34,13 @@ void Lexer::readFromFile(char *file) {
     std::string     buffer;
     while (std::getline(is, buffer))
         analyzeLine(buffer);
-    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
-        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
-            std::cout << *_tokens[j][i];
-        }
-        std::cout << std::endl;
-    }
+//    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
+//        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
+//            std::cout << *_tokens[j][i];
+//        }
+//        std::cout << std::endl;
+//    }
+//	std::cout << buffer << std::endl;
 }
 
 void Lexer::readFromSTDIN() {
@@ -47,12 +48,12 @@ void Lexer::readFromSTDIN() {
     while (std::getline(std::cin, buffer)) {
         analyzeLine(buffer);
     }
-    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
-        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
-            std::cout << *_tokens[j][i];
-        }
-        std::cout << std::endl;
-    }
+//    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
+//        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
+//            std::cout << *_tokens[j][i];
+//        }
+//        std::cout << std::endl;
+//    }
 }
 
 void Lexer::analyzeLine(std::string &line) {
@@ -81,8 +82,10 @@ void Lexer::analyzeLine(std::string &line) {
         }
         else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), dataType)) {
             list.push_back(new Token(INSTRUCTION, result[2]));
-            std::regex_match(static_cast<std::string>(result[3]).c_str(), result, dataType);
+	        buffer = result[3];
+            std::regex_match(buffer.c_str(), result, dataType);
             list.push_back(new Token(DATATYPE, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
+//	        std::cout << result[3] << std::endl;
             buffer = result[3];
             lexBra(list, buffer);
         }
@@ -117,7 +120,7 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     std::regex          close("(.*)(\\)(.*))");
     std::cmatch         result;
     std::string         buffer;
-	std::cout << line << std::endl;
+//	std::cout << line << std::endl;
     if (line == "")
         return list.push_back(new Token(NOARGS, "!"));
     if (std::regex_match(line.c_str(), result, valueInPar)) {
@@ -137,6 +140,7 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
                 list.push_back(new Token(EXCESS_SYMBOLS, buffer));
     }
     else if (std::regex_match(line.c_str(), result, openParExists)) {
+//	    std::cout << "here\n";
         list.push_back(new Token(OPENBRACKET, "("));
         list.push_back(new Token(VALUE, result[2]));
         list.push_back(new Token(MISSING_CLOSEBRACKET, "!"));

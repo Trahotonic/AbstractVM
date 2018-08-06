@@ -33,7 +33,7 @@ IOperand const* Factory::createOperand(eOperandType type, std::string const &val
 }
 
 IOperand const* Factory::createInt8(std::string const &value) const {
-    if (std::stol(value) > CHAR_MAX) {
+    if (value.length() > 19 || std::stol(value) > CHAR_MAX) {
 		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
                                           << value << "\e[0m] - <Int8> ";
 		throw ValueOverflow();
@@ -47,33 +47,73 @@ IOperand const* Factory::createInt8(std::string const &value) const {
 }
 
 IOperand const* Factory::createInt16(std::string const &value) const {
-    if (std::stol(value) > SHRT_MAX)
-        throw ValueOverflow();
-    if (std::stol(value) < SHRT_MIN)
-        throw ValueUnderflow();
+    if (value.length() > 19 || std::stol(value) > SHRT_MAX) {
+	    std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+	              << value << "\e[0m] - <Int16> ";
+	    throw ValueOverflow();
+    }
+    if (std::stol(value) < SHRT_MIN) {
+	    std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+	              << value << "\e[0m] - <Int16> ";
+	    throw ValueUnderflow();
+    }
 	return new Operand<short>(Int16, static_cast<short>(std::stoi(value)));
 }
 
 IOperand const* Factory::createInt32(std::string const &value) const {
-	if (std::stol(value) > INT_MAX)
+	if (value.length() > 19 || std::stol(value) > INT_MAX) {
+		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+		          << value << "\e[0m] - <Int32> ";
 		throw ValueOverflow();
-	if (std::stol(value) < INT_MIN)
+	}
+	if (std::stol(value) < INT_MIN) {
+		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+		          << value << "\e[0m] - <Int32> ";
 		throw ValueUnderflow();
+	}
 	return new Operand<int>(Int32, std::stoi(value));
 }
 
 IOperand const* Factory::createFloat(std::string const &value) const {
-	if (std::stof(value) > FLT_MAX)
+	try {
+		std::stof(value);
+	}
+	catch (std::exception & e) {
+		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+		          << value << "\e[0m] - <Int32> ";
 		throw ValueOverflow();
-	if (std::stof(value) < FLT_MIN)
-		throw ValueOverflow();
+	}
+//	if (std::stof(value) > FLT_MAX) {
+//		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+//		          << value << "\e[0m] - <Int32> ";
+//		throw ValueOverflow();
+//	}
+//	if (std::stof(value) < FLT_MIN) {
+//		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+//		          << value << "\e[0m] - <Int32> ";
+//		throw ValueOverflow();
+//	}
 	return new Operand<float>(Float, std::stof(value));
 }
 
 IOperand const* Factory::createDouble(std::string const &value) const {
-	if (std::stod(value) > DBL_MAX)
+	try {
+		std::stod(value);
+	}
+	catch (std::exception & e) {
+		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+		          << value << "\e[0m] - <Int32> ";
 		throw ValueOverflow();
-	if (std::stod(value) < DBL_MIN)
-		throw ValueUnderflow();
+	}
+//	if (std::stod(value) > DBL_MAX) {
+//		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+//		          << value << "\e[0m] - <Int32> ";
+//		throw ValueOverflow();
+//	}
+//	if (std::stod(value) < DBL_MIN) {
+//		std::cout << "\e[4mLine " << line << "\e[24m : \e[31mError\e[0m : [\e[31m"
+//		          << value << "\e[0m] - <Int32> ";
+//		throw ValueUnderflow();
+//	}
 	return new Operand<double>(Double, std::stod(value));
 }
