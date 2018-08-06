@@ -64,7 +64,7 @@ void Lexer::analyzeLine(std::string &line) {
     std::regex          dataType("([\\t\\s]+)(int8|int16|int32|float|double)(.*)");
     std::regex          brackets("(\\(.*)\\))");
     std::regex          excess("([\\t\\s]*)(.+)");
-    std::regex          comment("( ;.*)");
+    std::regex          comment("([\\t\\s]*;.*)");
     std::regex          whitespaces("([\\t\\s]*)");
     std::regex          whitespacesTrash("([\\t\\s]+)(.+)");
     std::vector<Token*> list;
@@ -116,7 +116,7 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     std::regex          valueInPar("(\\()(.+)(\\))(.*)");
     std::regex          emptyPar("(\\()(\\))(.*)");
     std::regex          openParExists("(\\()(.*)");
-    std::regex          comment("( ;.*)");
+    std::regex          comment("([\\t\\s]*;.*)");
     std::regex          close("(.*)(\\)(.*))");
     std::cmatch         result;
     std::string         buffer;
