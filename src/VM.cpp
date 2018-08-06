@@ -31,9 +31,9 @@ void VM::_add(int c) {
         std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot add\e[24m - ";
         throw TooFewOperandsException();
     }
-    const IOperand    *one = *_stack.begin();
-    _stack.pop_front();
     const IOperand    *two = *_stack.begin();
+    _stack.pop_front();
+    const IOperand    *one = *_stack.begin();
     _stack.pop_front();
 
 	_stack.push_front(*one + *two);
@@ -44,9 +44,9 @@ void VM::_sub(int c) {
         std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot subtract\e[24m - ";
         throw TooFewOperandsException();
     }
-	const IOperand    *one = *_stack.begin();
-	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 
 	_stack.push_front(*one - *two);
@@ -57,9 +57,9 @@ void VM::_mul(int c) {
         std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot multiply\e[24m - ";
         throw TooFewOperandsException();
     }
-	const IOperand    *one = *_stack.begin();
-	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 
 	_stack.push_front(*one * *two);
@@ -70,9 +70,9 @@ void VM::_div(int c) {
         std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot divide\e[24m - ";
         throw TooFewOperandsException();
     }
-	const IOperand    *one = *_stack.begin();
-	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 	DivisionByZero::checkZero(c, one, two, '/');
 	_stack.push_front(*one / *two);
@@ -83,9 +83,9 @@ void VM::_mod(int c) {
         std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot modulo\e[24m - ";
         throw TooFewOperandsException();
     }
-	const IOperand    *one = *_stack.begin();
-	_stack.pop_front();
 	const IOperand    *two = *_stack.begin();
+	_stack.pop_front();
+	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
 
 	_stack.push_front(*one % *two);
@@ -147,6 +147,14 @@ void VM::_dump(int c) {
 	for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
 		std::cout << CASTIO(*it)->toString() << std::endl;
 	}
+}
+
+void VM::_print(int c) {
+	if (_stack.empty()) {
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot dump\e[24m - ";
+		throw EmptyStackException();
+	}
+
 }
 
 void VM::run() {

@@ -231,4 +231,17 @@ public:
 	virtual const char* what() const throw();
 };
 
+class NonASCII : public virtual std::exception
+{
+public:
+	NonASCII(void);
+	NonASCII(NonASCII const & src);
+
+	NonASCII	&operator=(NonASCII const & src);
+
+	~NonASCII(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

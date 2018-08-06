@@ -322,3 +322,21 @@ MissingDataType::MissingDataType() {}
 MissingDataType::MissingDataType(MissingDataType const &src) {
 	*this = src;
 }
+
+NonASCII::~NonASCII() throw() {}
+
+const char* NonASCII::NonASCII::what() const throw() {
+	return "value is invalid to be printed as ASCII character";
+}
+
+NonASCII& NonASCII::NonASCII::operator=(NonASCII const &src)
+{
+	(void)src;
+	return *this;
+}
+
+NonASCII::NonASCII() {}
+
+NonASCII::NonASCII(NonASCII const &src) {
+	*this = src;
+}

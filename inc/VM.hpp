@@ -26,6 +26,7 @@ private:
     void                            _div(int);
     void                            _mod(int);
     void                            _pop(int);
+	void                            _print(int);
 public:
 	VM();
 	VM(VM const & src);
