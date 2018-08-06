@@ -26,6 +26,10 @@ eTokens Token::getType() const {
 }
 
 std::string Token::getValue() const {
+	return _value;
+}
+
+std::string Token::getValueTrim() const {
     size_t i = 0;
 	std::string ret = "";
 	while (isblank(_value[i]))

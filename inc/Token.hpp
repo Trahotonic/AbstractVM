@@ -38,6 +38,7 @@ public:
 
     eTokens     getType() const;
     std::string getValue() const;
+	std::string getValueTrim() const;
 };
 
 std::ostream	&operator<<(std::ostream & o, Token const & src);

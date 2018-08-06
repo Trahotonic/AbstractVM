@@ -61,16 +61,17 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         if (!_error)
             _error = true;
         std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
-        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[0]->getValue();
         std::cout << tokens[1]->getValue();
-        printFirstRed(tokens[2]->getValue());
+	    std::cout << "\e[31m!\e[0m" << tokens[2]->getValue() << " - ";
+//        printFirstRed(tokens[2]->getValue());
         throw NoOpenBracket();
     }
     else if (worst == MISSING_CLOSEBRACKET) {
         if (!_error)
             _error = true;
         std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
-        std::cout << tokens[0]->getValue() << " ";
+        std::cout << tokens[0]->getValue();
         std::cout << tokens[1]->getValue();
         std::cout << tokens[2]->getValue();
         std::cout << tokens[3]->getValue();
@@ -166,22 +167,22 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
              {"float", Float},
              {"double", Double}};
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert")
-        if (typeMap[tokens[1]->getValue()] == Int8 ||
-            typeMap[tokens[1]->getValue()] == Int16 ||
-            typeMap[tokens[1]->getValue()] == Int32)
-            if (!std::regex_match(tokens[3]->getValue(), i)) {
+        if (typeMap[tokens[1]->getValueTrim()] == Int8 ||
+            typeMap[tokens[1]->getValueTrim()] == Int16 ||
+            typeMap[tokens[1]->getValueTrim()] == Int32)
+            if (!std::regex_match(tokens[3]->getValueTrim(), i)) {
 	            std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
-	            std::cout << tokens[0]->getValue() << " " << tokens[1]->getValue() << tokens[2]->getValue()
-	                      << "\e[31m" << tokens[3]->getValue() << "\e[0m" << tokens[4]->getValue() << "\" - ";
+	            std::cout << tokens[0]->getValueTrim() << " " << tokens[1]->getValueTrim() << tokens[2]->getValueTrim()
+	                      << "\e[31m" << tokens[3]->getValueTrim() << "\e[0m" << tokens[4]->getValueTrim() << "\" - ";
                 throw InvalidInput();
             }
-    if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
-        _methodDatas.push_back(new MethodData(tokens[0]->getValue(),
-                                              typeMap[tokens[1]->getValue()],
-                                              tokens[3]->getValue(), n));
+    if (tokens[0]->getValueTrim() == "push" || tokens[0]->getValueTrim() == "assert") {
+        _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(),
+                                              typeMap[tokens[1]->getValueTrim()],
+                                              tokens[3]->getValueTrim(), n));
     }
     else
-        _methodDatas.push_back(new MethodData(tokens[0]->getValue(), n));
+        _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), n));
 }
 
 std::vector<MethodData*> Parser::getMethodDatas() {
