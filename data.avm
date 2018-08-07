@@ -1,2 +1,2 @@
-push int32(42)
-add
+push int8(1)
+print

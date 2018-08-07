@@ -151,10 +151,17 @@ void VM::_dump(int c) {
 
 void VM::_print(int c) {
 	if (_stack.empty()) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot dump\e[24m - ";
+		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot print\e[24m - ";
 		throw EmptyStackException();
 	}
-
+	if (_stack.front()->getType() == Int8 &&
+        std::stoi(_stack.front()->toString()) >= 32 &&
+        std::stoi(_stack.front()->toString()) <= 127)
+	    std::cout << static_cast<char>(std::stoi(_stack.front()->toString())) << std::endl;
+	else {
+        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot print\e[24m - ";
+        throw NonASCII();
+	}
 }
 
 void VM::run() {
@@ -180,5 +187,7 @@ void VM::run() {
             _mod(methodDatas[i]->getLine());
 		else if (methodDatas[i]->getInstr() == "pop")
 			_pop(methodDatas[i]->getLine());
+        else if (methodDatas[i]->getInstr() == "print")
+            _print(methodDatas[i]->getLine());
 	}
 }
