@@ -111,8 +111,8 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
 		throw ValueOverflow();
 	}
 	if ((type == Int8 && std::stol(str) < CHAR_MIN) || (type == Int16 && std::stol(str) < SHRT_MIN)
-	    || (type == Int32 && std::stol(str) < INT32_MIN) || (type == Float && std::stof(str) < FLT_MIN)
-	    || (type == Double && std::stod(str) < DBL_MIN)) {
+	    || (type == Int32 && std::stol(str) < INT32_MIN) || (type == Float && std::stof(str) < -FLT_MAX)
+	    || (type == Double && std::stod(str) < -DBL_MAX)) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mInvalid assertion argument\e[24m [\e[31m";
 		std::cout << str << "\e[0m] - ";
 		throw ValueUnderflow();
@@ -121,14 +121,37 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot assert\e[24m - ";
 		throw EmptyStackException();
 	}
-    if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
-        dynamic_cast<const IOperand*>(*_stack.begin())->toString() != str) {
-	    std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
-	    std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
-	              << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
-	              << "\e[0m) and (\e[33m" << types[type] << " " << str << "\e[0m) - ";
-	    throw AssertFalse();
-    }
+	if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Float &&
+            dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Double) {
+        if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
+            dynamic_cast<const IOperand*>(*_stack.begin())->toString() != str) {
+            std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+            std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
+                      << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
+                      << "\e[0m) and (\e[33m" << types[type] << " " << str << "\e[0m) - ";
+            throw AssertFalse();
+        }
+	}
+	else if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() == Float) {
+        if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
+            std::stof(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stof(str)) {
+            std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+            std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
+                      << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
+                      << "\e[0m) and (\e[33m" << types[type] << " " << std::setprecision(2) << std::fixed << std::stof(str) << "\e[0m) - ";
+            throw AssertFalse();
+        }
+	}
+	else {
+        if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
+            std::stod(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stod(str)) {
+            std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
+            std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
+                      << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
+                      << "\e[0m) and (\e[33m" << types[type] << " " << std::setprecision(2) << std::fixed << std::stod(str) << "\e[0m) - ";
+            throw AssertFalse();
+        }
+	}
 }
 
 void VM::_pop(int c) {
@@ -189,5 +212,7 @@ void VM::run() {
 			_pop(methodDatas[i]->getLine());
         else if (methodDatas[i]->getInstr() == "print")
             _print(methodDatas[i]->getLine());
+        else if (methodDatas[i]->getInstr() == "exit")
+            break ;
 	}
 }

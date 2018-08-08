@@ -1,3 +1,7 @@
-addq
-exit
-pushq
+push int32(100)
+push float(32.3)
+sub
+dump
+assert float(67.8)
+    exit
+dumps
