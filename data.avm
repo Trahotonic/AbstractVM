@@ -1,2 +1,4 @@
-push int8(1)
-print
+push int8(1000)
+push float(2)
+addq
+dump

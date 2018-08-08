@@ -340,3 +340,22 @@ NonASCII::NonASCII() {}
 NonASCII::NonASCII(NonASCII const &src) {
 	*this = src;
 }
+
+ParsingError::~ParsingError() throw() {}
+
+const char* ParsingError::ParsingError::what() const throw() {
+	return "\e[31mProgram cannot be executed\e[0m";
+}
+
+ParsingError& ParsingError::ParsingError::operator=(ParsingError const &src)
+{
+	(void)src;
+	return *this;
+}
+
+ParsingError::ParsingError() {}
+
+ParsingError::ParsingError(ParsingError const &src) {
+	*this = src;
+}
+

@@ -244,4 +244,17 @@ public:
 	virtual const char* what() const throw();
 };
 
+class ParsingError : public virtual std::exception
+{
+public:
+	ParsingError(void);
+	ParsingError(ParsingError const & src);
+
+	ParsingError	&operator=(ParsingError const & src);
+
+	~ParsingError(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

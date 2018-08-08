@@ -13,6 +13,7 @@
 
 class Lexer {
     std::vector<std::vector<Token*> >   _tokens;
+
     void                                readFromFile(char * file);
     void                                readFromSTDIN();
     void                                analyzeLine(std::string & line);
