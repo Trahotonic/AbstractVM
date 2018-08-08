@@ -7,7 +7,7 @@
 
 Parser::Parser() {}
 
-Parser::Parser(VM * pVM) : _parentVM(pVM), _error(false) {}
+Parser::Parser(VM * pVM) : _parentVM(pVM), _error(false), _exit(false) {}
 
 Parser::Parser(Parser const &src) {
     *this = src;
@@ -41,20 +41,25 @@ void Parser::parseTokens() {
 }
 
 void Parser::handleError(std::vector<Token*> tokens, int i) {
+	std::string message;
+	if (!_exit)
+		message = "\e[31mError\e[0m";
+	else
+		message = "\e[95mWarning\e[0m";
     eTokens worst = getWorstToken(tokens);
     if (worst == OK)
         createMethodData(tokens, i);
     else if (worst == UNKNOWN_INSTRUCTION) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+        std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         printFirstRed(tokens[0]->getValue());
         throw UnknownCommand();
     }
     else if (worst == UNKNOWN_DATATYPE) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue();
         printFirstRed(tokens[1]->getValue());
         throw UnknownDataType();
@@ -62,7 +67,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     else if (worst == MISSING_OPENBRACKET) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue();
         std::cout << tokens[1]->getValue();
 	    std::cout << "\e[31m!\e[0m" << tokens[2]->getValue() << " - ";
@@ -72,7 +77,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     else if (worst == MISSING_CLOSEBRACKET) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue();
         std::cout << tokens[1]->getValue();
         std::cout << tokens[2]->getValue();
@@ -83,8 +88,8 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     else if (worst == EMPTY_BRACKETS) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
-        std::cout << tokens[0]->getValue() << " ";
+	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
+        std::cout << tokens[0]->getValue();
         std::cout << tokens[1]->getValue();
         printFirstRed(tokens[2]->getValue());
         throw EmptyBrackets();
@@ -92,7 +97,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     else if (worst == NOARGS) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue() << " ";
         std::cout << tokens[1]->getValue();
         printFirstRed(tokens[2]->getValue());
@@ -101,7 +106,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     else if (worst == EXCESS_SYMBOLS) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
             std::cout << tokens[0]->getValue() << " ";
             std::cout << tokens[1]->getValue();
@@ -121,7 +126,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     else if (worst == MISSING_DATATYPE) {
         if (!_error)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : \e[31mError\e[0m : \"";
+	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue() << " \e[31m";
         std::cout << tokens[1]->getValue() ;
         std::cout << "\e[0m\" - ";
@@ -185,6 +190,8 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
     }
     else
         _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), n));
+		if (tokens[0]->getValueTrim() == "exit")
+			_exit = true;
 }
 
 std::vector<MethodData*> Parser::getMethodDatas() {

@@ -344,7 +344,7 @@ NonASCII::NonASCII(NonASCII const &src) {
 ParsingError::~ParsingError() throw() {}
 
 const char* ParsingError::ParsingError::what() const throw() {
-	return "\e[31mProgram cannot be executed\e[0m";
+	return "\n\e[31mProgram cannot be executed\e[0m";
 }
 
 ParsingError& ParsingError::ParsingError::operator=(ParsingError const &src)
@@ -359,3 +359,20 @@ ParsingError::ParsingError(ParsingError const &src) {
 	*this = src;
 }
 
+MissingExit::~MissingExit() throw() {}
+
+const char* MissingExit::MissingExit::what() const throw() {
+	return "\"exit\" command is missing";
+}
+
+MissingExit& MissingExit::MissingExit::operator=(MissingExit const &src)
+{
+	(void)src;
+	return *this;
+}
+
+MissingExit::MissingExit() {}
+
+MissingExit::MissingExit(MissingExit const &src) {
+	*this = src;
+}

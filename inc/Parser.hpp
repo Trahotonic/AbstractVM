@@ -17,6 +17,7 @@ class Parser {
     std::vector<std::vector<Token*> >   _tokens;
     std::vector<MethodData*>            _methodDatas;
     bool                                _error;
+	bool                                _exit;
     void                                handleError(std::vector<Token*>, int);
     eTokens                             getWorstToken(std::vector<Token*>);
     void                                printFirstRed(std::string);

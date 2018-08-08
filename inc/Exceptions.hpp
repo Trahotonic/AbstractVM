@@ -257,4 +257,17 @@ public:
 	virtual const char* what() const throw();
 };
 
+class MissingExit : public virtual std::exception
+{
+public:
+	MissingExit(void);
+	MissingExit(MissingExit const & src);
+
+	MissingExit	&operator=(MissingExit const & src);
+
+	~MissingExit(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP
