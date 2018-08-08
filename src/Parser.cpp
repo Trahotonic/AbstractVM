@@ -50,14 +50,14 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     if (worst == OK)
         createMethodData(tokens, i);
     else if (worst == UNKNOWN_INSTRUCTION) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
         std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         printFirstRed(tokens[0]->getValue());
         throw UnknownCommand();
     }
     else if (worst == UNKNOWN_DATATYPE) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
 	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue();
@@ -65,7 +65,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         throw UnknownDataType();
     }
     else if (worst == MISSING_OPENBRACKET) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
 	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue();
@@ -75,7 +75,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         throw NoOpenBracket();
     }
     else if (worst == MISSING_CLOSEBRACKET) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
 	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue();
@@ -86,7 +86,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         throw NoCloseBracket();
     }
     else if (worst == EMPTY_BRACKETS) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
 	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue();
@@ -95,7 +95,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         throw EmptyBrackets();
     }
     else if (worst == NOARGS) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
 	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue() << " ";
@@ -104,7 +104,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         throw NoArgs();
     }
     else if (worst == EXCESS_SYMBOLS) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
 	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
@@ -124,7 +124,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         throw Excess();
     }
     else if (worst == MISSING_DATATYPE) {
-        if (!_error)
+        if (!_error && !_exit)
             _error = true;
 	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         std::cout << tokens[0]->getValue() << " \e[31m";
