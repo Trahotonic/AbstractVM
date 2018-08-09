@@ -9,6 +9,7 @@
 # include <iostream>
 # include <sstream>
 # include <string>
+#include <cmath>
 
 # include "IOperand.hpp"
 # include "Converter.hpp"
@@ -80,6 +81,45 @@ public:
             return getValue() + std::stod(rhs.toString());
     }
 
+	template <typename X>
+	X   getSub(IOperand const & rhs) const{
+		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
+			return getValue() - std::stoi(rhs.toString());
+		else if (rhs.getType() == Float)
+			return getValue() - std::stof(rhs.toString());
+		else
+			return getValue() - std::stod(rhs.toString());
+	}
+
+	template <typename X>
+	X   getMul(IOperand const & rhs) const{
+		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
+			return getValue() * std::stoi(rhs.toString());
+		else if (rhs.getType() == Float)
+			return getValue() * std::stof(rhs.toString());
+		else
+			return getValue() * std::stod(rhs.toString());
+	}
+
+	template <typename X>
+	X   getDiv(IOperand const & rhs) const{
+		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
+			return getValue() / std::stoi(rhs.toString());
+		else if (rhs.getType() == Float)
+			return getValue() / std::stof(rhs.toString());
+		else
+			return getValue() / std::stod(rhs.toString());
+	}
+
+	template <typename X>
+	X   getMod(IOperand const & rhs) const{
+		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
+			return std::fmod(getValue(), std::stoi(rhs.toString()));
+		else if (rhs.getType() == Float)
+			return std::fmod(getValue(), std::stof(rhs.toString()));
+		else
+			return std::fmod(getValue(), std::stod(rhs.toString()));
+	}
 
 	const IOperand	*getMax(const IOperand * other) const{
 		if (this->getType() > other->getType())
@@ -99,52 +139,44 @@ public:
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const {
-		if (getMax(&rhs)->getType() == Int8)
-			return _factory.createOperand(Int8, _converter.getStrSub(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int16)
-			return _factory.createOperand(Int16, _converter.getStrSub(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(Int32, _converter.getStrSub(this, &rhs));
+		if (getMax(&rhs)->getType() == Int8 ||
+			getMax(&rhs)->getType() == Int16 ||
+			getMax(&rhs)->getType() == Int32)
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getSub<int>(rhs)));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, _converter.getStrSub(this, &rhs));
+			return _factory.createOperand(Float, std::to_string(getSub<float>(rhs)));
 		else
-			return _factory.createOperand(Double, _converter.getStrSub(this, &rhs));
+			return _factory.createOperand(Double, std::to_string(getSub<double>(rhs)));
 	}
 	IOperand const * operator*( IOperand const & rhs ) const {
-		if (getMax(&rhs)->getType() == Int8)
-			return _factory.createOperand(Int8, _converter.getStrMul(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int16)
-			return _factory.createOperand(Int16, _converter.getStrMul(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(Int32, _converter.getStrMul(this, &rhs));
+		if (getMax(&rhs)->getType() == Int8 ||
+			getMax(&rhs)->getType() == Int16 ||
+			getMax(&rhs)->getType() == Int32)
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getMul<int>(rhs)));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, _converter.getStrMul(this, &rhs));
+			return _factory.createOperand(Float, std::to_string(getMul<float>(rhs)));
 		else
-			return _factory.createOperand(Double, _converter.getStrMul(this, &rhs));
+			return _factory.createOperand(Double, std::to_string(getMul<double>(rhs)));
 	}
 	IOperand const * operator/( IOperand const & rhs ) const {
-		if (getMax(&rhs)->getType() == Int8)
-			return _factory.createOperand(Int8, _converter.getStrDiv(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int16)
-			return _factory.createOperand(Int16, _converter.getStrDiv(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(Int32, _converter.getStrDiv(this, &rhs));
+		if (getMax(&rhs)->getType() == Int8 ||
+			getMax(&rhs)->getType() == Int16 ||
+			getMax(&rhs)->getType() == Int32)
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getDiv<int>(rhs)));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, _converter.getStrDiv(this, &rhs));
+			return _factory.createOperand(Float, std::to_string(getDiv<float>(rhs)));
 		else
-			return _factory.createOperand(Double, _converter.getStrDiv(this, &rhs));
+			return _factory.createOperand(Double, std::to_string(getDiv<double>(rhs)));
 	}
 	IOperand const * operator%( IOperand const & rhs ) const {
-		if (getMax(&rhs)->getType() == Int8)
-			return _factory.createOperand(Int8, _converter.getStrMod(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int16)
-			return _factory.createOperand(Int16, _converter.getStrMod(this, &rhs));
-		else if (getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(Int32, _converter.getStrMod(this, &rhs));
+		if (getMax(&rhs)->getType() == Int8 ||
+			getMax(&rhs)->getType() == Int16 ||
+			getMax(&rhs)->getType() == Int32)
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getMod<int>(rhs)));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, _converter.getStrMod(this, &rhs));
+			return _factory.createOperand(Float, std::to_string(getMod<float>(rhs)));
 		else
-			return _factory.createOperand(Double, _converter.getStrMod(this, &rhs));
+			return _factory.createOperand(Double, std::to_string(getMod<double>(rhs)));
 	}
 };
 
