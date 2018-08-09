@@ -157,7 +157,6 @@ void DivisionByZero::checkZero(int c, const IOperand *one, const IOperand * two,
 		std::cout << "\e[0m] - ";
 		throw DivisionByZero();
     }
-
 }
 
 NoExit::~NoExit() throw() {}

@@ -1,7 +1,5 @@
-push int32(100)
-push float(32.3)
-sub
+push int8(10)
+push int32(0)
+mod
 dump
-assert float(67.8)
-    exit
-dumps
+exit

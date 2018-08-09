@@ -43,7 +43,7 @@ IOperand const* Factory::createInt8(std::string const &value) const {
                                        << value << "\e[0m] - <Int8> ";
 		throw ValueUnderflow();
     }
-	return new Operand<char>(Int8, static_cast<char>(std::stoi(value)));
+	return new Operand<char>(Int8, static_cast<char>(std::stoi(value)), value);
 }
 
 IOperand const* Factory::createInt16(std::string const &value) const {
@@ -57,7 +57,7 @@ IOperand const* Factory::createInt16(std::string const &value) const {
 	              << value << "\e[0m] - <Int16> ";
 	    throw ValueUnderflow();
     }
-	return new Operand<short>(Int16, static_cast<short>(std::stoi(value)));
+	return new Operand<short>(Int16, static_cast<short>(std::stoi(value)), value);
 }
 
 IOperand const* Factory::createInt32(std::string const &value) const {
@@ -71,7 +71,7 @@ IOperand const* Factory::createInt32(std::string const &value) const {
 		          << value << "\e[0m] - <Int32> ";
 		throw ValueUnderflow();
 	}
-	return new Operand<int>(Int32, std::stoi(value));
+	return new Operand<int>(Int32, std::stoi(value), value);
 }
 
 IOperand const* Factory::createFloat(std::string const &value) const {
@@ -93,7 +93,7 @@ IOperand const* Factory::createFloat(std::string const &value) const {
 //		          << value << "\e[0m] - <Int32> ";
 //		throw ValueOverflow();
 //	}
-	return new Operand<float>(Float, std::stof(value));
+	return new Operand<float>(Float, std::stof(value), value);
 }
 
 IOperand const* Factory::createDouble(std::string const &value) const {
@@ -115,5 +115,5 @@ IOperand const* Factory::createDouble(std::string const &value) const {
 //		          << value << "\e[0m] - <Int32> ";
 //		throw ValueUnderflow();
 //	}
-	return new Operand<double>(Double, std::stod(value));
+	return new Operand<double>(Double, std::stod(value), value);
 }
