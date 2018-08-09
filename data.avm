@@ -1,7 +1,4 @@
-push int8(10)
-assert int8(10)
-push int32(0)
-add
-assert int32(10)
+push float(1.918273645)
 dump
+assert float(1.9182736)
 exit

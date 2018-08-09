@@ -138,7 +138,7 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
             std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
             std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
                       << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
-                      << "\e[0m) and (\e[33m" << types[type] << " " << std::setprecision(2) << std::fixed << std::stof(str) << "\e[0m) - ";
+                      << "\e[0m) and (\e[33m" << types[type] << " " << std::stof(str) << "\e[0m) - ";
             throw AssertFalse();
         }
 	}

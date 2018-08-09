@@ -12,7 +12,6 @@
 #include <cmath>
 
 # include "IOperand.hpp"
-# include "Converter.hpp"
 # include "Factory.hpp"
 
 template <typename T>
@@ -21,7 +20,6 @@ private:
 	eOperandType	_type;
 	T				_value;
 	std::string		_str;
-	Converter       _converter;
 	Factory         _factory;
 
 public:
