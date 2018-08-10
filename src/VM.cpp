@@ -177,7 +177,10 @@ void VM::_dump(int c) {
 		throw EmptyStackException();
 	}
 	for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
-		std::cout << _trim(CASTIO(*it)->toString(), CASTIO(*it)->getType()) << std::endl;
+		if (CASTIO(*it)->getType() == Float || CASTIO(*it)->getType() == Double)
+			std::cout << _trim(CASTIO(*it)->toString(), CASTIO(*it)->getType()) << std::endl;
+		else
+			std::cout << CASTIO(*it)->toString() << std::endl;
 	}
 }
 

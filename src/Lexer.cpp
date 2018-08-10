@@ -45,9 +45,14 @@ void Lexer::readFromFile(char *file) {
 
 void Lexer::readFromSTDIN() {
     std::string     buffer;
+    std::regex      eof("([\\t\\s]*;;[\\t\\s]*)");
     while (std::getline(std::cin, buffer)) {
+	    if (std::regex_match(buffer, eof))
+		    return ;
         analyzeLine(buffer);
     }
+	std::cout << "\e[31mError reading input\e[0m : ";
+	throw UnexpectedEnd();
 //    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
 //        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
 //            std::cout << *_tokens[j][i];

@@ -180,7 +180,7 @@ NoExit::NoExit(NoExit const &src) {
 AssertFalse::~AssertFalse() throw() {}
 
 const char* AssertFalse::AssertFalse::what() const throw() {
-	return "Assertion returned false statement";
+	return "Assertion failed";
 }
 
 AssertFalse& AssertFalse::AssertFalse::operator=(AssertFalse const &src)
@@ -373,5 +373,23 @@ MissingExit& MissingExit::MissingExit::operator=(MissingExit const &src)
 MissingExit::MissingExit() {}
 
 MissingExit::MissingExit(MissingExit const &src) {
+	*this = src;
+}
+
+UnexpectedEnd::~UnexpectedEnd() throw() {}
+
+const char* UnexpectedEnd::UnexpectedEnd::what() const throw() {
+	return "Unexpected end of stream";
+}
+
+UnexpectedEnd& UnexpectedEnd::UnexpectedEnd::operator=(UnexpectedEnd const &src)
+{
+	(void)src;
+	return *this;
+}
+
+UnexpectedEnd::UnexpectedEnd() {}
+
+UnexpectedEnd::UnexpectedEnd(UnexpectedEnd const &src) {
 	*this = src;
 }

@@ -190,8 +190,12 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
     }
     else
         _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), n));
-		if (tokens[0]->getValueTrim() == "exit")
-			_exit = true;
+		if (tokens[0]->getValueTrim() == "exit") {
+			if (!_exit)
+                _exit = true;
+			else
+				std::cout << "\e[4mLine " << n << "\e[24m : \e[97mNote\e[0m : \"\e[34mexit\e[0m\" command is redundant\n";
+        }
 }
 
 std::vector<MethodData*> Parser::getMethodDatas() {

@@ -270,4 +270,17 @@ public:
 	virtual const char* what() const throw();
 };
 
+class UnexpectedEnd : public virtual std::exception
+{
+public:
+	UnexpectedEnd(void);
+	UnexpectedEnd(UnexpectedEnd const & src);
+
+	UnexpectedEnd	&operator=(UnexpectedEnd const & src);
+
+	~UnexpectedEnd(void) throw();
+
+	virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP
