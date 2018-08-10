@@ -27,6 +27,7 @@ private:
     void                            _mod(int);
     void                            _pop(int);
 	void                            _print(int);
+	std::string                     _trim(std::string, eOperandType);
 public:
 	VM();
 	VM(VM const & src);

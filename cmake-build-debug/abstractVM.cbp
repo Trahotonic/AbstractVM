@@ -82,9 +82,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/rkyslyy/avm/inc/Converter.hpp">
-			<Option target="abstractVM"/>
-		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/inc/Exceptions.hpp">
 			<Option target="abstractVM"/>
 		</Unit>
@@ -110,9 +107,6 @@
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/inc/VM.hpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/src/Converter.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/src/Exceptions.cpp">

@@ -5,8 +5,6 @@
 #ifndef ABSTRACTVM_IOPERAND_HPP
 #define ABSTRACTVM_IOPERAND_HPP
 
-#define CASTCH static_cast<char>
-#define CASTSH static_cast<short>
 #define CASTIO dynamic_cast<const IOperand*>
 
 # include <iostream>

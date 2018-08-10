@@ -138,7 +138,7 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
             std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
             std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
                       << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
-                      << "\e[0m) and (\e[33m" << types[type] << " " << std::stof(str) << "\e[0m) - ";
+                      << "\e[0m) and (\e[33m" << types[type] << " " << str << "\e[0m) - ";
             throw AssertFalse();
         }
 	}
@@ -162,13 +162,22 @@ void VM::_pop(int c) {
 	_stack.pop_front();
 }
 
+std::string VM::_trim(std::string str, eOperandType type) {
+	std::ostringstream out;
+	if (type == Float)
+		out << std::setprecision(2) << std::fixed << std::stof(str);
+	else
+		out << std::setprecision(2) << std::fixed << std::stod(str);
+	return out.str();
+}
+
 void VM::_dump(int c) {
 	if (_stack.empty()) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot dump\e[24m - ";
 		throw EmptyStackException();
 	}
 	for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
-		std::cout << CASTIO(*it)->toString() << std::endl;
+		std::cout << _trim(CASTIO(*it)->toString(), CASTIO(*it)->getType()) << std::endl;
 	}
 }
 

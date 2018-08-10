@@ -1,4 +1,4 @@
-push float(1.918273645)
+push float(1.29384756123)
 dump
-assert float(1.9182736)
+assert float(1.29384784294)
 exit
