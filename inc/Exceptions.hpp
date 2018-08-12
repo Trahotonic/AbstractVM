@@ -176,9 +176,11 @@ public:
 
 class NoCloseBracket : public virtual std::exception
 {
+    std::vector<Token*> _tokens;
 public:
     NoCloseBracket(void);
     NoCloseBracket(NoCloseBracket const & src);
+    NoCloseBracket(std::vector<Token*> tokens);
 
     NoCloseBracket	&operator=(NoCloseBracket const & src);
 

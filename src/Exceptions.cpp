@@ -288,7 +288,18 @@ NoOpenBracket::NoOpenBracket(std::vector<Token *> tokens) : _tokens(tokens) {}
 NoCloseBracket::~NoCloseBracket() throw() {}
 
 const char* NoCloseBracket::NoCloseBracket::what() const throw() {
-	return "Missing closing bracket";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = _tokens[0]->getValue() + _tokens[1]->getValue() + _tokens[2]->getValue() + _tokens[3]->getValue() +
+            printFirstRed(_tokens[4]->getValue()) + " - Missing closing bracket";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 NoCloseBracket& NoCloseBracket::NoCloseBracket::operator=(NoCloseBracket const &src)
@@ -303,6 +314,7 @@ NoCloseBracket::NoCloseBracket(NoCloseBracket const &src) {
 	*this = src;
 }
 
+NoCloseBracket::NoCloseBracket(std::vector<Token *> tokens) : _tokens(tokens) {}
 
 EmptyBrackets::~EmptyBrackets() throw() {}
 
