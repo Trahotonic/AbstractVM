@@ -191,9 +191,11 @@ public:
 
 class EmptyBrackets : public virtual std::exception
 {
+	std::vector<Token*> _tokens;
 public:
     EmptyBrackets(void);
     EmptyBrackets(EmptyBrackets const & src);
+    EmptyBrackets(std::vector<Token*> tokens);
 
     EmptyBrackets	&operator=(EmptyBrackets const & src);
 
@@ -204,9 +206,11 @@ public:
 
 class NoArgs : public virtual std::exception
 {
+    std::vector<Token*> _tokens;
 public:
     NoArgs(void);
     NoArgs(NoArgs const & src);
+    NoArgs(std::vector<Token*> tokens);
 
     NoArgs	&operator=(NoArgs const & src);
 

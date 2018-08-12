@@ -293,7 +293,7 @@ const char* NoCloseBracket::NoCloseBracket::what() const throw() {
     std::string         str;
 
     str = _tokens[0]->getValue() + _tokens[1]->getValue() + _tokens[2]->getValue() + _tokens[3]->getValue() +
-            printFirstRed(_tokens[4]->getValue()) + " - Missing closing bracket";
+            printFirstRed(_tokens[4]->getValue()) + "Missing closing bracket";
     size = str.length() + 2;
     ret = new char[size];
     for (unsigned long i = 0; i < size; ++i)
@@ -319,7 +319,17 @@ NoCloseBracket::NoCloseBracket(std::vector<Token *> tokens) : _tokens(tokens) {}
 EmptyBrackets::~EmptyBrackets() throw() {}
 
 const char* EmptyBrackets::EmptyBrackets::what() const throw() {
-	return "Empty brackets";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = _tokens[0]->getValue() + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) + "Empty brackets";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 EmptyBrackets& EmptyBrackets::EmptyBrackets::operator=(EmptyBrackets const &src)
@@ -334,10 +344,22 @@ EmptyBrackets::EmptyBrackets(EmptyBrackets const &src) {
 	*this = src;
 }
 
+EmptyBrackets::EmptyBrackets(std::vector<Token *> tokens) : _tokens(tokens) {}
+
 NoArgs::~NoArgs() throw() {}
 
 const char* NoArgs::NoArgs::what() const throw() {
-	return "No arguments provided";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) + "No arguments provided";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 NoArgs& NoArgs::NoArgs::operator=(NoArgs const &src)
@@ -351,6 +373,8 @@ NoArgs::NoArgs() {}
 NoArgs::NoArgs(NoArgs const &src) {
 	*this = src;
 }
+
+NoArgs::NoArgs(std::vector<Token *> tokens) : _tokens(tokens) {}
 
 Excess::~Excess() throw() {}
 

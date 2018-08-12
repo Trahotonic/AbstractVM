@@ -60,18 +60,8 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         else if (worst == UNKNOWN_DATATYPE) throw UnknownDataType(tokens);
         else if (worst == MISSING_OPENBRACKET) throw NoOpenBracket(tokens);
         else if (worst == MISSING_CLOSEBRACKET) throw NoCloseBracket(tokens);
-        else if (worst == EMPTY_BRACKETS) {
-            std::cout << tokens[0]->getValue();
-            std::cout << tokens[1]->getValue();
-            printFirstRed(tokens[2]->getValue());
-            throw EmptyBrackets();
-        }
-        else if (worst == NOARGS) {
-            std::cout << tokens[0]->getValue() << " ";
-            std::cout << tokens[1]->getValue();
-            printFirstRed(tokens[2]->getValue());
-            throw NoArgs();
-        }
+        else if (worst == EMPTY_BRACKETS) throw EmptyBrackets(tokens);
+        else if (worst == NOARGS) throw NoArgs(tokens);
         else if (worst == EXCESS_SYMBOLS)
             throw Excess(tokens);
         else if (worst == MISSING_DATATYPE) {
