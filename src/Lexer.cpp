@@ -34,13 +34,6 @@ void Lexer::readFromFile(char *file) {
     std::string     buffer;
     while (std::getline(is, buffer))
         analyzeLine(buffer);
-//    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
-//        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
-//            std::cout << *_tokens[j][i];
-//        }
-//        std::cout << std::endl;
-//    }
-//	std::cout << buffer << std::endl;
 }
 
 void Lexer::readFromSTDIN() {
@@ -53,12 +46,6 @@ void Lexer::readFromSTDIN() {
     }
 	std::cout << "\e[31mError reading input\e[0m : ";
 	throw UnexpectedEnd();
-//    for (int j = 0; j < static_cast<int>(_tokens.size()); ++j) {
-//        for (int i = 0; i < static_cast<int>(_tokens[j].size()); ++i) {
-//            std::cout << *_tokens[j][i];
-//        }
-//        std::cout << std::endl;
-//    }
 }
 
 void Lexer::analyzeLine(std::string &line) {

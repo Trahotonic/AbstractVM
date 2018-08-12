@@ -42,7 +42,18 @@ EmptyStackException::EmptyStackException(EmptyStackException const &src) {
 TooFewOperandsException::~TooFewOperandsException() throw() {}
 
 const char* TooFewOperandsException::TooFewOperandsException::what() const throw() {
-	return "Too few operands in stack";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4m" + _str +
+            "\e[24m - Too few operands in stack";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 TooFewOperandsException& TooFewOperandsException::TooFewOperandsException::operator=(TooFewOperandsException const &src)
@@ -56,6 +67,8 @@ TooFewOperandsException::TooFewOperandsException() {}
 TooFewOperandsException::TooFewOperandsException(TooFewOperandsException const &src) {
 	*this = src;
 }
+
+TooFewOperandsException::TooFewOperandsException(std::string str, int line) : _str(str), _line(line) {}
 
 FloatIntoIntException::~FloatIntoIntException() throw() {}
 

@@ -25,9 +25,12 @@ public:
 
 class TooFewOperandsException : public virtual std::exception
 {
+    std::string _str;
+    int         _line;
 public:
 	TooFewOperandsException(void);
 	TooFewOperandsException(TooFewOperandsException const & src);
+	TooFewOperandsException(std::string, int);
 
 	TooFewOperandsException	&operator=(TooFewOperandsException const & src);
 

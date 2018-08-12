@@ -27,49 +27,38 @@ void VM::readInput(int argc, char **argv) {
 }
 
 void VM::_add(int c) {
-    if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot add\e[24m - ";
-        throw TooFewOperandsException();
-    }
+    if (_stack.size() < 2)
+		throw TooFewOperandsException("Cannot add", c);
     const IOperand    *two = *_stack.begin();
     _stack.pop_front();
     const IOperand    *one = *_stack.begin();
     _stack.pop_front();
-
 	_stack.push_front(*one + *two);
 }
 
 void VM::_sub(int c) {
-    if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot subtract\e[24m - ";
-        throw TooFewOperandsException();
-    }
+    if (_stack.size() < 2)
+		throw TooFewOperandsException("Cannot subtract", c);
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
-
 	_stack.push_front(*one - *two);
 }
 
 void VM::_mul(int c) {
-    if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot multiply\e[24m - ";
-        throw TooFewOperandsException();
-    }
+    if (_stack.size() < 2)
+		throw TooFewOperandsException("Cannot multiply", c);
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *one = *_stack.begin();
 	_stack.pop_front();
-
 	_stack.push_front(*one * *two);
 }
 
 void VM::_div(int c) {
-    if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot divide\e[24m - ";
-        throw TooFewOperandsException();
-    }
+    if (_stack.size() < 2)
+		throw TooFewOperandsException("Cannot divide", c);
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *one = *_stack.begin();
@@ -79,10 +68,8 @@ void VM::_div(int c) {
 }
 
 void VM::_mod(int c) {
-    if (_stack.size() < 2) {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot modulo\e[24m - ";
-        throw TooFewOperandsException();
-    }
+    if (_stack.size() < 2)
+        throw TooFewOperandsException("Cannot modulo", c);
 	const IOperand    *two = *_stack.begin();
 	_stack.pop_front();
 	const IOperand    *one = *_stack.begin();

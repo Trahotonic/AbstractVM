@@ -15,6 +15,5 @@ int main(int argc, char **argv)
 		std::cout << e.what() << std::endl;
 		return 1;
 	}
-//	std::cout << DBL_MIN << std::endl;
     return 0;
 }
