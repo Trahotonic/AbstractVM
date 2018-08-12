@@ -9,7 +9,7 @@
 # include <iostream>
 # include <sstream>
 # include <string>
-#include <cmath>
+# include <cmath>
 
 # include "IOperand.hpp"
 # include "Factory.hpp"
@@ -36,15 +36,10 @@ public:
 		return *this;
 	}
 
-	T   getValue() const
-    {
-        if (_type == Int8 || _type == Int16 || _type == Int32)
-            return std::stoi(_str);
-        else if (_type == Float)
-            return std::stof(_str);
-        else
-            return std::stod(_str);
+	T   getValue() const {
+        return _value;
     }
+
 	~Operand() {}
 
 	template <typename X>
@@ -70,53 +65,43 @@ public:
 	}
 
 	template <typename X>
-	X   getSum(IOperand const & rhs) const{
-        if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
-            return getValue() + std::stoi(rhs.toString());
-        else if (rhs.getType() == Float)
-            return getValue() + std::stof(rhs.toString());
-        else
-            return getValue() + std::stod(rhs.toString());
-    }
-
-	template <typename X>
-	X   getSub(IOperand const & rhs) const{
-		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
-			return getValue() - std::stoi(rhs.toString());
-		else if (rhs.getType() == Float)
-			return getValue() - std::stof(rhs.toString());
-		else
-			return getValue() - std::stod(rhs.toString());
-	}
-
-	template <typename X>
-	X   getMul(IOperand const & rhs) const{
-		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
-			return getValue() * std::stoi(rhs.toString());
-		else if (rhs.getType() == Float)
-			return getValue() * std::stof(rhs.toString());
-		else
-			return getValue() * std::stod(rhs.toString());
-	}
-
-	template <typename X>
-	X   getDiv(IOperand const & rhs) const{
-		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
-			return getValue() / std::stoi(rhs.toString());
-		else if (rhs.getType() == Float)
-			return getValue() / std::stof(rhs.toString());
-		else
-			return getValue() / std::stod(rhs.toString());
-	}
-
-	template <typename X>
-	X   getMod(IOperand const & rhs) const{
-		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32)
-			return std::fmod(getValue(), std::stoi(rhs.toString()));
-		else if (rhs.getType() == Float)
-			return std::fmod(getValue(), std::stof(rhs.toString()));
-		else
-			return std::fmod(getValue(), std::stod(rhs.toString()));
+	X	getStrResult(IOperand const & rhs, char op) const {
+		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32) {
+			if (op == '+')
+				return getValue() + std::stoi(rhs.toString());
+			else if (op == '-')
+				return getValue() - std::stoi(rhs.toString());
+			else if (op == '*')
+				return getValue() * std::stoi(rhs.toString());
+			else if (op == '/')
+				return getValue() / std::stoi(rhs.toString());
+			else
+				return std::fmod(getValue(), std::stoi(rhs.toString()));
+		}
+		else if (rhs.getType() == Float) {
+			if (op == '+')
+				return getValue() + std::stof(rhs.toString());
+			else if (op == '-')
+				return getValue() - std::stof(rhs.toString());
+			else if (op == '*')
+				return getValue() * std::stof(rhs.toString());
+			else if (op == '/')
+				return getValue() / std::stof(rhs.toString());
+			else
+				return std::fmod(getValue(), std::stof(rhs.toString()));
+		}
+		else {
+			if (op == '+')
+				return getValue() + std::stod(rhs.toString());
+			else if (op == '-')
+				return getValue() - std::stod(rhs.toString());
+			else if (op == '*')
+				return getValue() * std::stod(rhs.toString());
+			else if (op == '/')
+				return getValue() / std::stod(rhs.toString());
+			else
+				return std::fmod(getValue(), std::stod(rhs.toString()));
+		}
 	}
 
 	const IOperand	*getMax(const IOperand * other) const{
@@ -129,52 +114,52 @@ public:
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getSum<int>(rhs)));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '+')));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, std::to_string(getSum<float>(rhs)));
+			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '+')));
 		else
-			return _factory.createOperand(Double, std::to_string(getSum<double>(rhs)));
+			return _factory.createOperand(Double, std::to_string(getStrResult<double>(rhs, '+')));
 	}
 
 	IOperand const * operator-( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getSub<int>(rhs)));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '-')));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, std::to_string(getSub<float>(rhs)));
+			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '-')));
 		else
-			return _factory.createOperand(Double, std::to_string(getSub<double>(rhs)));
+			return _factory.createOperand(Double, std::to_string(getStrResult<double>(rhs, '-')));
 	}
 	IOperand const * operator*( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getMul<int>(rhs)));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '*')));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, std::to_string(getMul<float>(rhs)));
+			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '*')));
 		else
-			return _factory.createOperand(Double, std::to_string(getMul<double>(rhs)));
+			return _factory.createOperand(Double, std::to_string(getStrResult<double>(rhs, '*')));
 	}
 	IOperand const * operator/( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getDiv<int>(rhs)));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '/')));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, std::to_string(getDiv<float>(rhs)));
+			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '/')));
 		else
-			return _factory.createOperand(Double, std::to_string(getDiv<double>(rhs)));
+			return _factory.createOperand(Double, std::to_string(getStrResult<double>(rhs, '/')));
 	}
 	IOperand const * operator%( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getMod<int>(rhs)));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '%')));
 		else if (getMax(&rhs)->getType() == Float)
-			return _factory.createOperand(Float, std::to_string(getMod<float>(rhs)));
+			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '%')));
 		else
-			return _factory.createOperand(Double, std::to_string(getMod<double>(rhs)));
+			return _factory.createOperand(Double, std::to_string(getStrResult<double>(rhs, '%')));
 	}
 };
 

@@ -5,8 +5,6 @@
 #ifndef ABSTRACTVM_IOPERAND_HPP
 #define ABSTRACTVM_IOPERAND_HPP
 
-#define CASTIO dynamic_cast<const IOperand*>
-
 # include <iostream>
 # include <string>
 # include <map>
