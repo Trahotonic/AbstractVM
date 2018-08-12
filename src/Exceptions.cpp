@@ -126,7 +126,18 @@ UnknownCommand::UnknownCommand(std::vector<Token *> tokens) : _tokens(tokens) {}
 ValueOverflow::~ValueOverflow() throw() {}
 
 const char* ValueOverflow::ValueOverflow::what() const throw() {
-	return "value overflow";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [\e[31m" +
+            _value + "\e[0m] - " + _type + " value overflow";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 ValueOverflow& ValueOverflow::ValueOverflow::operator=(ValueOverflow const &src)
@@ -141,10 +152,23 @@ ValueOverflow::ValueOverflow(ValueOverflow const &src) {
 	*this = src;
 }
 
+ValueOverflow::ValueOverflow(int line, std::string value, std::string type) : _line(line), _value(value), _type(type) {}
+
 ValueUnderflow::~ValueUnderflow() throw() {}
 
 const char* ValueUnderflow::ValueUnderflow::what() const throw() {
-	return "value underflow";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [\e[31m" +
+          _value + "\e[0m] - " + _type + " value underflow";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 ValueUnderflow& ValueUnderflow::ValueUnderflow::operator=(ValueUnderflow const &src)
@@ -158,6 +182,9 @@ ValueUnderflow::ValueUnderflow() {}
 ValueUnderflow::ValueUnderflow(ValueUnderflow const &src) {
 	*this = src;
 }
+
+ValueUnderflow::ValueUnderflow(int line, std::string value, std::string type) : _line(line), _value(value), _type(type)
+{}
 
 DivisionByZero::~DivisionByZero() throw() {}
 

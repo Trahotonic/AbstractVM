@@ -79,9 +79,13 @@ public:
 
 class ValueOverflow : public virtual std::exception
 {
+    int         _line;
+    std::string _value;
+    std::string _type;
 public:
 	ValueOverflow(void);
 	ValueOverflow(ValueOverflow const & src);
+	ValueOverflow(int, std::string, std::string);
 
 	ValueOverflow	&operator=(ValueOverflow const & src);
 
@@ -92,9 +96,13 @@ public:
 
 class ValueUnderflow : public virtual std::exception
 {
+    int         _line;
+    std::string _value;
+    std::string _type;
 public:
 	ValueUnderflow(void);
 	ValueUnderflow(ValueUnderflow const & src);
+	ValueUnderflow(int, std::string, std::string);
 
 	ValueUnderflow	&operator=(ValueUnderflow const & src);
 
