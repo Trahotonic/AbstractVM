@@ -6,7 +6,9 @@
 #define ABSTRACTVM_EXCEPTIONS_HPP
 
 #include <exception>
+#include <vector>
 #include "IOperand.hpp"
+#include "Token.hpp"
 
 class EmptyStackException : public virtual std::exception
 {
@@ -207,8 +209,10 @@ public:
 
 class Excess : public virtual std::exception
 {
+	std::vector<Token*> _tokens;
 public:
     Excess(void);
+    Excess(std::vector<Token*> tokens);
     Excess(Excess const & src);
 
     Excess	&operator=(Excess const & src);

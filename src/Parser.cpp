@@ -45,96 +45,60 @@ void Parser::parseTokens() {
 }
 
 void Parser::handleError(std::vector<Token*> tokens, int i) {
+    if (tokens[0]->getType() == COMMENT)
+        return ;
 	std::string message;
-	if (!_exit)
-		message = "\e[31mError\e[0m";
-	else
-		message = "\e[95mWarning\e[0m";
+    (!_exit) ? (message = "\e[31mError\e[0m") : (message = "\e[95mWarning\e[0m");
     eTokens worst = getWorstToken(tokens);
     if (worst == OK)
         createMethodData(tokens, i);
-    else if (worst == UNKNOWN_INSTRUCTION) {
+    else {
         if (!_error && !_exit)
             _error = true;
-        std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        printFirstRed(tokens[0]->getValue());
-        throw UnknownCommand();
-    }
-    else if (worst == UNKNOWN_DATATYPE) {
-        if (!_error && !_exit)
-            _error = true;
-	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        std::cout << tokens[0]->getValue();
-        printFirstRed(tokens[1]->getValue());
-        throw UnknownDataType();
-    }
-    else if (worst == MISSING_OPENBRACKET) {
-        if (!_error && !_exit)
-            _error = true;
-	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        std::cout << tokens[0]->getValue();
-        std::cout << tokens[1]->getValue();
-	    std::cout << "\e[31m!\e[0m" << tokens[2]->getValue() << " - ";
-//        printFirstRed(tokens[2]->getValue());
-        throw NoOpenBracket();
-    }
-    else if (worst == MISSING_CLOSEBRACKET) {
-        if (!_error && !_exit)
-            _error = true;
-	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        std::cout << tokens[0]->getValue();
-        std::cout << tokens[1]->getValue();
-        std::cout << tokens[2]->getValue();
-        std::cout << tokens[3]->getValue();
-        printFirstRed(tokens[4]->getValue());
-        throw NoCloseBracket();
-    }
-    else if (worst == EMPTY_BRACKETS) {
-        if (!_error && !_exit)
-            _error = true;
-	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        std::cout << tokens[0]->getValue();
-        std::cout << tokens[1]->getValue();
-        printFirstRed(tokens[2]->getValue());
-        throw EmptyBrackets();
-    }
-    else if (worst == NOARGS) {
-        if (!_error && !_exit)
-            _error = true;
-	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        std::cout << tokens[0]->getValue() << " ";
-        std::cout << tokens[1]->getValue();
-        printFirstRed(tokens[2]->getValue());
-        throw NoArgs();
-    }
-    else if (worst == EXCESS_SYMBOLS) {
-        if (!_error && !_exit)
-            _error = true;
-	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
-            std::cout << tokens[0]->getValue() << " ";
+//        std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
+        if (worst == UNKNOWN_INSTRUCTION) {
+            printFirstRed(tokens[0]->getValue());
+            throw UnknownCommand();
+        }
+        else if (worst == UNKNOWN_DATATYPE) {
+            std::cout << tokens[0]->getValue();
+            printFirstRed(tokens[1]->getValue());
+            throw UnknownDataType();
+        }
+        else if (worst == MISSING_OPENBRACKET) {
+            std::cout << tokens[0]->getValue();
+            std::cout << tokens[1]->getValue();
+            std::cout << "\e[31m!\e[0m" << tokens[2]->getValue() << " - ";
+            throw NoOpenBracket();
+        }
+        else if (worst == MISSING_CLOSEBRACKET) {
+            std::cout << tokens[0]->getValue();
             std::cout << tokens[1]->getValue();
             std::cout << tokens[2]->getValue();
             std::cout << tokens[3]->getValue();
-            std::cout << tokens[4]->getValue();
-            std::cout << "\e[31m";
-            std::cout << tokens[5]->getValue();
+            printFirstRed(tokens[4]->getValue());
+            throw NoCloseBracket();
         }
-        else {
-            std::cout << tokens[0]->getValue() << "\e[31m";
+        else if (worst == EMPTY_BRACKETS) {
+            std::cout << tokens[0]->getValue();
             std::cout << tokens[1]->getValue();
+            printFirstRed(tokens[2]->getValue());
+            throw EmptyBrackets();
         }
-        std::cout << "\e[0m\" - ";
-        throw Excess();
-    }
-    else if (worst == MISSING_DATATYPE) {
-        if (!_error && !_exit)
-            _error = true;
-	    std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        std::cout << tokens[0]->getValue() << " \e[31m";
-        std::cout << tokens[1]->getValue() ;
-        std::cout << "\e[0m\" - ";
-        throw MissingDataType();
+        else if (worst == NOARGS) {
+            std::cout << tokens[0]->getValue() << " ";
+            std::cout << tokens[1]->getValue();
+            printFirstRed(tokens[2]->getValue());
+            throw NoArgs();
+        }
+        else if (worst == EXCESS_SYMBOLS)
+            throw Excess(tokens);
+        else if (worst == MISSING_DATATYPE) {
+            std::cout << tokens[0]->getValue() << " \e[31m";
+            std::cout << tokens[1]->getValue() ;
+            std::cout << "\e[0m\" - ";
+            throw MissingDataType();
+        }
     }
 }
 

@@ -289,7 +289,36 @@ NoArgs::NoArgs(NoArgs const &src) {
 Excess::~Excess() throw() {}
 
 const char* Excess::Excess::what() const throw() {
-	return "Excess symbols in the end of line";
+    char                *ret;
+    unsigned long       size;
+	if (_tokens[0]->getValue() == "push" || _tokens[0]->getValue() == "assert") {
+	    size = _tokens[0]->getValue().length() + _tokens[1]->getValue().length() + _tokens[2]->getValue().length() +
+	            _tokens[3]->getValue().length() + _tokens[4]->getValue().length() + _tokens[5]->getValue().length() +
+               strlen("\e[0m\" - Excess symbols in the end of line") + 20;
+	    ret = new char[size];
+        for (unsigned long i = 0; i < size; ++i)
+            ret[i] = '\0';
+        strcat(ret, _tokens[0]->getValue().c_str());
+        strcat(ret, " ");
+        strcat(ret, _tokens[1]->getValue().c_str());
+        strcat(ret, _tokens[2]->getValue().c_str());
+        strcat(ret, _tokens[3]->getValue().c_str());
+        strcat(ret, _tokens[4]->getValue().c_str());
+        strcat(ret, "\e[31m");
+        strcat(ret, _tokens[5]->getValue().c_str());
+	}
+	else {
+	    size = _tokens[0]->getValue().length() + _tokens[1]->getValue().length() +
+	            strlen("\e[0m\" - Excess symbols in the end of line") + 20;
+	    ret = new char[size];
+        for (unsigned long i = 0; i < size; ++i)
+            ret[i] = '\0';
+        strcat(ret, _tokens[0]->getValue().c_str());
+        strcat(ret, "\e[31m");
+        strcat(ret, _tokens[1]->getValue().c_str());
+	}
+	strcat(ret, "\e[0m\" - Excess symbols in the end of line");
+	return ret;
 }
 
 Excess& Excess::Excess::operator=(Excess const &src)
@@ -303,6 +332,8 @@ Excess::Excess() {}
 Excess::Excess(Excess const &src) {
 	*this = src;
 }
+
+Excess::Excess(std::vector<Token *> tokens) : _tokens(tokens){}
 
 MissingDataType::~MissingDataType() throw() {}
 

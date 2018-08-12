@@ -38,35 +38,3 @@ std::string Token::getValueTrim() const {
 		ret += _value[i++];
     return ret;
 }
-
-std::ostream	&operator<<(std::ostream & o, Token const & src) {
-    std::string buff;
-    if (src.getType() == INSTRUCTION)
-        buff = "INSTRUCTION";
-    else if (src.getType() == DATATYPE)
-        buff = "DATATYPE";
-    else if (src.getType() == OPENBRACKET)
-        buff = "OPENBRACKET";
-    else if (src.getType() == CLOSEBRACKET)
-        buff = "CLOSEBRACKET";
-    else if (src.getType() == VALUE)
-        buff = "VALUE";
-    else if (src.getType() == UNKNOWN_DATATYPE)
-        buff = "UNKNOWN_DATATYPE";
-    else if (src.getType() == UNKNOWN_INSTRUCTION)
-        buff = "UNKNOWN_INSTRUCTION";
-    else if (src.getType() == MISSING_OPENBRACKET)
-        buff = "MISSING_OPENBRACKET";
-    else if (src.getType() == MISSING_CLOSEBRACKET)
-        buff = "MISSING_CLOSEBRACKET";
-    else if (src.getType() == EMPTY_BRACKETS)
-        buff = "EMPTY_BRACKETS";
-    else if (src.getType() == NOARGS)
-        buff = "NOARGS";
-    else if (src.getType() == EXCESS_SYMBOLS)
-        buff = "EXCESS_SYMBOLS";
-    else if (src.getType() == EMPTY_LINE)
-        buff = "EMPTY_LINE";
-    o << "Type: " << buff << "; Value: " << src.getValue() << std::endl;
-    return o;
-}

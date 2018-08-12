@@ -23,11 +23,8 @@ private:
 	Factory         _factory;
 
 public:
-	Operand() : _type(Int8), _value(0), _str(to_string(_value)) {}
-	Operand(eOperandType type, T value) : _type(type), _value(value), _str(to_string(_value)) {}
-	Operand(eOperandType type, T value, std::string str) : _type(type), _value(value), _str(str) {
-		std::cout << "we have " << _value << std::endl;
-	}
+	Operand() : _type(Int8), _value(0), _str("0") {}
+	Operand(eOperandType type, T value, std::string str) : _type(type), _value(value), _str(str) {}
 	Operand(Operand const &src) {
 		*this = src;
 	}
@@ -43,17 +40,6 @@ public:
     }
 
 	~Operand() {}
-
-	template <typename X>
-	std::string to_string(const X a_value)
-	{
-		std::ostringstream out;
-		if (typeid(a_value) == typeid(char))
-			out << std::setprecision(2) << std::fixed << static_cast<int>(a_value);
-		else
-			out << std::setprecision(2) << std::fixed << a_value;
-		return out.str();
-	}
 
 	std::string const & toString() const {
 		return _str;
@@ -115,10 +101,8 @@ public:
 	IOperand const * operator+( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
-			getMax(&rhs)->getType() == Int32) {
-            std::cout <<  std::to_string(getStrResult<int>(rhs, '+')) << std::endl;
+			getMax(&rhs)->getType() == Int32)
             return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '+')));
-		}
 		else if (getMax(&rhs)->getType() == Float)
 			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '+')));
 		else

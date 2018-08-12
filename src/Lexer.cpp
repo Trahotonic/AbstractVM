@@ -77,7 +77,9 @@ void Lexer::analyzeLine(std::string &line) {
         list.push_back(new Token(EMPTY_LINE, ""));
         return _tokens.push_back(list);
     }
-    if (std::regex_match(buffer.c_str(), result, argInstr)) {
+    if (std::regex_match(buffer.c_str(), comment))
+        list.push_back(new Token(COMMENT, result[2]));
+    else if (std::regex_match(buffer.c_str(), result, argInstr)) {
         if (std::regex_match(static_cast<std::string>(result[3]), whitespaces)) {
             list.push_back(new Token(INSTRUCTION, result[2]));
             list.push_back(new Token(MISSING_DATATYPE, "!"));
@@ -90,7 +92,6 @@ void Lexer::analyzeLine(std::string &line) {
 	        buffer = result[3];
             std::regex_match(buffer.c_str(), result, dataType);
             list.push_back(new Token(DATATYPE, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
-//	        std::cout << result[3] << std::endl;
             buffer = result[3];
             lexBra(list, buffer);
         }
