@@ -21,11 +21,9 @@ class Parser {
 	bool                                _exit;
     void                                handleError(std::vector<Token*>, int);
     eTokens                             getWorstToken(std::vector<Token*>);
-    std::stringstream                   printFirstRed(std::string);
     void                                createMethodData(std::vector<Token*>, int);
 public:
     Parser();
-    Parser(VM*);
     Parser(Parser const & src);
     Parser  &operator=(Parser const & src);
     ~Parser();

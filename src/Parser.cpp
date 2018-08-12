@@ -7,8 +7,6 @@
 
 Parser::Parser() {}
 
-Parser::Parser(VM * pVM) : _parentVM(pVM), _error(false), _exit(false) {}
-
 Parser::Parser(Parser const &src) {
     *this = src;
 }
@@ -39,9 +37,6 @@ void Parser::parseTokens() {
         _error = true;
         throw NoExit();
     }
-//    for (int j = 0; j < (int)_methodDatas.size(); ++j) {
-//        std::cout << _methodDatas[j]->getInstr() << " " << _methodDatas[j]->getType() << " " << _methodDatas[j]->getValue() << _methodDatas[j]->getLine() << std::endl;
-//    }
 }
 
 void Parser::handleError(std::vector<Token*> tokens, int i) {
@@ -82,35 +77,13 @@ eTokens Parser::getWorstToken(std::vector<Token *> tokens) {
     return OK;
 }
 
-std::stringstream Parser::printFirstRed(std::string line) {
-    size_t i = 0;
-    std::stringstream ss;
-    while (isblank(line[i]))
-        ss << line[i++];
-    ss << "\e[31m";
-    while (i < static_cast<size_t>(line.size())) {
-        ss << line[i++];
-        if (i >= static_cast<size_t>(line.size()) || isblank(line[i]) || line[i] == '(') {
-            ss << "\e[0m";
-        }
-    }
-    ss <<  "\" - ";
-    return ss;
-}
-
 void Parser::createMethodData(std::vector<Token *> tokens, int n) {
     std::regex  i("(\\-?[0-9]+)");
     std::regex  f("(-?[0-9]+[\\.]?[0-9]+)");
-
     std::map<std::string, eOperandType>	typeMap =
-            {{"int8", Int8},
-             {"int16", Int16},
-             {"int32", Int32},
-             {"float", Float},
-             {"double", Double}};
+            {{"int8", Int8}, {"int16", Int16}, {"int32", Int32}, {"float", Float}, {"double", Double}};
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert")
-        if (typeMap[tokens[1]->getValueTrim()] == Int8 ||
-            typeMap[tokens[1]->getValueTrim()] == Int16 ||
+        if (typeMap[tokens[1]->getValueTrim()] == Int8 || typeMap[tokens[1]->getValueTrim()] == Int16 ||
             typeMap[tokens[1]->getValueTrim()] == Int32)
             if (!std::regex_match(tokens[3]->getValueTrim(), i)) {
 	            std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
@@ -119,8 +92,7 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
                 throw InvalidInput();
             }
     if (tokens[0]->getValueTrim() == "push" || tokens[0]->getValueTrim() == "assert") {
-        _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(),
-                                              typeMap[tokens[1]->getValueTrim()],
+        _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), typeMap[tokens[1]->getValueTrim()],
                                               tokens[3]->getValueTrim(), n));
     }
     else
@@ -129,7 +101,8 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
 			if (!_exit)
                 _exit = true;
 			else
-				std::cout << "\e[4mLine " << n << "\e[24m : \e[97mNote\e[0m : \"\e[34mexit\e[0m\" command is redundant\n";
+				std::cout <<
+                          "\e[4mLine " << n << "\e[24m : \e[97mNote\e[0m : \"\e[34mexit\e[0m\" command is redundant\n";
         }
 }
 
