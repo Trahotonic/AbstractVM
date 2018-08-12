@@ -71,7 +71,7 @@ IOperand const* Factory::createInt32(std::string const &value) const {
 		          << value << "\e[0m] - <Int32> ";
 		throw ValueUnderflow();
 	}
-	return new Operand<int>(Int32, std::stoi(value), value);
+	return new Operand<long>(Int32, std::stol(value), value);
 }
 
 IOperand const* Factory::createFloat(std::string const &value) const {

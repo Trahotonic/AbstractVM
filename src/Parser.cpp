@@ -35,6 +35,10 @@ void Parser::parseTokens() {
     }
     if (_error)
         throw ParsingError();
+    if (!_exit) {
+        _error = true;
+        throw NoExit();
+    }
 //    for (int j = 0; j < (int)_methodDatas.size(); ++j) {
 //        std::cout << _methodDatas[j]->getInstr() << " " << _methodDatas[j]->getType() << " " << _methodDatas[j]->getValue() << _methodDatas[j]->getLine() << std::endl;
 //    }

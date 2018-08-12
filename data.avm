@@ -1,5 +1,5 @@
-push int8(1)
-push float(-399.1)
+push int32(2147483647)
+push int32(3)
 add
-assert float(-398.1)
 dump
+exit

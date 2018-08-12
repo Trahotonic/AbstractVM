@@ -25,7 +25,9 @@ private:
 public:
 	Operand() : _type(Int8), _value(0), _str(to_string(_value)) {}
 	Operand(eOperandType type, T value) : _type(type), _value(value), _str(to_string(_value)) {}
-	Operand(eOperandType type, T value, std::string str) : _type(type), _value(value), _str(str) {}
+	Operand(eOperandType type, T value, std::string str) : _type(type), _value(value), _str(str) {
+		std::cout << "we have " << _value << std::endl;
+	}
 	Operand(Operand const &src) {
 		*this = src;
 	}
@@ -68,15 +70,15 @@ public:
 	X	getStrResult(IOperand const & rhs, char op) const {
 		if (rhs.getType() == Int8 || rhs.getType() == Int16 || rhs.getType() == Int32) {
 			if (op == '+')
-				return getValue() + std::stoi(rhs.toString());
+				return getValue() + std::stol(rhs.toString());
 			else if (op == '-')
-				return getValue() - std::stoi(rhs.toString());
+				return getValue() - std::stol(rhs.toString());
 			else if (op == '*')
-				return getValue() * std::stoi(rhs.toString());
+				return getValue() * std::stol(rhs.toString());
 			else if (op == '/')
-				return getValue() / std::stoi(rhs.toString());
+				return getValue() / std::stol(rhs.toString());
 			else
-				return std::fmod(getValue(), std::stoi(rhs.toString()));
+				return std::fmod(getValue(), std::stol(rhs.toString()));
 		}
 		else if (rhs.getType() == Float) {
 			if (op == '+')
@@ -113,8 +115,10 @@ public:
 	IOperand const * operator+( IOperand const & rhs ) const {
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
-			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '+')));
+			getMax(&rhs)->getType() == Int32) {
+            std::cout <<  std::to_string(getStrResult<int>(rhs, '+')) << std::endl;
+            return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '+')));
+		}
 		else if (getMax(&rhs)->getType() == Float)
 			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '+')));
 		else
@@ -125,7 +129,7 @@ public:
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '-')));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '-')));
 		else if (getMax(&rhs)->getType() == Float)
 			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '-')));
 		else
@@ -135,7 +139,7 @@ public:
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '*')));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '*')));
 		else if (getMax(&rhs)->getType() == Float)
 			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '*')));
 		else
@@ -145,7 +149,7 @@ public:
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '/')));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '/')));
 		else if (getMax(&rhs)->getType() == Float)
 			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '/')));
 		else
@@ -155,7 +159,7 @@ public:
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<int>(rhs, '%')));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '%')));
 		else if (getMax(&rhs)->getType() == Float)
 			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '%')));
 		else
