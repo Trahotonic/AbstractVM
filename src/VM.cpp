@@ -200,31 +200,17 @@ void VM::_print(int c) {
 }
 
 void VM::run() {
+    typedef void(VM::*meth)(int);
+    std::map<std::string, meth> map = {{"add", &VM::_add}, {"sub", &VM::_sub}, {"mul", &VM::_mul},
+            {"div", &VM::_div}, {"mod", &VM::_mod}, {"pop", &VM::_pop}, {"print", &VM::_print}, {"dump", &VM::_dump},
+    };
 	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
-		if (methodDatas[i]->getInstr() == "push")
-			_push(methodDatas[i]->getType(), methodDatas[i]->getValue());
-		else if (methodDatas[i]->getInstr() == "assert")
-			_assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(), methodDatas[i]->getLine());
-		else if (methodDatas[i]->getInstr() == "add")
-			_add(methodDatas[i]->getLine());
-		else if (methodDatas[i]->getInstr() == "sub")
-			_sub(methodDatas[i]->getLine());
-		else if (methodDatas[i]->getInstr() == "mul")
-			_mul(methodDatas[i]->getLine());
-		else if (methodDatas[i]->getInstr() == "div")
-			_div(methodDatas[i]->getLine());
-		else if (methodDatas[i]->getInstr() == "mod")
-			_mod(methodDatas[i]->getLine());
-        else if (methodDatas[i]->getInstr() == "dump")
-            _dump(methodDatas[i]->getLine());
-        else if (methodDatas[i]->getInstr() == "mod")
-            _mod(methodDatas[i]->getLine());
-		else if (methodDatas[i]->getInstr() == "pop")
-			_pop(methodDatas[i]->getLine());
-        else if (methodDatas[i]->getInstr() == "print")
-            _print(methodDatas[i]->getLine());
-        else if (methodDatas[i]->getInstr() == "exit")
-            break ;
+		if (methodDatas[i]->getInstr() == "push") _push(methodDatas[i]->getType(), methodDatas[i]->getValue());
+		else if (methodDatas[i]->getInstr() == "assert") _assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
+                                                                 methodDatas[i]->getLine());
+        else if (methodDatas[i]->getInstr() == "exit") break ;
+		else
+            (this->*map[methodDatas[i]->getInstr()])(methodDatas[i]->getLine());
 	}
 }
