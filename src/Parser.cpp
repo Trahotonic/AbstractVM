@@ -55,11 +55,9 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
     else {
         if (!_error && !_exit)
             _error = true;
-//        std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
-        if (worst == UNKNOWN_INSTRUCTION) {
-            printFirstRed(tokens[0]->getValue());
-            throw UnknownCommand();
-        }
+        std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
+        if (worst == UNKNOWN_INSTRUCTION)
+            throw UnknownCommand(tokens);
         else if (worst == UNKNOWN_DATATYPE) {
             std::cout << tokens[0]->getValue();
             printFirstRed(tokens[1]->getValue());
@@ -117,18 +115,20 @@ eTokens Parser::getWorstToken(std::vector<Token *> tokens) {
     return OK;
 }
 
-void Parser::printFirstRed(std::string line) {
+std::stringstream Parser::printFirstRed(std::string line) {
     size_t i = 0;
+    std::stringstream ss;
     while (isblank(line[i]))
-        std::cout << line[i++];
-    std::cout << "\e[31m";
+        ss << line[i++];
+    ss << "\e[31m";
     while (i < static_cast<size_t>(line.size())) {
-        std::cout << line[i++];
+        ss << line[i++];
         if (i >= static_cast<size_t>(line.size()) || isblank(line[i]) || line[i] == '(') {
-            std::cout << "\e[0m";
+            ss << "\e[0m";
         }
     }
-    std::cout <<  "\" - ";
+    ss <<  "\" - ";
+    return ss;
 }
 
 void Parser::createMethodData(std::vector<Token *> tokens, int n) {

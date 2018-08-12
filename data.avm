@@ -1,4 +1,2 @@
-push int32(42) excess symbols
-push int32(42)excess symbols
-push int32(42) ; excess symbols
+pushq int32(42)
 exit

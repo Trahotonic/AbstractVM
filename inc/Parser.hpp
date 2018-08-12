@@ -6,6 +6,7 @@
 #define ABSTRACTVM_PARSER_HPP
 
 # include <vector>
+# include <sstream>
 # include "Token.hpp"
 # include "Exceptions.hpp"
 # include "MethodData.hpp"
@@ -20,7 +21,7 @@ class Parser {
 	bool                                _exit;
     void                                handleError(std::vector<Token*>, int);
     eTokens                             getWorstToken(std::vector<Token*>);
-    void                                printFirstRed(std::string);
+    std::stringstream                   printFirstRed(std::string);
     void                                createMethodData(std::vector<Token*>, int);
 public:
     Parser();

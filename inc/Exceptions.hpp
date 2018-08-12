@@ -64,8 +64,10 @@ public:
 
 class UnknownCommand : public virtual std::exception
 {
+    std::vector<Token*> _tokens;
 public:
 	UnknownCommand(void);
+	UnknownCommand(std::vector<Token*> tokens);
 	UnknownCommand(UnknownCommand const & src);
 
 	UnknownCommand	&operator=(UnknownCommand const & src);

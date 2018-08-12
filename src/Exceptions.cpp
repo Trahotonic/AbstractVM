@@ -2,7 +2,24 @@
 // Created by Roman KYSLYY on 7/26/18.
 //
 
+#include <sstream>
 #include "../inc/Exceptions.hpp"
+
+std::string printFirstRed(std::string line) {
+	size_t i = 0;
+	std::stringstream ss;
+	while (isblank(line[i]))
+		ss << line[i++];
+	ss << "\e[31m";
+	while (i < static_cast<size_t>(line.size())) {
+		ss << line[i++];
+		if (i >= static_cast<size_t>(line.size()) || isblank(line[i]) || line[i] == '(') {
+			ss << "\e[0m";
+		}
+	}
+	ss <<  "\" - ";
+	return ss.str();
+}
 
 EmptyStackException::~EmptyStackException() throw() {}
 
@@ -79,7 +96,17 @@ InvalidInput::InvalidInput(InvalidInput const &src) {
 UnknownCommand::~UnknownCommand() throw() {}
 
 const char* UnknownCommand::UnknownCommand::what() const throw() {
-	return "Unknown instruction";
+	char                *ret;
+	unsigned long       size;
+	std::string         str;
+
+	str = printFirstRed(_tokens[0]->getValue()) + "Unknown instruction";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 UnknownCommand& UnknownCommand::UnknownCommand::operator=(UnknownCommand const &src)
@@ -93,6 +120,8 @@ UnknownCommand::UnknownCommand() {}
 UnknownCommand::UnknownCommand(UnknownCommand const &src) {
 	*this = src;
 }
+
+UnknownCommand::UnknownCommand(std::vector<Token *> tokens) : _tokens(tokens) {}
 
 ValueOverflow::~ValueOverflow() throw() {}
 
