@@ -382,6 +382,7 @@ const char* Excess::Excess::what() const throw() {
     char                *ret;
     unsigned long       size;
     std::string         str;
+
 	if (_tokens[0]->getValue() == "push" || _tokens[0]->getValue() == "assert")
 	    str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + _tokens[2]->getValue() + _tokens[3]->getValue() +
 	            _tokens[4]->getValue() + "\e[31m" + _tokens[5]->getValue();
@@ -413,7 +414,17 @@ Excess::Excess(std::vector<Token *> tokens) : _tokens(tokens){}
 MissingDataType::~MissingDataType() throw() {}
 
 const char* MissingDataType::MissingDataType::what() const throw() {
-	return "Missing data type";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = _tokens[0]->getValue() + " \e[31m" + _tokens[1]->getValue() + "\e[0m\" - Data type missing";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 MissingDataType& MissingDataType::MissingDataType::operator=(MissingDataType const &src)
@@ -427,6 +438,8 @@ MissingDataType::MissingDataType() {}
 MissingDataType::MissingDataType(MissingDataType const &src) {
 	*this = src;
 }
+
+MissingDataType::MissingDataType(std::vector<Token *> tokens) : _tokens(tokens) {}
 
 NonASCII::~NonASCII() throw() {}
 

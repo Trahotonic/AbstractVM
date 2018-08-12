@@ -236,9 +236,11 @@ public:
 
 class MissingDataType : public virtual std::exception
 {
+    std::vector<Token*> _tokens;
 public:
 	MissingDataType(void);
 	MissingDataType(MissingDataType const & src);
+	MissingDataType(std::vector<Token*> tokens);
 
 	MissingDataType	&operator=(MissingDataType const & src);
 
