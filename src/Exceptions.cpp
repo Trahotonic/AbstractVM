@@ -227,7 +227,17 @@ AssertFalse::AssertFalse(AssertFalse const &src) {
 UnknownDataType::~UnknownDataType() throw() {}
 
 const char* UnknownDataType::UnknownDataType::what() const throw() {
-	return "Unknown data type";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = _tokens[0]->getValue() + printFirstRed(_tokens[1]->getValue()) + "Unknown data type";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 UnknownDataType& UnknownDataType::UnknownDataType::operator=(UnknownDataType const &src)
@@ -242,10 +252,23 @@ UnknownDataType::UnknownDataType(UnknownDataType const &src) {
 	*this = src;
 }
 
+UnknownDataType::UnknownDataType(std::vector<Token *> tokens) : _tokens(tokens) {}
+
 NoOpenBracket::~NoOpenBracket() throw() {}
 
 const char* NoOpenBracket::NoOpenBracket::what() const throw() {
-	return "Missing opening bracket";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = _tokens[0]->getValue() + _tokens[1]->getValue() + "\e[31m!\e[0m" + _tokens[2]->getValue() +
+            " - Missing opening bracket";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 NoOpenBracket& NoOpenBracket::NoOpenBracket::operator=(NoOpenBracket const &src)
@@ -259,6 +282,8 @@ NoOpenBracket::NoOpenBracket() {}
 NoOpenBracket::NoOpenBracket(NoOpenBracket const &src) {
 	*this = src;
 }
+
+NoOpenBracket::NoOpenBracket(std::vector<Token *> tokens) : _tokens(tokens) {}
 
 NoCloseBracket::~NoCloseBracket() throw() {}
 

@@ -58,17 +58,10 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
         std::cout << "\e[4mLine " << i << "\e[24m : " << message << " : \"";
         if (worst == UNKNOWN_INSTRUCTION)
             throw UnknownCommand(tokens);
-        else if (worst == UNKNOWN_DATATYPE) {
-            std::cout << tokens[0]->getValue();
-            printFirstRed(tokens[1]->getValue());
-            throw UnknownDataType();
-        }
-        else if (worst == MISSING_OPENBRACKET) {
-            std::cout << tokens[0]->getValue();
-            std::cout << tokens[1]->getValue();
-            std::cout << "\e[31m!\e[0m" << tokens[2]->getValue() << " - ";
-            throw NoOpenBracket();
-        }
+        else if (worst == UNKNOWN_DATATYPE)
+            throw UnknownDataType(tokens);
+        else if (worst == MISSING_OPENBRACKET)
+            throw NoOpenBracket(tokens);
         else if (worst == MISSING_CLOSEBRACKET) {
             std::cout << tokens[0]->getValue();
             std::cout << tokens[1]->getValue();

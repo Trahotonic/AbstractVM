@@ -146,9 +146,11 @@ public:
 
 class UnknownDataType : public virtual std::exception
 {
+    std::vector<Token*> _tokens;
 public:
 	UnknownDataType(void);
 	UnknownDataType(UnknownDataType const & src);
+	UnknownDataType(std::vector<Token*>);
 
 	UnknownDataType	&operator=(UnknownDataType const & src);
 
@@ -159,9 +161,11 @@ public:
 
 class NoOpenBracket : public virtual std::exception
 {
+    std::vector<Token*> _tokens;
 public:
 	NoOpenBracket(void);
 	NoOpenBracket(NoOpenBracket const & src);
+	NoOpenBracket(std::vector<Token*> tokens);
 
 	NoOpenBracket	&operator=(NoOpenBracket const & src);
 
