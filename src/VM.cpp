@@ -82,28 +82,24 @@ void VM::_push(eOperandType type, std::string value) {
 	   _stack.push_front(_factory.createOperand(type, value));
 }
 
-void VM::_assertV(eOperandType type, std::string str, int c) {
-	std::map<eOperandType, std::string> types = {
-			{Int8, "int8"},
-			{Int16, "int16"},
-			{Int32, "int32"},
-			{Float, "float"},
-			{Double, "double"}
-	};
+void VM::_checkAssertionOverflow(eOperandType type, std::string str, int c, std::map<eOperandType, std::string> & types) {
 	if ((type == Int8 && std::stol(str) > CHAR_MAX) || (type == Int16 && std::stol(str) > SHRT_MAX)
 	    || (type == Int32 && std::stol(str) > INT32_MAX) || (type == Float && std::stof(str) > FLT_MAX)
 	    || (type == Double && std::stod(str) > DBL_MAX)) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mInvalid assertion argument\e[24m [\e[31m";
-		std::cout << str << "\e[0m] - ";
-		throw ValueOverflow();
+		throw ValueOverflow(c, str, "\e[4mInvalid assertion argument\e[24m - <" + types[type] + ">");
 	}
 	if ((type == Int8 && std::stol(str) < CHAR_MIN) || (type == Int16 && std::stol(str) < SHRT_MIN)
 	    || (type == Int32 && std::stol(str) < INT32_MIN) || (type == Float && std::stof(str) < -FLT_MAX)
 	    || (type == Double && std::stod(str) < -DBL_MAX)) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mInvalid assertion argument\e[24m [\e[31m";
-		std::cout << str << "\e[0m] - ";
-		throw ValueUnderflow();
+		throw ValueUnderflow(c, str, "\e[4mInvalid assertion argument\e[24m - " + types[type]);
 	}
+}
+
+void VM::_assertV(eOperandType type, std::string str, int c) {
+	std::map<eOperandType, std::string> types = {
+			{Int8, "Int8"}, {Int16, "Int16"}, {Int32, "Int32"}, {Float, "Float"}, {Double, "Double"}
+	};
+	_checkAssertionOverflow(type, str, c, types);
 	if (_stack.empty()) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot assert\e[24m - ";
 		throw EmptyStackException();

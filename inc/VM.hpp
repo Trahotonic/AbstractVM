@@ -13,21 +13,22 @@
 
 class VM {
 private:
-	std::list<const IOperand*>      _stack;
-	Factory                         _factory;
-	Lexer							_lexer;
-	Parser							_parser;
-    void                            _push(eOperandType, std::string);
-    void                            _assertV(eOperandType, std::string, int);
-    void                            _dump(int);
-    void                            _add(int);
-    void                            _sub(int);
-    void                            _mul(int);
-    void                            _div(int);
-    void                            _mod(int);
-    void                            _pop(int);
-	void                            _print(int);
-	std::string                     _trim(std::string, eOperandType);
+	std::list<const IOperand*>  _stack;
+	Factory                     _factory;
+	Lexer		                _lexer;
+	Parser		                _parser;
+    void                        _push(eOperandType, std::string);
+    void                        _assertV(eOperandType, std::string, int);
+    void                        _dump(int);
+    void                        _add(int);
+    void                        _sub(int);
+    void                        _mul(int);
+    void                        _div(int);
+    void                        _mod(int);
+    void                        _pop(int);
+	void                        _print(int);
+	std::string                 _trim(std::string, eOperandType);
+	void                        _checkAssertionOverflow(eOperandType, std::string, int , std::map<eOperandType, std::string> &);
 public:
 	VM();
 	VM(VM const & src);
