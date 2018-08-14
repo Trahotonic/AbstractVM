@@ -48,6 +48,48 @@ void Lexer::readFromSTDIN() {
 	throw UnexpectedEnd();
 }
 
+void Lexer::lexArgInstr(std::cmatch &result, std::string &buffer, std::vector<Token *> &list) {
+	std::regex  whitespaces("([\\t\\s]*)");
+	std::regex  dataType("([\\t\\s]+)(int8|int16|int32|float|double)(.*)");
+	if (std::regex_match(static_cast<std::string>(result[3]), whitespaces)) {
+		list.push_back(new Token(INSTRUCTION, result[2]));
+		list.push_back(new Token(MISSING_DATATYPE, "!"));
+	}
+	else if (!isblank(static_cast<std::string>(result[3])[0])) {
+		list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
+	}
+	else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), dataType)) {
+		list.push_back(new Token(INSTRUCTION, result[2]));
+		buffer = result[3];
+		std::regex_match(buffer.c_str(), result, dataType);
+		list.push_back(new Token(DATATYPE, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
+		buffer = result[3];
+		lexBra(list, buffer);
+	}
+	else {
+		list.push_back(new Token(INSTRUCTION, result[2]));
+		list.push_back(new Token(UNKNOWN_DATATYPE, result[3]));
+	}
+}
+
+void Lexer::lexNonArgInstr(std::cmatch &result, std::string &buffer, std::vector<Token *> &list) {
+	std::regex  comment("([\\t\\s]*;.*)");
+	std::regex  whitespaces("([\\t\\s]*)");
+	std::regex  whitespacesTrash("([\\t\\s]+)(.+)");
+	if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespaces) ||
+	    std::regex_match(static_cast<std::string>(result[3]).c_str(), comment)) {
+		list.push_back(new Token(INSTRUCTION, result[2]));
+	}
+	else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespacesTrash)){
+		list.push_back(new Token(INSTRUCTION, result[2]));
+		std::regex_match(static_cast<std::string>(result[3]).c_str(), result, whitespacesTrash);
+		list.push_back(new Token(EXCESS_SYMBOLS, static_cast<std::string>(result[1]) +
+				static_cast<std::string>(result[2])));
+	}
+	else
+		list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
+}
+
 void Lexer::analyzeLine(std::string &line) {
     std::cmatch         result;
     std::string         buffer = line;
@@ -57,8 +99,6 @@ void Lexer::analyzeLine(std::string &line) {
     std::regex          brackets("(\\(.*)\\))");
     std::regex          excess("([\\t\\s]*)(.+)");
     std::regex          comment("([\\t\\s]*;.*)");
-    std::regex          whitespaces("([\\t\\s]*)");
-    std::regex          whitespacesTrash("([\\t\\s]+)(.+)");
     std::vector<Token*> list;
     if (line.empty()) {
         list.push_back(new Token(EMPTY_LINE, ""));
@@ -66,40 +106,10 @@ void Lexer::analyzeLine(std::string &line) {
     }
     if (std::regex_match(buffer.c_str(), comment))
         list.push_back(new Token(COMMENT, result[2]));
-    else if (std::regex_match(buffer.c_str(), result, argInstr)) {
-        if (std::regex_match(static_cast<std::string>(result[3]), whitespaces)) {
-            list.push_back(new Token(INSTRUCTION, result[2]));
-            list.push_back(new Token(MISSING_DATATYPE, "!"));
-        }
-        else if (!isblank(static_cast<std::string>(result[3])[0])) {
-            list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
-        }
-        else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), dataType)) {
-            list.push_back(new Token(INSTRUCTION, result[2]));
-	        buffer = result[3];
-            std::regex_match(buffer.c_str(), result, dataType);
-            list.push_back(new Token(DATATYPE, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
-            buffer = result[3];
-            lexBra(list, buffer);
-        }
-        else {
-            list.push_back(new Token(INSTRUCTION, result[2]));
-            list.push_back(new Token(UNKNOWN_DATATYPE, result[3]));
-        }
-    }
-    else if (std::regex_match(buffer.c_str(), result, nonArgInstr)) {
-        if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespaces) ||
-            std::regex_match(static_cast<std::string>(result[3]).c_str(), comment)) {
-            list.push_back(new Token(INSTRUCTION, result[2]));
-        }
-        else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespacesTrash)){
-            list.push_back(new Token(INSTRUCTION, result[2]));
-            std::regex_match(static_cast<std::string>(result[3]).c_str(), result, whitespacesTrash);
-            list.push_back(new Token(EXCESS_SYMBOLS, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
-        }
-        else
-            list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
-    }
+    else if (std::regex_match(buffer.c_str(), result, argInstr))
+        lexArgInstr(result, buffer, list);
+    else if (std::regex_match(buffer.c_str(), result, nonArgInstr))
+       lexNonArgInstr(result, buffer, list);
     else
         list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
     _tokens.push_back(list);
@@ -113,7 +123,6 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
     std::regex          close("(.*)(\\)(.*))");
     std::cmatch         result;
     std::string         buffer;
-//	std::cout << line << std::endl;
     if (line == "")
         return list.push_back(new Token(NOARGS, "!"));
     if (std::regex_match(line.c_str(), result, valueInPar)) {
@@ -133,7 +142,6 @@ void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
                 list.push_back(new Token(EXCESS_SYMBOLS, buffer));
     }
     else if (std::regex_match(line.c_str(), result, openParExists)) {
-//	    std::cout << "here\n";
         list.push_back(new Token(OPENBRACKET, "("));
         list.push_back(new Token(VALUE, result[2]));
         list.push_back(new Token(MISSING_CLOSEBRACKET, "!"));

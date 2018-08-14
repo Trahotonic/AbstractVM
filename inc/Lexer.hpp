@@ -17,6 +17,8 @@ class Lexer {
     void                                readFromFile(char * file);
     void                                readFromSTDIN();
     void                                analyzeLine(std::string & line);
+	void                                lexArgInstr(std::cmatch & result, std::string & buffer,std::vector<Token*> & list);
+	void                                lexNonArgInstr(std::cmatch & result, std::string & buffer,std::vector<Token*> & list);
     void                                lexBra(std::vector<Token*> & list, std::string const & line);
 public:
     Lexer();
