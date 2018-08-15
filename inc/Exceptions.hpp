@@ -144,9 +144,16 @@ public:
 
 class AssertFalse : public virtual std::exception
 {
+	std::string                         _type1;
+	std::string                         _type2;
+	std::string                         _value1;
+	std::string                         _value2;
+	int                                 _line;
+	std::map<eOperandType, std::string> _types;
 public:
 	AssertFalse(void);
 	AssertFalse(AssertFalse const & src);
+	AssertFalse(std::string, std::string, std::string, std::string, int, std::map<eOperandType, std::string>);
 
 	AssertFalse	&operator=(AssertFalse const & src);
 

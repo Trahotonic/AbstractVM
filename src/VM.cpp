@@ -108,31 +108,22 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
             dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Double) {
         if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
             dynamic_cast<const IOperand*>(*_stack.begin())->toString() != str) {
-            std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
-            std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
-                      << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
-                      << "\e[0m) and (\e[33m" << types[type] << " " << str << "\e[0m) - ";
-            throw AssertFalse();
+            throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
+                              types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
         }
 	}
 	else if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() == Float) {
         if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
             std::stof(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stof(str)) {
-            std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
-            std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
-                      << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
-                      << "\e[0m) and (\e[33m" << types[type] << " " << str << "\e[0m) - ";
-            throw AssertFalse();
+	        throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
+	                          types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
         }
 	}
 	else {
         if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
             std::stod(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stod(str)) {
-            std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : ";
-            std::cout << "(\e[35m" << types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()] << " "
-                      << dynamic_cast<const IOperand*>(*_stack.begin())->toString()
-                      << "\e[0m) and (\e[33m" << types[type] << " " << str << "\e[0m) - ";
-            throw AssertFalse();
+	        throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
+	                          types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
         }
 	}
 }

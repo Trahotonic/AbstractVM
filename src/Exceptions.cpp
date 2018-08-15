@@ -249,7 +249,18 @@ NoExit::NoExit(NoExit const &src) {
 AssertFalse::~AssertFalse() throw() {}
 
 const char* AssertFalse::AssertFalse::what() const throw() {
-	return "Assertion failed";
+	char                *ret;
+	unsigned long       size;
+	std::string         str;
+
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : (\e[35m" + _type1 + " " + _value1 +
+			"\e[0m) and (\e[33m" + _type2 + " " + _value2 + "\e[0m) - " + "Assertion failed";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 AssertFalse& AssertFalse::AssertFalse::operator=(AssertFalse const &src)
@@ -263,6 +274,9 @@ AssertFalse::AssertFalse() {}
 AssertFalse::AssertFalse(AssertFalse const &src) {
 	*this = src;
 }
+
+AssertFalse::AssertFalse(std::string type1, std::string type2, std::string value1, std::string value2, int line, std::map<eOperandType, std::string> types) :
+_type1(type1), _type2(type2), _value1(value1), _value2(value2), _line(line), _types(types) {}
 
 UnknownDataType::~UnknownDataType() throw() {}
 
