@@ -33,7 +33,11 @@ IOperand const* Factory::createOperand(eOperandType type, std::string const &val
 }
 
 IOperand const* Factory::createInt8(std::string const &value) const {
-    if (value.length() > 19 || std::stol(value) > CHAR_MAX)
+    if (value.length() > 19) {
+        if (value[0] == '-') throw ValueUnderflow(line, value, "<Int8>");
+        else throw ValueOverflow(line, value, "<Int8>");
+    }
+    if (std::stol(value) > CHAR_MAX)
         throw ValueOverflow(line, value, "<Int8>");
     if (std::stol(value) < CHAR_MIN)
         throw ValueUnderflow(line, value, "<Int8>");
@@ -41,7 +45,11 @@ IOperand const* Factory::createInt8(std::string const &value) const {
 }
 
 IOperand const* Factory::createInt16(std::string const &value) const {
-    if (value.length() > 19 || std::stol(value) > SHRT_MAX)
+    if (value.length() > 19) {
+        if (value[0] == '-') throw ValueUnderflow(line, value, "<Int8>");
+        else throw ValueOverflow(line, value, "<Int8>");
+    }
+    if (std::stol(value) > SHRT_MAX)
 	    throw ValueOverflow(line, value, "<Int16>");
     if (std::stol(value) < SHRT_MIN)
 	    throw ValueUnderflow(line, value, "<Int16>");
@@ -49,7 +57,11 @@ IOperand const* Factory::createInt16(std::string const &value) const {
 }
 
 IOperand const* Factory::createInt32(std::string const &value) const {
-	if (value.length() > 19 || std::stol(value) > INT_MAX)
+    if (value.length() > 19) {
+        if (value[0] == '-') throw ValueUnderflow(line, value, "<Int8>");
+        else throw ValueOverflow(line, value, "<Int8>");
+    }
+	if (std::stol(value) > INT_MAX)
 		throw ValueOverflow(line, value, "<Int32>");
 	if (std::stol(value) < INT_MIN)
 		throw ValueUnderflow(line, value, "<Int32>");

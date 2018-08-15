@@ -7,6 +7,7 @@
 
 #include <exception>
 #include <vector>
+#include <sstream>
 #include "IOperand.hpp"
 #include "Token.hpp"
 

@@ -2,7 +2,6 @@
 // Created by Roman KYSLYY on 7/26/18.
 //
 
-#include <sstream>
 #include "../inc/Exceptions.hpp"
 
 std::string printFirstRed(std::string line) {
@@ -275,7 +274,8 @@ AssertFalse::AssertFalse(AssertFalse const &src) {
 	*this = src;
 }
 
-AssertFalse::AssertFalse(std::string type1, std::string type2, std::string value1, std::string value2, int line, std::map<eOperandType, std::string> types) :
+AssertFalse::AssertFalse(std::string type1, std::string type2, std::string value1, std::string value2,
+						 int line, std::map<eOperandType, std::string> types) :
 _type1(type1), _type2(type2), _value1(value1), _value2(value2), _line(line), _types(types) {}
 
 UnknownDataType::~UnknownDataType() throw() {}
@@ -407,7 +407,8 @@ const char* NoArgs::NoArgs::what() const throw() {
     unsigned long       size;
     std::string         str;
 
-    str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) + "No arguments provided";
+    str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) +
+    		"No arguments provided";
     size = str.length() + 2;
     ret = new char[size];
     for (unsigned long i = 0; i < size; ++i)
