@@ -31,6 +31,8 @@ void Lexer::readInput(int argc, char **argv) {
 
 void Lexer::readFromFile(char *file) {
     std::ifstream   is(file);
+    if (is.fail())
+        throw FileDoesNotExist(file);
     std::string     buffer;
     while (std::getline(is, buffer))
         analyzeLine(buffer);

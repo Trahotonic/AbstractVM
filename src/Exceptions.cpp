@@ -596,3 +596,33 @@ UnexpectedEnd::UnexpectedEnd() {}
 UnexpectedEnd::UnexpectedEnd(UnexpectedEnd const &src) {
 	*this = src;
 }
+
+FileDoesNotExist::~FileDoesNotExist() throw() {}
+
+const char* FileDoesNotExist::FileDoesNotExist::what() const throw() {
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = "\e[31mError\e[0m : file \"" + _fileName + "\" does not exist";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
+}
+
+FileDoesNotExist& FileDoesNotExist::FileDoesNotExist::operator=(FileDoesNotExist const &src)
+{
+    (void)src;
+    return *this;
+}
+
+FileDoesNotExist::FileDoesNotExist() {}
+
+FileDoesNotExist::FileDoesNotExist(FileDoesNotExist const &src) {
+    *this = src;
+}
+
+FileDoesNotExist::FileDoesNotExist(std::string fileName) : _fileName(fileName) {}

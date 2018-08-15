@@ -328,4 +328,19 @@ public:
 	virtual const char* what() const throw();
 };
 
+class FileDoesNotExist : public virtual std::exception
+{
+    std::string _fileName;
+public:
+    FileDoesNotExist(void);
+    FileDoesNotExist(FileDoesNotExist const & src);
+    FileDoesNotExist(std::string fileName);
+
+    FileDoesNotExist	&operator=(FileDoesNotExist const & src);
+
+    ~FileDoesNotExist(void) throw();
+
+    virtual const char* what() const throw();
+};
+
 #endif //ABSTRACTVM_EXCEPTIONS_HPP
