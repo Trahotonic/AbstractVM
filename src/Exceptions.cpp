@@ -534,7 +534,7 @@ ParsingError::ParsingError(ParsingError const &src) {
 MissingExit::~MissingExit() throw() {}
 
 const char* MissingExit::MissingExit::what() const throw() {
-	return "\"exit\" command is missing";
+	return "\e[31mError : Couldn`t find program exit\nAbort\e[0m";
 }
 
 MissingExit& MissingExit::MissingExit::operator=(MissingExit const &src)

@@ -35,7 +35,7 @@ void Parser::parseTokens() {
         throw ParsingError();
     if (!_exit) {
         _error = true;
-        throw NoExit();
+        throw MissingExit();
     }
 }
 
