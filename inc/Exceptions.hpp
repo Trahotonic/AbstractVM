@@ -117,9 +117,14 @@ public:
 
 class DivisionByZero : public virtual std::exception
 {
+	int 		_line;
+	std::string	_value1;
+	std::string	_value2;
+	char 		_op;
 public:
 	DivisionByZero(void);
 	DivisionByZero(DivisionByZero const & src);
+	DivisionByZero(int line, std::string const & value1, std::string const & value2, char op);
 
 	DivisionByZero	&operator=(DivisionByZero const & src);
 

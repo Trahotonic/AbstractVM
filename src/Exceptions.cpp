@@ -201,7 +201,23 @@ ValueUnderflow::ValueUnderflow(int line, std::string value, std::string type) : 
 DivisionByZero::~DivisionByZero() throw() {}
 
 const char* DivisionByZero::DivisionByZero::what() const throw() {
-	return "Division by zero";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [" + _value1 + " " + _op + " \e[31m" +
+            _value2 + "\e[0m] - ";
+    if (_op == '/')
+        str += "Division";
+    else
+        str += "Modulo";
+    str += " by zero";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 DivisionByZero& DivisionByZero::DivisionByZero::operator=(DivisionByZero const &src)
@@ -216,14 +232,14 @@ DivisionByZero::DivisionByZero(DivisionByZero const &src) {
 	*this = src;
 }
 
+DivisionByZero::DivisionByZero(int line, std::string const &value1, std::string const &value2, char op) :
+_line(line), _value1(value1), _value2(value2), _op(op) {}
+
 void DivisionByZero::checkZero(int c, const IOperand *one, const IOperand * two, char op) {
     if ((two->getType() == Float && std::stof(two->toString()) == 0) ||
 			(two->getType() == Double && std::stod(two->toString()) == 0) ||
 			(two->getType() != Double && two->getType() != Float && std::stoi(two->toString()) == 0)) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : [";
-		std::cout << one->toString() << " " << op << " \e[31m" << two->toString();
-		std::cout << "\e[0m] - ";
-		throw DivisionByZero();
+		throw DivisionByZero(c, one->toString(), two->toString(), op);
     }
 }
 

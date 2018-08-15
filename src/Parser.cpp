@@ -40,7 +40,7 @@ void Parser::parseTokens() {
 }
 
 void Parser::handleError(std::vector<Token*> tokens, int i) {
-    if (tokens[0]->getType() == COMMENT)
+    if (tokens[0]->getType() == COMMENT || tokens[0]->getType() == EMPTY_LINE)
         return ;
 	std::string message;
     (!_exit) ? (message = "\e[31mError\e[0m") : (message = "\e[95mWarning\e[0m");
