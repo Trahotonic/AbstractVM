@@ -177,13 +177,14 @@ void VM::run() {
     std::map<std::string, meth> map = {{"add", &VM::_add}, {"sub", &VM::_sub}, {"mul", &VM::_mul},
             {"div", &VM::_div}, {"mod", &VM::_mod}, {"pop", &VM::_pop}, {"print", &VM::_print}, {"dump", &VM::_dump},
     };
-	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
-	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
-		if (methodDatas[i]->getInstr() == "push") _push(methodDatas[i]->getType(), methodDatas[i]->getValue());
-		else if (methodDatas[i]->getInstr() == "assert") _assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
-                                                                 methodDatas[i]->getLine());
-        else if (methodDatas[i]->getInstr() == "exit") break ;
+	std::list<MethodData*> methodDatas = _parser.getMethodDatas();
+	while (!methodDatas.empty()) {
+		if (methodDatas.front()->getInstr() == "push") _push(methodDatas.front()->getType(), methodDatas.front()->getValue());
+		else if (methodDatas.front()->getInstr() == "assert") _assertV(methodDatas.front()->getType(), methodDatas.front()->getValue(),
+                                                                 methodDatas.front()->getLine());
+        else if (methodDatas.front()->getInstr() == "exit") break ;
 		else
-            (this->*map[methodDatas[i]->getInstr()])(methodDatas[i]->getLine());
+            (this->*map[methodDatas.front()->getInstr()])(methodDatas.front()->getLine());
+		methodDatas.pop_front();
 	}
 }

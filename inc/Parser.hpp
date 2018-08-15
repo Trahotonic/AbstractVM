@@ -5,7 +5,7 @@
 #ifndef ABSTRACTVM_PARSER_HPP
 #define ABSTRACTVM_PARSER_HPP
 
-# include <vector>
+# include <list>
 # include <sstream>
 # include "Token.hpp"
 # include "Exceptions.hpp"
@@ -16,7 +16,7 @@ class VM;
 class Parser {
     VM *                                _parentVM;
     std::vector<std::vector<Token*> >   _tokens;
-    std::vector<MethodData*>            _methodDatas;
+    std::list<MethodData*>            	_methodDatas;
     bool                                _error;
 	bool                                _exit;
     void                                handleError(std::vector<Token*>, int);
@@ -30,7 +30,7 @@ public:
 
     void                        setTokens(std::vector<std::vector<Token*> >);
     void                        parseTokens();
-    std::vector<MethodData*>    getMethodDatas();
+    std::list<MethodData*>    	getMethodDatas();
 };
 
 #endif //ABSTRACTVM_PARSER_HPP

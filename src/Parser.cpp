@@ -106,6 +106,6 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
         }
 }
 
-std::vector<MethodData*> Parser::getMethodDatas() {
+std::list<MethodData*> Parser::getMethodDatas() {
     return _methodDatas;
 }
