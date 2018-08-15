@@ -168,8 +168,7 @@ void VM::_print(int c) {
         std::stoi(_stack.front()->toString()) <= 127)
 	    std::cout << static_cast<char>(std::stoi(_stack.front()->toString())) << std::endl;
 	else {
-        std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot print\e[24m - ";
-        throw NonASCII();
+        throw NonASCII(c, _stack.front()->toString());
 	}
 }
 

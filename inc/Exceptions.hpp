@@ -270,9 +270,12 @@ public:
 
 class NonASCII : public virtual std::exception
 {
+    int         _line;
+    std::string _value;
 public:
 	NonASCII(void);
 	NonASCII(NonASCII const & src);
+    NonASCII(int line, std::string const & value);
 
 	NonASCII	&operator=(NonASCII const & src);
 

@@ -499,7 +499,18 @@ MissingDataType::MissingDataType(std::vector<Token *> tokens) : _tokens(tokens) 
 NonASCII::~NonASCII() throw() {}
 
 const char* NonASCII::NonASCII::what() const throw() {
-	return "value is invalid to be printed as ASCII character";
+    char                *ret;
+    unsigned long       size;
+    std::string         str;
+
+    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4mCannot print\e[24m - value [\e[33m" +
+            _value + "\e[0m] is invalid to be printed as ASCII character";
+    size = str.length() + 2;
+    ret = new char[size];
+    for (unsigned long i = 0; i < size; ++i)
+        ret[i] = '\0';
+    strcat(ret, str.c_str());
+    return ret;
 }
 
 NonASCII& NonASCII::NonASCII::operator=(NonASCII const &src)
@@ -513,6 +524,8 @@ NonASCII::NonASCII() {}
 NonASCII::NonASCII(NonASCII const &src) {
 	*this = src;
 }
+
+NonASCII::NonASCII(int line, std::string const &value) : _line(line), _value(value) {}
 
 ParsingError::~ParsingError() throw() {}
 
