@@ -73,7 +73,8 @@ IOperand const* Factory::createFloat(std::string const &value) const {
 		std::stof(value);
 	}
 	catch (std::exception & e) {
-        throw ValueOverflow(line, value, "<Float>");
+	    if (value[0] != '-') throw ValueOverflow(line, value, "<Float>");
+	    else throw ValueUnderflow(line, value, "<Float>");
 	}
 	return new Operand<float>(Float, std::stof(value), value);
 }
@@ -83,7 +84,8 @@ IOperand const* Factory::createDouble(std::string const &value) const {
 		std::stod(value);
 	}
 	catch (std::exception & e) {
-        throw ValueOverflow(line, value, "<Double>");
+	    if (value[0] != '-') throw ValueOverflow(line, value, "<Double>");
+	    else throw ValueUnderflow(line, value, "<Double>");
 	}
 	return new Operand<double>(Double, std::stod(value), value);
 }
