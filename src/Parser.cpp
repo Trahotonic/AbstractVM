@@ -45,7 +45,7 @@ void Parser::handleError(std::vector<Token*> tokens, int i) {
 	std::string message;
     (!_exit) ? (message = "\e[31mError\e[0m") : (message = "\e[95mWarning\e[0m");
     eTokens worst = getWorstToken(tokens);
-    if (worst == OK)
+    if (worst == GOOD)
         createMethodData(tokens, i);
     else {
         if (!_error && !_exit)
@@ -74,7 +74,7 @@ eTokens Parser::getWorstToken(std::vector<Token *> tokens) {
                 tokens[i]->getType() == MISSING_DATATYPE)
             return tokens[i]->getType();
     }
-    return OK;
+    return GOOD;
 }
 
 void Parser::createMethodData(std::vector<Token *> tokens, int n) {

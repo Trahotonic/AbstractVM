@@ -7,6 +7,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/abstractVM.dir/src/Token.cpp.o"
   "CMakeFiles/abstractVM.dir/src/Parser.cpp.o"
   "CMakeFiles/abstractVM.dir/src/MethodData.cpp.o"
+  "CMakeFiles/abstractVM.dir/Visualizer.cpp.o"
   "abstractVM.pdb"
   "abstractVM"
 )

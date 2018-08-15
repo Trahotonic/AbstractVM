@@ -123,6 +123,33 @@ abstractVM/fast:
 	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/build
 .PHONY : abstractVM/fast
 
+Visualizer.o: Visualizer.cpp.o
+
+.PHONY : Visualizer.o
+
+# target to build an object file
+Visualizer.cpp.o:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Visualizer.cpp.o
+.PHONY : Visualizer.cpp.o
+
+Visualizer.i: Visualizer.cpp.i
+
+.PHONY : Visualizer.i
+
+# target to preprocess a source file
+Visualizer.cpp.i:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Visualizer.cpp.i
+.PHONY : Visualizer.cpp.i
+
+Visualizer.s: Visualizer.cpp.s
+
+.PHONY : Visualizer.s
+
+# target to generate assembly for a file
+Visualizer.cpp.s:
+	$(MAKE) -f CMakeFiles/abstractVM.dir/build.make CMakeFiles/abstractVM.dir/Visualizer.cpp.s
+.PHONY : Visualizer.cpp.s
+
 src/Exceptions.o: src/Exceptions.cpp.o
 
 .PHONY : src/Exceptions.o
@@ -348,6 +375,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... abstractVM"
+	@echo "... Visualizer.o"
+	@echo "... Visualizer.i"
+	@echo "... Visualizer.s"
 	@echo "... src/Exceptions.o"
 	@echo "... src/Exceptions.i"
 	@echo "... src/Exceptions.s"

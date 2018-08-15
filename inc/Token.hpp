@@ -23,7 +23,7 @@ typedef enum eTokens {  INSTRUCTION = 0,
                         EMPTY_LINE,
                         MISSING_DATATYPE,
 						COMMENT,
-                        OK}
+                        GOOD}
                         eTokens;
 
 class Token {

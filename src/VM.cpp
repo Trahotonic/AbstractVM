@@ -7,7 +7,7 @@
 #include <cfloat>
 #include "../inc/VM.hpp"
 
-VM::VM() {}
+VM::VM() : _visualization(false) {}
 
 VM::VM(VM const &src) {
     *this = src;
@@ -21,6 +21,10 @@ VM& VM::operator=(VM const &src) {
 VM::~VM() {}
 
 void VM::readInput(int argc, char **argv) {
+    for (int i = 1; i < argc; ++i) {
+        if (!strcmp(argv[i], "-v"))
+            _visualization = true;
+    }
 	_lexer.readInput(argc, argv);
 	_parser.setTokens(_lexer.getTokens());
 	_parser.parseTokens();
@@ -173,12 +177,15 @@ void VM::_print(int c) {
 }
 
 void VM::run() {
+    if (_visualization)
+        _visualizer.initVis();
     typedef void(VM::*meth)(int);
     std::map<std::string, meth> map = {{"add", &VM::_add}, {"sub", &VM::_sub}, {"mul", &VM::_mul},
             {"div", &VM::_div}, {"mod", &VM::_mod}, {"pop", &VM::_pop}, {"print", &VM::_print}, {"dump", &VM::_dump},
     };
 	std::list<MethodData*> methodDatas = _parser.getMethodDatas();
 	while (!methodDatas.empty()) {
+	    _visualizer.visualize(_stack, methodDatas.front());
 		if (methodDatas.front()->getInstr() == "push") _push(methodDatas.front()->getType(), methodDatas.front()->getValue());
 		else if (methodDatas.front()->getInstr() == "assert") _assertV(methodDatas.front()->getType(), methodDatas.front()->getValue(),
                                                                  methodDatas.front()->getLine());
@@ -187,4 +194,6 @@ void VM::run() {
             (this->*map[methodDatas.front()->getInstr()])(methodDatas.front()->getLine());
 		methodDatas.pop_front();
 	}
+	if (_visualization)
+	    endwin();
 }

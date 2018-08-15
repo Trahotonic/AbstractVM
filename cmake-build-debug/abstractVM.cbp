@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/rkyslyy/avm/Visualizer.cpp">
+			<Option target="abstractVM"/>
+		</Unit>
+		<Unit filename="/Users/rkyslyy/avm/Visualizer.hpp">
+			<Option target="abstractVM"/>
+		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/inc/Exceptions.hpp">
 			<Option target="abstractVM"/>
 		</Unit>

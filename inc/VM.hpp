@@ -10,6 +10,7 @@
 #include "Operand.hpp"
 #include "Lexer.hpp"
 #include "Parser.hpp"
+#include "Visualizer.hpp"
 
 class VM {
 private:
@@ -17,6 +18,8 @@ private:
 	Factory                     _factory;
 	Lexer		                _lexer;
 	Parser		                _parser;
+	Visualizer					_visualizer;
+	bool						_visualization;
     void                        _push(eOperandType, std::string);
     void                        _assertV(eOperandType, std::string, int);
     void                        _dump(int);
