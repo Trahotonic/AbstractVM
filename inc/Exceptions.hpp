@@ -55,9 +55,12 @@ public:
 
 class InvalidInput : public virtual std::exception
 {
+	std::vector<Token*> _tokens;
+	int                 _line;
 public:
 	InvalidInput(void);
 	InvalidInput(InvalidInput const & src);
+	InvalidInput(std::vector<Token*> tokens, int line);
 
 	InvalidInput	&operator=(InvalidInput const & src);
 

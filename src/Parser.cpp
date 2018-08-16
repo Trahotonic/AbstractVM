@@ -78,34 +78,35 @@ eTokens Parser::getWorstToken(std::vector<Token *> tokens) {
 }
 
 void Parser::createMethodData(std::vector<Token *> tokens, int n) {
+	std::cmatch result;
     std::regex  i("(\\-?[0-9]+)");
-    std::regex  f("(-?[0-9]+[\\.]?[0-9]+)");
+    std::regex  f1("(-?[0-9]+)(.*)");
+    std::regex  f2("(\\.[0-9])");
     std::map<std::string, eOperandType>	typeMap =
             {{"int8", Int8}, {"int16", Int16}, {"int32", Int32}, {"float", Float}, {"double", Double}};
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
         if (typeMap[tokens[1]->getValueTrim()] == Int8 || typeMap[tokens[1]->getValueTrim()] == Int16 ||
             typeMap[tokens[1]->getValueTrim()] == Int32) {
             if (!std::regex_match(tokens[3]->getValueTrim(), i)) {
-                std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
-                std::cout << tokens[0]->getValueTrim() << " " << tokens[1]->getValueTrim() << tokens[2]->getValueTrim()
-                          << "\e[31m" << tokens[3]->getValueTrim() << "\e[0m" << tokens[4]->getValueTrim() << "\" - ";
 	            _error = true;
-                throw InvalidInput();
+                throw InvalidInput(tokens, n);
             }
         }
         else if (typeMap[tokens[1]->getValueTrim()] == Float || typeMap[tokens[1]->getValueTrim()] == Double) {
-            if (!std::regex_match(tokens[3]->getValueTrim(), f)) {
-                std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
-                std::cout << tokens[0]->getValueTrim() << " " << tokens[1]->getValueTrim() << tokens[2]->getValueTrim()
-                          << "\e[31m" << tokens[3]->getValueTrim() << "\e[0m" << tokens[4]->getValueTrim() << "\" - ";
-	            _error = true;
-                throw InvalidInput();
+            if (std::regex_match(tokens[3]->getValueTrim().c_str(), result, f1)) {
+	            if (result[2] != "" && !std::regex_match(static_cast<std::string>(result[2]), f2)) {
+		            _error = true;
+		            throw InvalidInput(tokens, n);
+	            }
             }
+	        else {
+	            _error = true;
+	            throw InvalidInput(tokens, n);
+            }
+
         }
-    }
-    if (tokens[0]->getValueTrim() == "push" || tokens[0]->getValueTrim() == "assert") {
-        _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), typeMap[tokens[1]->getValueTrim()],
-                                              tokens[3]->getValueTrim(), n));
+	    _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), typeMap[tokens[1]->getValueTrim()],
+	                                          tokens[3]->getValueTrim(), n));
     }
     else
         _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), n));

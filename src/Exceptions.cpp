@@ -90,7 +90,19 @@ FloatIntoIntException::FloatIntoIntException(FloatIntoIntException const &src) {
 InvalidInput::~InvalidInput() throw() {}
 
 const char* InvalidInput::InvalidInput::what() const throw() {
-	return "Invalid value";
+	char                *ret;
+	unsigned long       size;
+	std::string         str;
+
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \"" + _tokens[0]->getValueTrim() + " " +
+			_tokens[1]->getValueTrim() + _tokens[2]->getValueTrim() + "\e[31m" +
+			_tokens[3]->getValueTrim() + "\e[0m" + _tokens[4]->getValueTrim() + "\" - Invalid value";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 InvalidInput& InvalidInput::operator=(InvalidInput const &src)
@@ -104,6 +116,8 @@ InvalidInput::InvalidInput() {}
 InvalidInput::InvalidInput(InvalidInput const &src) {
 	*this = src;
 }
+
+InvalidInput::InvalidInput(std::vector<Token *> tokens, int line) : _tokens(tokens), _line(line) {}
 
 UnknownCommand::~UnknownCommand() throw() {}
 
