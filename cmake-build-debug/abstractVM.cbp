@@ -82,12 +82,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/rkyslyy/avm/Visualizer.cpp">
-			<Option target="abstractVM"/>
-		</Unit>
-		<Unit filename="/Users/rkyslyy/avm/Visualizer.hpp">
-			<Option target="abstractVM"/>
-		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/inc/Exceptions.hpp">
 			<Option target="abstractVM"/>
 		</Unit>
@@ -115,6 +109,9 @@
 		<Unit filename="/Users/rkyslyy/avm/inc/VM.hpp">
 			<Option target="abstractVM"/>
 		</Unit>
+		<Unit filename="/Users/rkyslyy/avm/inc/Visualizer.hpp">
+			<Option target="abstractVM"/>
+		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/src/Exceptions.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
@@ -134,6 +131,9 @@
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/src/VM.cpp">
+			<Option target="abstractVM"/>
+		</Unit>
+		<Unit filename="/Users/rkyslyy/avm/src/Visualizer.cpp">
 			<Option target="abstractVM"/>
 		</Unit>
 		<Unit filename="/Users/rkyslyy/avm/src/main.cpp">

@@ -17,6 +17,8 @@ public:
     Visualizer  &operator=(Visualizer const & src);
     ~Visualizer();
 
+	void    refreshWin();
+	void    toggleAttr(eOperandType, bool);
     void    initVis();
     void    visualize(std::list<const IOperand*>, MethodData*);
 };

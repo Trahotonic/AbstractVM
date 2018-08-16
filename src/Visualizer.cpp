@@ -23,9 +23,31 @@ void Visualizer::initVis() {
     curs_set(0);
     start_color();
     use_default_colors();
+	init_pair(1, COLOR_YELLOW, -1);
+	init_pair(2, COLOR_GREEN, -1);
+	init_pair(3, COLOR_BLUE, -1);
+	init_pair(4, COLOR_CYAN, -1);
+	init_pair(5, COLOR_MAGENTA, -1);
 }
 
-void Visualizer::visualize(std::list<const IOperand *>, MethodData *) {
+void Visualizer::refreshWin() {
+	for (int i = 3; i < 20; ++i) {
+		for (int j = 1; j < 33; ++j) {
+			mvwprintw(stdscr, i, j, " ");
+		}
+	}
+}
+
+void Visualizer::toggleAttr(eOperandType type, bool on) {
+	if (on)
+		attron(COLOR_PAIR(type + 1));
+	else
+		attroff(COLOR_PAIR(type + 1));
+}
+
+void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
+    std::map<eOperandType, std::string>	typeMap =
+            {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"}, {Float, "float"}, {Double, "double"}};
     for (int i = 1; i < 100; ++i) {
         mvwprintw(stdscr, 0, i, "-");
         mvwprintw(stdscr, 2, i, "-");
@@ -38,5 +60,16 @@ void Visualizer::visualize(std::list<const IOperand *>, MethodData *) {
     }
     mvwprintw(stdscr, 1, 15, "STACK");
     mvwprintw(stdscr, 1, 61, "NEXT OPERATION");
+    std::string buffer;
+	int n = 3;
+	refreshWin();
+    for (auto it = stack.begin(); it != stack.end(); ++it) {
+	    toggleAttr((*it)->getType(), true);
+	    mvwprintw(stdscr, n, 1, typeMap[(*it)->getType()].c_str());
+	    toggleAttr((*it)->getType(), false);
+	    mvwprintw(stdscr, n, 7, " ");
+	    mvwprintw(stdscr, n, 8, (*it)->toString().c_str());
+	    ++n;
+    }
     getch();
 }

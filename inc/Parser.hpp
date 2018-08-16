@@ -16,7 +16,7 @@ class VM;
 class Parser {
     VM *                                _parentVM;
     std::vector<std::vector<Token*> >   _tokens;
-    std::list<MethodData*>            	_methodDatas;
+    std::vector<MethodData*>            	_methodDatas;
     bool                                _error;
 	bool                                _exit;
     void                                handleError(std::vector<Token*>, int);
@@ -30,7 +30,7 @@ public:
 
     void                        setTokens(std::vector<std::vector<Token*> >);
     void                        parseTokens();
-    std::list<MethodData*>    	getMethodDatas();
+    std::vector<MethodData*>    getMethodDatas();
 };
 
 #endif //ABSTRACTVM_PARSER_HPP
