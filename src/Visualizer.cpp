@@ -82,6 +82,10 @@ void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
 	    else
 		    mvwprintw(stdscr, n, 8, _trim((*it)->toString(), (*it)->getType()).c_str());
 	    ++n;
+	    if (n == 19) {
+		    mvwprintw(stdscr, n, 1, ". . .");
+		    break ;
+	    }
     }
     getch();
 }

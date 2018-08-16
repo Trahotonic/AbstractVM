@@ -82,15 +82,27 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
     std::regex  f("(-?[0-9]+[\\.]?[0-9]+)");
     std::map<std::string, eOperandType>	typeMap =
             {{"int8", Int8}, {"int16", Int16}, {"int32", Int32}, {"float", Float}, {"double", Double}};
-    if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert")
+    if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
         if (typeMap[tokens[1]->getValueTrim()] == Int8 || typeMap[tokens[1]->getValueTrim()] == Int16 ||
-            typeMap[tokens[1]->getValueTrim()] == Int32)
+            typeMap[tokens[1]->getValueTrim()] == Int32) {
             if (!std::regex_match(tokens[3]->getValueTrim(), i)) {
-	            std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
-	            std::cout << tokens[0]->getValueTrim() << " " << tokens[1]->getValueTrim() << tokens[2]->getValueTrim()
-	                      << "\e[31m" << tokens[3]->getValueTrim() << "\e[0m" << tokens[4]->getValueTrim() << "\" - ";
+                std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
+                std::cout << tokens[0]->getValueTrim() << " " << tokens[1]->getValueTrim() << tokens[2]->getValueTrim()
+                          << "\e[31m" << tokens[3]->getValueTrim() << "\e[0m" << tokens[4]->getValueTrim() << "\" - ";
+	            _error = true;
                 throw InvalidInput();
             }
+        }
+        else if (typeMap[tokens[1]->getValueTrim()] == Float || typeMap[tokens[1]->getValueTrim()] == Double) {
+            if (!std::regex_match(tokens[3]->getValueTrim(), f)) {
+                std::cout << "\e[4mLine " << n << "\e[24m : \e[31mError\e[0m : \"";
+                std::cout << tokens[0]->getValueTrim() << " " << tokens[1]->getValueTrim() << tokens[2]->getValueTrim()
+                          << "\e[31m" << tokens[3]->getValueTrim() << "\e[0m" << tokens[4]->getValueTrim() << "\" - ";
+	            _error = true;
+                throw InvalidInput();
+            }
+        }
+    }
     if (tokens[0]->getValueTrim() == "push" || tokens[0]->getValueTrim() == "assert") {
         _methodDatas.push_back(new MethodData(tokens[0]->getValueTrim(), typeMap[tokens[1]->getValueTrim()],
                                               tokens[3]->getValueTrim(), n));
