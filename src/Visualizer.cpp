@@ -79,8 +79,16 @@ void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
 	    mvwprintw(stdscr, n, 7, " ");
 	    if ((*it)->getType() != Float && (*it)->getType() != Double)
 	        mvwprintw(stdscr, n, 8, (*it)->toString().c_str());
-	    else
-		    mvwprintw(stdscr, n, 8, _trim((*it)->toString(), (*it)->getType()).c_str());
+	    else {
+		    if ((*it)->toString().length() <= 24)
+		        mvwprintw(stdscr, n, 8, _trim((*it)->toString(), (*it)->getType()).c_str());
+		    else {
+			    for (int i = 8, q = 0; i < 31; ++i, ++q) {
+				    mvwprintw(stdscr, n, i, "%c", (*it)->toString()[q]);
+			    }
+			    mvwprintw(stdscr, n, 31, "...");
+		    }
+	    }
 	    ++n;
 	    if (n == 19) {
 		    mvwprintw(stdscr, n, 1, ". . .");

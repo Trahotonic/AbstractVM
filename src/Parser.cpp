@@ -81,7 +81,8 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
 	std::cmatch result;
     std::regex  i("(\\-?[0-9]+)");
     std::regex  f1("(-?[0-9]+)(.*)");
-    std::regex  f2("(\\.[0-9])");
+    std::regex  f2("(\\.[0-9]+)");
+	std::string buffer;
     std::map<std::string, eOperandType>	typeMap =
             {{"int8", Int8}, {"int16", Int16}, {"int32", Int32}, {"float", Float}, {"double", Double}};
     if (tokens[0]->getValue() == "push" || tokens[0]->getValue() == "assert") {
@@ -94,7 +95,8 @@ void Parser::createMethodData(std::vector<Token *> tokens, int n) {
         }
         else if (typeMap[tokens[1]->getValueTrim()] == Float || typeMap[tokens[1]->getValueTrim()] == Double) {
             if (std::regex_match(tokens[3]->getValueTrim().c_str(), result, f1)) {
-	            if (result[2] != "" && !std::regex_match(static_cast<std::string>(result[2]), f2)) {
+	            buffer = result[2];
+	            if (buffer != "" && !std::regex_match(buffer, f2)) {
 		            _error = true;
 		            throw InvalidInput(tokens, n);
 	            }
