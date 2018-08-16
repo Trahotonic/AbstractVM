@@ -20,6 +20,7 @@ public:
     ~Visualizer();
 
 	std::string _trim(std::string, eOperandType);
+	void        printFloat(const std::string & value, int n);
 	void        refreshWin();
 	void        toggleAttr(eOperandType, bool);
     void        initVis();

@@ -54,6 +54,18 @@ std::string Visualizer::_trim(std::string str, eOperandType type) {
 	return out.str();
 }
 
+void Visualizer::printFloat(const std::string &value, int n) {
+	if ((value.find('.') == std::string::npos && value.length() > 23) ||
+			(value.find('.') > 23)) {
+		for (int i = 8, q = 0; i < 31; ++i, ++q) {
+			mvwprintw(stdscr, n, i, "%c", value[q]);
+		}
+		mvwprintw(stdscr, n, 31, "...");
+	}
+	else
+		mvwprintw(stdscr, n, 8, _trim(value, Double).c_str());
+}
+
 void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
     std::map<eOperandType, std::string>	typeMap =
             {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"}, {Float, "float"}, {Double, "double"}};
@@ -83,10 +95,7 @@ void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
 		    if ((*it)->toString().length() <= 24)
 		        mvwprintw(stdscr, n, 8, _trim((*it)->toString(), (*it)->getType()).c_str());
 		    else {
-			    for (int i = 8, q = 0; i < 31; ++i, ++q) {
-				    mvwprintw(stdscr, n, i, "%c", (*it)->toString()[q]);
-			    }
-			    mvwprintw(stdscr, n, 31, "...");
+				printFloat((*it)->toString(), n);
 		    }
 	    }
 	    ++n;
