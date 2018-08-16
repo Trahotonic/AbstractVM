@@ -7,6 +7,8 @@
 
 #include <list>
 #include <ncurses.h>
+#include <iomanip>
+#include <sstream>
 #include "IOperand.hpp"
 #include "MethodData.hpp"
 
@@ -17,10 +19,11 @@ public:
     Visualizer  &operator=(Visualizer const & src);
     ~Visualizer();
 
-	void    refreshWin();
-	void    toggleAttr(eOperandType, bool);
-    void    initVis();
-    void    visualize(std::list<const IOperand*>, MethodData*);
+	std::string _trim(std::string, eOperandType);
+	void        refreshWin();
+	void        toggleAttr(eOperandType, bool);
+    void        initVis();
+    void        visualize(std::list<const IOperand*>, MethodData*);
 };
 
 #endif //ABSTRACTVM_VISUALIZER_HPP

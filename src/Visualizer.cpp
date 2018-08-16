@@ -45,6 +45,15 @@ void Visualizer::toggleAttr(eOperandType type, bool on) {
 		attroff(COLOR_PAIR(type + 1));
 }
 
+std::string Visualizer::_trim(std::string str, eOperandType type) {
+	std::ostringstream out;
+	if (type == Float)
+		out << std::setprecision(2) << std::fixed << std::stof(str);
+	else
+		out << std::setprecision(2) << std::fixed << std::stod(str);
+	return out.str();
+}
+
 void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
     std::map<eOperandType, std::string>	typeMap =
             {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"}, {Float, "float"}, {Double, "double"}};
@@ -68,7 +77,10 @@ void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
 	    mvwprintw(stdscr, n, 1, typeMap[(*it)->getType()].c_str());
 	    toggleAttr((*it)->getType(), false);
 	    mvwprintw(stdscr, n, 7, " ");
-	    mvwprintw(stdscr, n, 8, (*it)->toString().c_str());
+	    if ((*it)->getType() != Float && (*it)->getType() != Double)
+	        mvwprintw(stdscr, n, 8, (*it)->toString().c_str());
+	    else
+		    mvwprintw(stdscr, n, 8, _trim((*it)->toString(), (*it)->getType()).c_str());
 	    ++n;
     }
     getch();
