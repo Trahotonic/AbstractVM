@@ -187,12 +187,20 @@ void VM::run() {
 	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
 	    _visualizer.visualize(_stack, methodDatas, i);
-		if (methodDatas[i]->getInstr() == "push") _push(methodDatas[i]->getType(), methodDatas[i]->getValue());
-		else if (methodDatas[i]->getInstr() == "assert") _assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
-                                                                 methodDatas[i]->getLine());
-        else if (methodDatas[i]->getInstr() == "exit") break ;
-		else
-            (this->*map[methodDatas[i]->getInstr()])(methodDatas[i]->getLine());
+		try {
+			if (methodDatas[i]->getInstr() == "push") _push(methodDatas[i]->getType(), methodDatas[i]->getValue());
+			else if (methodDatas[i]->getInstr() == "assert") _assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
+																	  methodDatas[i]->getLine());
+			else if (methodDatas[i]->getInstr() == "exit") break ;
+			else
+				(this->*map[methodDatas[i]->getInstr()])(methodDatas[i]->getLine());
+		}
+		catch (std::exception & e) {
+			_visualization = false;
+			_visualizer.endWithError();
+			std::cout << e.what() << std::endl;
+			break ;
+		}
 	}
 	if (_visualization)
 	    endwin();

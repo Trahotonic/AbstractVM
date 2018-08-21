@@ -25,8 +25,9 @@ public:
 	void        refreshWin();
 	void        toggleAttr(eOperandType, bool);
     void        initVis();
-    void		printOps(std::vector<MethodData*>, int, std::map<eOperandType, std::string>);
-    void        visualize(std::list<const IOperand*>, std::vector<MethodData*>, int);
+    void		printOps(std::vector<MethodData*>&, int, std::map<eOperandType, std::string>);
+    void        visualize(std::list<const IOperand*>, std::vector<MethodData*>&, int);
+    void		endWithError();
 };
 
 #endif //ABSTRACTVM_VISUALIZER_HPP

@@ -23,11 +23,13 @@ void Visualizer::initVis() {
     curs_set(0);
     start_color();
     use_default_colors();
+    noecho();
 	init_pair(1, COLOR_YELLOW, -1);
 	init_pair(2, COLOR_GREEN, -1);
 	init_pair(3, COLOR_BLUE, -1);
 	init_pair(4, COLOR_CYAN, -1);
 	init_pair(5, COLOR_MAGENTA, -1);
+	init_pair(6, COLOR_RED, -1);
 }
 
 void Visualizer::refreshWin() {
@@ -74,7 +76,7 @@ void Visualizer::printFloat(const std::string &value, int n) {
 		mvwprintw(stdscr, n, 8, _trim(value, Double).c_str());
 }
 
-void Visualizer::printOps(std::vector<MethodData *> datas, int iter, std::map<eOperandType, std::string> map) {
+void Visualizer::printOps(std::vector<MethodData *> &datas, int iter, std::map<eOperandType, std::string> map) {
 	std::string	buffer;
 	int 		len;
 	attron(A_BOLD);
@@ -106,7 +108,19 @@ void Visualizer::printOps(std::vector<MethodData *> datas, int iter, std::map<eO
 	}
 }
 
-void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<MethodData*> datas, int iter) {
+void Visualizer::endWithError() {
+	int c = 0;
+	attron(COLOR_PAIR(6));
+	mvwprintw(stdscr, 3, 35, "ERROR! PRESS 'ENTER' FOR MORE INFO");
+	attroff(COLOR_PAIR(6));
+	while (c != '\n')
+		c = getch();
+	endwin();
+	system("clear");
+}
+
+void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<MethodData*> &datas, int iter) {
+	int c = 0;
     std::map<eOperandType, std::string>	typeMap =
             {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"}, {Float, "float"}, {Double, "double"}};
     for (int i = 1; i < 100; ++i) {
@@ -145,6 +159,7 @@ void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<Method
 		    break ;
 	    }
     }
-printOps(datas, iter, typeMap);
-    getch();
+	printOps(datas, iter, typeMap);
+    while (c != '\n')
+    	c = getch();
 }
