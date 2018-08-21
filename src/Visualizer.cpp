@@ -4,7 +4,7 @@
 
 #include "../inc/Visualizer.hpp"
 
-Visualizer::Visualizer() {
+Visualizer::Visualizer() : _exit(false) {
 }
 
 Visualizer::Visualizer(Visualizer const &src) {
@@ -30,6 +30,23 @@ void Visualizer::initVis() {
 	init_pair(4, COLOR_CYAN, -1);
 	init_pair(5, COLOR_MAGENTA, -1);
 	init_pair(6, COLOR_RED, -1);
+	for (int i = 1; i < 100; ++i) {
+		mvwprintw(stdscr, 0, i, "-");
+		mvwprintw(stdscr, 2, i, "-");
+		mvwprintw(stdscr, 20, i, "-");
+	}
+	for (int i = 1; i < 20; ++i) {
+		mvwprintw(stdscr, i, 0, "|");
+		mvwprintw(stdscr, i, 34, "|");
+		mvwprintw(stdscr, i, 100, "|");
+	}
+	for (int i = 35; i < 100; ++i)
+		mvwprintw(stdscr, 4, i, "-");
+	mvwprintw(stdscr, 1, 15, "STACK");
+	mvwprintw(stdscr, 1, 61, "NEXT OPERATION");
+	attron(A_DIM);
+	mvwprintw(stdscr, 21, 68, "'ENTER' - continue; 'ESC' - exit");
+	attroff(A_DIM);
 }
 
 void Visualizer::refreshWin() {
@@ -111,7 +128,7 @@ void Visualizer::printOps(std::vector<MethodData *> &datas, int iter, std::map<e
 void Visualizer::endWithError() {
 	int c = 0;
 	attron(COLOR_PAIR(6));
-	mvwprintw(stdscr, 3, 35, "ERROR! PRESS 'ENTER' FOR MORE INFO");
+	mvwprintw(stdscr, 3, 35, "ERROR! PRESS 'ENTER' or 'ESC' FOR MORE INFO");
 	attroff(COLOR_PAIR(6));
 	while (c != '\n')
 		c = getch();
@@ -123,20 +140,6 @@ void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<Method
 	int c = 0;
     std::map<eOperandType, std::string>	typeMap =
             {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"}, {Float, "float"}, {Double, "double"}};
-    for (int i = 1; i < 100; ++i) {
-        mvwprintw(stdscr, 0, i, "-");
-        mvwprintw(stdscr, 2, i, "-");
-        mvwprintw(stdscr, 20, i, "-");
-    }
-    for (int i = 1; i < 20; ++i) {
-        mvwprintw(stdscr, i, 0, "|");
-        mvwprintw(stdscr, i, 34, "|");
-        mvwprintw(stdscr, i, 100, "|");
-    }
-	for (int i = 35; i < 100; ++i)
-		mvwprintw(stdscr, 4, i, "-");
-    mvwprintw(stdscr, 1, 15, "STACK");
-    mvwprintw(stdscr, 1, 61, "NEXT OPERATION");
     std::string buffer;
 	int n = 3;
 	refreshWin();
@@ -160,6 +163,14 @@ void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<Method
 	    }
     }
 	printOps(datas, iter, typeMap);
-    while (c != '\n')
+    while (c != '\n' && c != 27)
     	c = getch();
+    if (c == 27) {
+    	endwin();
+    	_exit = true;
+    }
+}
+
+bool Visualizer::getExit() {
+	return _exit;
 }

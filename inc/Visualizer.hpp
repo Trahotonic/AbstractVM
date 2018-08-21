@@ -14,6 +14,8 @@
 #include "MethodData.hpp"
 
 class Visualizer {
+private:
+	bool	_exit;
 public:
     Visualizer();
     Visualizer(Visualizer const & src);
@@ -28,6 +30,7 @@ public:
     void		printOps(std::vector<MethodData*>&, int, std::map<eOperandType, std::string>);
     void        visualize(std::list<const IOperand*>, std::vector<MethodData*>&, int);
     void		endWithError();
+    bool		getExit();
 };
 
 #endif //ABSTRACTVM_VISUALIZER_HPP
