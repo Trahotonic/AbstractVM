@@ -23,8 +23,23 @@ std::vector<std::vector<Token*> > Lexer::getTokens() {
 }
 
 void Lexer::readInput(int argc, char **argv) {
-    if (argc == 2 || (argc == 3 && !strcmp(argv[2], "-v")))
-        readFromFile(argv[1]);
+    if (argc == 2) {
+		readFromFile(argv[1]);
+    }
+    else if (argc == 3) {
+    	if (!strcmp(argv[2], "-v"))
+			readFromFile(argv[1]);
+    	else if (!strcmp(argv[1], "-v"))
+			readFromFile(argv[2]);
+    	else {
+    		if (!strcmp(argv[1], "-v"))
+				throw FileDoesNotExist(argv[2]);
+    		else if (!strcmp(argv[2], "-v"))
+				throw FileDoesNotExist(argv[2]);
+    		else
+				throw FileDoesNotExist(argv[1]);
+    	}
+    }
     else
         readFromSTDIN();
 }
@@ -34,8 +49,9 @@ void Lexer::readFromFile(char *file) {
     if (is.fail())
         throw FileDoesNotExist(file);
     std::string     buffer;
-    while (std::getline(is, buffer))
-        analyzeLine(buffer);
+    while (std::getline(is, buffer)) {
+		analyzeLine(buffer);
+    }
 }
 
 void Lexer::readFromSTDIN() {

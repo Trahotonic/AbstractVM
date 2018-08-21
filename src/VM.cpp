@@ -10,75 +10,75 @@
 VM::VM() : _visualization(false) {}
 
 VM::VM(VM const &src) {
-    *this = src;
+	*this = src;
 }
 
 VM& VM::operator=(VM const &src) {
-    _stack = src._stack;
-    return *this;
+	_stack = src._stack;
+	return *this;
 }
 
 VM::~VM() {}
 
 void VM::readInput(int argc, char **argv) {
-    for (int i = 1; i < argc; ++i) {
-        if (!strcmp(argv[i], "-v"))
-            _visualization = true;
-    }
+	for (int i = 1; i < argc; ++i) {
+		if (!strcmp(argv[i], "-v"))
+			_visualization = true;
+	}
 	_lexer.readInput(argc, argv);
 	_parser.setTokens(_lexer.getTokens());
 	_parser.parseTokens();
 }
 
 void VM::_add(int c) {
-    if (_stack.size() < 2)
+	if (_stack.size() < 2)
 		throw TooFewOperandsException("Cannot add", c);
-    const IOperand    *two = *_stack.begin();
-    _stack.pop_front();
-    const IOperand    *one = *_stack.begin();
-    _stack.pop_front();
+	const IOperand	*two = *_stack.begin();
+	_stack.pop_front();
+	const IOperand	*one = *_stack.begin();
+	_stack.pop_front();
 	_stack.push_front(*one + *two);
 }
 
 void VM::_sub(int c) {
-    if (_stack.size() < 2)
+	if (_stack.size() < 2)
 		throw TooFewOperandsException("Cannot subtract", c);
-	const IOperand    *two = *_stack.begin();
+	const IOperand	*two = *_stack.begin();
 	_stack.pop_front();
-	const IOperand    *one = *_stack.begin();
+	const IOperand	*one = *_stack.begin();
 	_stack.pop_front();
 	_stack.push_front(*one - *two);
 }
 
 void VM::_mul(int c) {
-    if (_stack.size() < 2)
+	if (_stack.size() < 2)
 		throw TooFewOperandsException("Cannot multiply", c);
-	const IOperand    *two = *_stack.begin();
+	const IOperand	*two = *_stack.begin();
 	_stack.pop_front();
-	const IOperand    *one = *_stack.begin();
+	const IOperand	*one = *_stack.begin();
 	_stack.pop_front();
 	_stack.push_front(*one * *two);
 }
 
 void VM::_div(int c) {
-    if (_stack.size() < 2)
+	if (_stack.size() < 2)
 		throw TooFewOperandsException("Cannot divide", c);
-	const IOperand    *two = *_stack.begin();
+	const IOperand	*two = *_stack.begin();
 	_stack.pop_front();
-	const IOperand    *one = *_stack.begin();
+	const IOperand	*one = *_stack.begin();
 	_stack.pop_front();
 	DivisionByZero::checkZero(c, one, two, '/');
 	_stack.push_front(*one / *two);
 }
 
 void VM::_mod(int c) {
-    if (_stack.size() < 2)
-        throw TooFewOperandsException("Cannot modulo", c);
-	const IOperand    *two = *_stack.begin();
+	if (_stack.size() < 2)
+		throw TooFewOperandsException("Cannot modulo", c);
+	const IOperand	*two = *_stack.begin();
 	_stack.pop_front();
-	const IOperand    *one = *_stack.begin();
+	const IOperand	*one = *_stack.begin();
 	_stack.pop_front();
-    DivisionByZero::checkZero(c, one, two, '%');
+	DivisionByZero::checkZero(c, one, two, '%');
 	_stack.push_front(*one % *two);
 }
 
@@ -88,13 +88,13 @@ void VM::_push(eOperandType type, std::string value) {
 
 void VM::_checkAssertionOverflow(eOperandType type, std::string str, int c, std::map<eOperandType, std::string> & types) {
 	if ((type == Int8 && std::stol(str) > CHAR_MAX) || (type == Int16 && std::stol(str) > SHRT_MAX)
-	    || (type == Int32 && std::stol(str) > INT32_MAX) || (type == Float && std::stof(str) > FLT_MAX)
-	    || (type == Double && std::stod(str) > DBL_MAX)) {
+		|| (type == Int32 && std::stol(str) > INT32_MAX) || (type == Float && std::stof(str) > FLT_MAX)
+		|| (type == Double && std::stod(str) > DBL_MAX)) {
 		throw ValueOverflow(c, str, "\e[4mInvalid assertion argument\e[24m - <" + types[type] + ">");
 	}
 	if ((type == Int8 && std::stol(str) < CHAR_MIN) || (type == Int16 && std::stol(str) < SHRT_MIN)
-	    || (type == Int32 && std::stol(str) < INT32_MIN) || (type == Float && std::stof(str) < -FLT_MAX)
-	    || (type == Double && std::stod(str) < -DBL_MAX)) {
+		|| (type == Int32 && std::stol(str) < INT32_MIN) || (type == Float && std::stof(str) < -FLT_MAX)
+		|| (type == Double && std::stod(str) < -DBL_MAX)) {
 		throw ValueUnderflow(c, str, "\e[4mInvalid assertion argument\e[24m - " + types[type]);
 	}
 }
@@ -109,26 +109,26 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
 		throw EmptyStackException();
 	}
 	if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Float &&
-            dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Double) {
-        if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
-            dynamic_cast<const IOperand*>(*_stack.begin())->toString() != str) {
-            throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
-                              types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
-        }
+			dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Double) {
+		if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
+			dynamic_cast<const IOperand*>(*_stack.begin())->toString() != str) {
+			throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
+							  types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
+		}
 	}
 	else if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() == Float) {
-        if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
-            std::stof(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stof(str)) {
-	        throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
-	                          types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
-        }
+		if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
+			std::stof(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stof(str)) {
+			throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
+							  types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
+		}
 	}
 	else {
-        if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
-            std::stod(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stod(str)) {
-	        throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
-	                          types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
-        }
+		if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != type ||
+			std::stod(dynamic_cast<const IOperand*>(*_stack.begin())->toString()) != std::stod(str)) {
+			throw AssertFalse(types[dynamic_cast<const IOperand*>(*_stack.begin())->getType()],
+							  types[type], dynamic_cast<const IOperand*>(*_stack.begin())->toString(), str, c, types);
+		}
 	}
 }
 
@@ -169,26 +169,27 @@ void VM::_print(int c) {
 		throw EmptyStackException();
 	}
 	if (_stack.front()->getType() == Int8 &&
-        std::stoi(_stack.front()->toString()) >= 32 &&
-        std::stoi(_stack.front()->toString()) <= 127)
-	    std::cout << static_cast<char>(std::stoi(_stack.front()->toString())) << std::endl;
+		std::stoi(_stack.front()->toString()) >= 32 &&
+		std::stoi(_stack.front()->toString()) <= 127)
+		std::cout << static_cast<char>(std::stoi(_stack.front()->toString())) << std::endl;
 	else {
-        throw NonASCII(c, _stack.front()->toString());
+		throw NonASCII(c, _stack.front()->toString());
 	}
 }
 
 void VM::run() {
-    if (_visualization)
-        _visualizer.initVis();
-    typedef void(VM::*meth)(int);
-    std::map<std::string, meth> map = {{"add", &VM::_add}, {"sub", &VM::_sub}, {"mul", &VM::_mul},
-            {"div", &VM::_div}, {"mod", &VM::_mod}, {"pop", &VM::_pop}, {"print", &VM::_print}, {"dump", &VM::_dump},
-    };
+	if (_visualization)
+		_visualizer.initVis();
+	typedef void(VM::*meth)(int);
+	std::map<std::string, meth> map = {{"add", &VM::_add}, {"sub", &VM::_sub}, {"mul", &VM::_mul},
+			{"div", &VM::_div}, {"mod", &VM::_mod}, {"pop", &VM::_pop}, {"print", &VM::_print}, {"dump", &VM::_dump},
+	};
 	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
-	    _visualizer.visualize(_stack, methodDatas, i);
-	    if (_visualizer.getExit())
-	    	break ;
+		if (_visualization)
+			_visualizer.visualize(_stack, methodDatas, i);
+		if (_visualizer.getExit())
+			break ;
 		try {
 			if (methodDatas[i]->getInstr() == "push") _push(methodDatas[i]->getType(), methodDatas[i]->getValue());
 			else if (methodDatas[i]->getInstr() == "assert") _assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
@@ -207,5 +208,5 @@ void VM::run() {
 		}
 	}
 	if (_visualization)
-	    endwin();
+		endwin();
 }
