@@ -91,6 +91,10 @@ void Visualizer::printOps(std::vector<MethodData *> datas, int iter, std::map<eO
 	}
 
 	for (int i = iter - 1, y = 5; i >= 0; --i, ++y) {
+		if (y == 19) {
+			mvwprintw(stdscr, y, 35, ". . .");
+			break ;
+		}
 		mvwprintw(stdscr, y, 35, datas[i]->getInstr().c_str());
 		if (datas[i]->getInstr() == "push" || datas[i]->getInstr() == "assert") {
 			buffer = " " + map[datas[i]->getType()];

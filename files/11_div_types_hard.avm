@@ -1,28 +1,28 @@
 ; -----------------------
-; 09_add_types_hard.avm -
+; 10_div_types_hard.avm -
 ; -----------------------
 
 push int8(42)
 push int16(2)
-mul
+div
 
 push int32(8)
-mul
+div
 
 push int8(2)
-mul
+div
 
 push float(3.05)
-mul
+div
 
 push int32(6)
-mul
+div
 
 push int16(1)
-mul
+div
 
 push double(0.32)
-mul
+div
 
 dump
 
