@@ -9,6 +9,7 @@
 #include <ncurses.h>
 #include <iomanip>
 #include <sstream>
+#include <vector>
 #include "IOperand.hpp"
 #include "MethodData.hpp"
 
@@ -24,7 +25,8 @@ public:
 	void        refreshWin();
 	void        toggleAttr(eOperandType, bool);
     void        initVis();
-    void        visualize(std::list<const IOperand*>, MethodData*);
+    void		printOps(std::vector<MethodData*>, int, std::map<eOperandType, std::string>);
+    void        visualize(std::list<const IOperand*>, std::vector<MethodData*>, int);
 };
 
 #endif //ABSTRACTVM_VISUALIZER_HPP

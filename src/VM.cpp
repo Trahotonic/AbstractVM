@@ -154,12 +154,13 @@ void VM::_dump(int c) {
 		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot dump\e[24m - ";
 		throw EmptyStackException();
 	}
-	for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
-		if ((*it)->getType() == Float || (*it)->getType() == Double)
-			std::cout << _trim((*it)->toString(), (*it)->getType()) << std::endl;
-		else
-			std::cout << (*it)->toString() << std::endl;
-	}
+	if (!_visualization)
+		for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
+			if ((*it)->getType() == Float || (*it)->getType() == Double)
+				std::cout << _trim((*it)->toString(), (*it)->getType()) << std::endl;
+			else
+				std::cout << (*it)->toString() << std::endl;
+		}
 }
 
 void VM::_print(int c) {
@@ -185,7 +186,7 @@ void VM::run() {
     };
 	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
-	    _visualizer.visualize(_stack, methodDatas[i]);
+	    _visualizer.visualize(_stack, methodDatas, i);
 		if (methodDatas[i]->getInstr() == "push") _push(methodDatas[i]->getType(), methodDatas[i]->getValue());
 		else if (methodDatas[i]->getInstr() == "assert") _assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
                                                                  methodDatas[i]->getLine());

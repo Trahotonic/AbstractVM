@@ -36,6 +36,14 @@ void Visualizer::refreshWin() {
 			mvwprintw(stdscr, i, j, " ");
 		}
 	}
+	for (int j = 35; j < 100; ++j) {
+		mvwprintw(stdscr, 3, j, " ");
+	}
+	for (int i = 5; i < 20; ++i) {
+		for (int j = 35; j < 100; ++j) {
+			mvwprintw(stdscr, i, j, " ");
+		}
+	}
 }
 
 void Visualizer::toggleAttr(eOperandType type, bool on) {
@@ -66,7 +74,35 @@ void Visualizer::printFloat(const std::string &value, int n) {
 		mvwprintw(stdscr, n, 8, _trim(value, Double).c_str());
 }
 
-void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
+void Visualizer::printOps(std::vector<MethodData *> datas, int iter, std::map<eOperandType, std::string> map) {
+	std::string	buffer;
+	int 		len;
+	attron(A_BOLD);
+	mvwprintw(stdscr, 3, 35, datas[iter]->getInstr().c_str());
+	attroff(A_BOLD);
+	if (datas[iter]->getInstr() == "push" || datas[iter]->getInstr() == "assert") {
+		toggleAttr(datas[iter]->getType(), true);
+		buffer = " " + map[datas[iter]->getType()];
+		mvwprintw(stdscr, 3, 35 + datas[iter]->getInstr().length(), buffer.c_str());
+		toggleAttr(datas[iter]->getType(), false);
+		len = buffer.length();
+		buffer = "(" + datas[iter]->getValue() + ")";
+		mvwprintw(stdscr, 3, 35 + datas[iter]->getInstr().length() + len, buffer.c_str());
+	}
+
+	for (int i = iter - 1, y = 5; i >= 0; --i, ++y) {
+		mvwprintw(stdscr, y, 35, datas[i]->getInstr().c_str());
+		if (datas[i]->getInstr() == "push" || datas[i]->getInstr() == "assert") {
+			buffer = " " + map[datas[i]->getType()];
+			mvwprintw(stdscr, y, 35 + datas[i]->getInstr().length(), buffer.c_str());
+			len = buffer.length();
+			buffer = "(" + datas[i]->getValue() + ")";
+			mvwprintw(stdscr, y, 35 + datas[i]->getInstr().length() + len, buffer.c_str());
+		}
+	}
+}
+
+void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<MethodData*> datas, int iter) {
     std::map<eOperandType, std::string>	typeMap =
             {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"}, {Float, "float"}, {Double, "double"}};
     for (int i = 1; i < 100; ++i) {
@@ -79,6 +115,8 @@ void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
         mvwprintw(stdscr, i, 34, "|");
         mvwprintw(stdscr, i, 100, "|");
     }
+	for (int i = 35; i < 100; ++i)
+		mvwprintw(stdscr, 4, i, "-");
     mvwprintw(stdscr, 1, 15, "STACK");
     mvwprintw(stdscr, 1, 61, "NEXT OPERATION");
     std::string buffer;
@@ -94,9 +132,8 @@ void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
 	    else {
 		    if ((*it)->toString().length() <= 24)
 		        mvwprintw(stdscr, n, 8, _trim((*it)->toString(), (*it)->getType()).c_str());
-		    else {
+		    else
 				printFloat((*it)->toString(), n);
-		    }
 	    }
 	    ++n;
 	    if (n == 19) {
@@ -104,5 +141,6 @@ void Visualizer::visualize(std::list<const IOperand *> stack, MethodData *) {
 		    break ;
 	    }
     }
+printOps(datas, iter, typeMap);
     getch();
 }
