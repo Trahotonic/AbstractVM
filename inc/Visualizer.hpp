@@ -28,7 +28,7 @@ public:
 	void        toggleAttr(eOperandType, bool);
     void        initVis();
 	void		dealWithLong(std::string, std::string, int, int);
-    void		printOps(std::vector<MethodData*>&, int, std::map<eOperandType, std::string>);
+    void		printOps(std::vector<MethodData*>&, int, std::map<eOperandType,std::string>);
     void        visualize(std::list<const IOperand*>, std::vector<MethodData*>&, int);
     void		endWithError();
     bool		getExit();

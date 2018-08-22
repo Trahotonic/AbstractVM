@@ -67,7 +67,8 @@ void Lexer::readFromSTDIN() {
 	throw UnexpectedEnd();
 }
 
-void Lexer::lexArgInstr(std::cmatch &result, std::string &buffer, std::vector<Token *> &list) {
+void Lexer::lexArgInstr(std::cmatch &result, std::string &buffer,
+						std::vector<Token *> &list) {
 	std::regex  whitespaces("([\\t\\s]*)");
 	std::regex  dataType("([\\t\\s]+)(int8|int16|int32|float|double)(.*)");
 	if (std::regex_match(static_cast<std::string>(result[3]), whitespaces)) {
@@ -77,11 +78,13 @@ void Lexer::lexArgInstr(std::cmatch &result, std::string &buffer, std::vector<To
 	else if (!isblank(static_cast<std::string>(result[3])[0])) {
 		list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
 	}
-	else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), dataType)) {
+	else if (std::regex_match(static_cast<std::string>(result[3]).c_str(),
+							  dataType)) {
 		list.push_back(new Token(INSTRUCTION, result[2]));
 		buffer = result[3];
 		std::regex_match(buffer.c_str(), result, dataType);
-		list.push_back(new Token(DATATYPE, static_cast<std::string>(result[1]) + static_cast<std::string>(result[2])));
+		list.push_back(new Token(DATATYPE, static_cast<std::string>(result[1]) +
+				static_cast<std::string>(result[2])));
 		buffer = result[3];
 		lexBra(list, buffer);
 	}

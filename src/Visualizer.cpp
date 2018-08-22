@@ -102,7 +102,6 @@ void Visualizer::dealWithLong(std::string ins, std::string buff, int len, int y)
 		}
 		mvwprintw(stdscr, y, 97, "...");
 	}
-//		mvwprintw(stdscr, y, 35 + val.length() + len, "boi");
 }
 
 void Visualizer::printOps(std::vector<MethodData *> &datas, int iter,
@@ -119,7 +118,6 @@ void Visualizer::printOps(std::vector<MethodData *> &datas, int iter,
 		toggleAttr(datas[iter]->getType(), false);
 		len = buffer.length();
 		buffer = "(" + datas[iter]->getValue() + ")";
-//		mvwprintw(stdscr, 3, 35 + datas[iter]->getInstr().length() + len, buffer.c_str());
 		dealWithLong(datas[iter]->getInstr(), buffer, len, 3);
 	}
 
@@ -134,7 +132,6 @@ void Visualizer::printOps(std::vector<MethodData *> &datas, int iter,
 			mvwprintw(stdscr, y, 35 + datas[i]->getInstr().length(), buffer.c_str());
 			len = buffer.length();
 			buffer = "(" + datas[i]->getValue() + ")";
-//			mvwprintw(stdscr, y, 35 + datas[i]->getInstr().length() + len, buffer.c_str());
 			dealWithLong(datas[i]->getInstr(), buffer, len, y);
 		}
 	}

@@ -101,7 +101,8 @@ void VM::_checkAssertionOverflow(eOperandType type, std::string str, int c, std:
 
 void VM::_assertV(eOperandType type, std::string str, int c) {
 	std::map<eOperandType, std::string> types = {
-			{Int8, "Int8"}, {Int16, "Int16"}, {Int32, "Int32"}, {Float, "Float"}, {Double, "Double"}
+			{Int8, "Int8"}, {Int16, "Int16"}, {Int32, "Int32"},
+			{Float, "Float"}, {Double, "Double"}
 	};
 	_checkAssertionOverflow(type, str, c, types);
 	if (_stack.empty()) {
@@ -177,8 +178,11 @@ void VM::run() {
 	if (_visualization)
 		_visualizer.initVis();
 	typedef void(VM::*meth)(int);
-	std::map<std::string, meth> map = {{"add", &VM::_add}, {"sub", &VM::_sub}, {"mul", &VM::_mul},
-			{"div", &VM::_div}, {"mod", &VM::_mod}, {"pop", &VM::_pop}, {"print", &VM::_print}, {"dump", &VM::_dump},
+	std::map<std::string, meth> map = {{"add", &VM::_add}, {"sub", &VM::_sub},
+									   {"mul", &VM::_mul}, {"div", &VM::_div},
+									   {"mod", &VM::_mod}, {"pop", &VM::_pop},
+									   {"print", &VM::_print},
+									   {"dump", &VM::_dump},
 	};
 	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
@@ -187,10 +191,13 @@ void VM::run() {
 		if (_visualizer.getExit())
 			break ;
 		try {
-			if (methodDatas[i]->getInstr() == "push") _push(methodDatas[i]->getType(), methodDatas[i]->getValue());
-			else if (methodDatas[i]->getInstr() == "assert") _assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
-																	  methodDatas[i]->getLine());
-			else if (methodDatas[i]->getInstr() == "exit") break ;
+			if (methodDatas[i]->getInstr() == "push")
+				_push(methodDatas[i]->getType(), methodDatas[i]->getValue());
+			else if (methodDatas[i]->getInstr() == "assert")
+				_assertV(methodDatas[i]->getType(), methodDatas[i]->getValue(),
+						 methodDatas[i]->getLine());
+			else if (methodDatas[i]->getInstr() == "exit")
+				break ;
 			else
 				(this->*map[methodDatas[i]->getInstr()])(methodDatas[i]->getLine());
 		}
