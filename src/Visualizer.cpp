@@ -93,6 +93,18 @@ void Visualizer::printFloat(const std::string &value, int n) {
 		mvwprintw(stdscr, n, 8, _trim(value, Double).c_str());
 }
 
+void Visualizer::dealWithLong(std::string ins, std::string buff, int len, int y) {
+	if (35 + ins.length() + len + buff.length() <= 100)
+		mvwprintw(stdscr, y, 35 + ins.length() + len, buff.c_str());
+	else {
+		for (int i = 35 + ins.length() + len, n = 0; i < 98; ++i, ++n) {
+			mvwprintw(stdscr, y, i, "%c", buff[n]);
+		}
+		mvwprintw(stdscr, y, 97, "...");
+	}
+//		mvwprintw(stdscr, y, 35 + val.length() + len, "boi");
+}
+
 void Visualizer::printOps(std::vector<MethodData *> &datas, int iter,
 						  std::map<eOperandType, std::string> map) {
 	std::string	buffer;
@@ -107,7 +119,8 @@ void Visualizer::printOps(std::vector<MethodData *> &datas, int iter,
 		toggleAttr(datas[iter]->getType(), false);
 		len = buffer.length();
 		buffer = "(" + datas[iter]->getValue() + ")";
-		mvwprintw(stdscr, 3, 35 + datas[iter]->getInstr().length() + len, buffer.c_str());
+//		mvwprintw(stdscr, 3, 35 + datas[iter]->getInstr().length() + len, buffer.c_str());
+		dealWithLong(datas[iter]->getInstr(), buffer, len, 3);
 	}
 
 	for (int i = iter - 1, y = 5; i >= 0; --i, ++y) {
@@ -121,13 +134,17 @@ void Visualizer::printOps(std::vector<MethodData *> &datas, int iter,
 			mvwprintw(stdscr, y, 35 + datas[i]->getInstr().length(), buffer.c_str());
 			len = buffer.length();
 			buffer = "(" + datas[i]->getValue() + ")";
-			mvwprintw(stdscr, y, 35 + datas[i]->getInstr().length() + len, buffer.c_str());
+//			mvwprintw(stdscr, y, 35 + datas[i]->getInstr().length() + len, buffer.c_str());
+			dealWithLong(datas[i]->getInstr(), buffer, len, y);
 		}
 	}
 }
 
 void Visualizer::endWithError() {
 	int c = 0;
+	for (int j = 35; j < 100; ++j) {
+		mvwprintw(stdscr, 3, j, " ");
+	}
 	attron(COLOR_PAIR(6));
 	mvwprintw(stdscr, 3, 35, "ERROR! PRESS 'ENTER' or 'ESC' FOR MORE INFO");
 	attroff(COLOR_PAIR(6));
@@ -137,10 +154,12 @@ void Visualizer::endWithError() {
 	system("clear");
 }
 
-void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<MethodData*> &datas, int iter) {
+void Visualizer::visualize(std::list<const IOperand *> stack,
+						   std::vector<MethodData*> &datas, int iter) {
 	int c = 0;
     std::map<eOperandType, std::string>	typeMap =
-            {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"}, {Float, "float"}, {Double, "double"}};
+            {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"},
+			 {Float, "float"}, {Double, "double"}};
     std::string buffer;
 	int n = 3;
 	refreshWin();
@@ -153,7 +172,8 @@ void Visualizer::visualize(std::list<const IOperand *> stack, std::vector<Method
 	        mvwprintw(stdscr, n, 8, (*it)->toString().c_str());
 	    else {
 		    if ((*it)->toString().length() <= 24)
-		        mvwprintw(stdscr, n, 8, _trim((*it)->toString(), (*it)->getType()).c_str());
+		        mvwprintw(stdscr, n, 8, _trim((*it)->toString(),
+											  (*it)->getType()).c_str());
 		    else
 				printFloat((*it)->toString(), n);
 	    }
