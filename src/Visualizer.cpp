@@ -93,7 +93,8 @@ void Visualizer::printFloat(const std::string &value, int n) {
 		mvwprintw(stdscr, n, 8, _trim(value, Double).c_str());
 }
 
-void Visualizer::printOps(std::vector<MethodData *> &datas, int iter, std::map<eOperandType, std::string> map) {
+void Visualizer::printOps(std::vector<MethodData *> &datas, int iter,
+						  std::map<eOperandType, std::string> map) {
 	std::string	buffer;
 	int 		len;
 	attron(A_BOLD);
@@ -130,7 +131,7 @@ void Visualizer::endWithError() {
 	attron(COLOR_PAIR(6));
 	mvwprintw(stdscr, 3, 35, "ERROR! PRESS 'ENTER' or 'ESC' FOR MORE INFO");
 	attroff(COLOR_PAIR(6));
-	while (c != '\n')
+	while (c != '\n' && c != 27)
 		c = getch();
 	endwin();
 	system("clear");

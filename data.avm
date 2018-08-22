@@ -1,6 +1,4 @@
 push int32(2)
-push int8(0)
-div
-dump
-
+pop
+pop
 exit

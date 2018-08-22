@@ -23,7 +23,18 @@ std::string printFirstRed(std::string line) {
 EmptyStackException::~EmptyStackException() throw() {}
 
 const char* EmptyStackException::EmptyStackException::what() const throw() {
-	return "Stack is empty";
+	char                *ret;
+	unsigned long       size;
+	std::string         str;
+
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4m" + _str +
+		  "\e[24m - Stack is empty";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 EmptyStackException& EmptyStackException::EmptyStackException::operator=(EmptyStackException const &src)
@@ -37,6 +48,8 @@ EmptyStackException::EmptyStackException() {}
 EmptyStackException::EmptyStackException(EmptyStackException const &src) {
 	*this = src;
 }
+
+EmptyStackException::EmptyStackException(std::string str, int line) : _str(str), _line(line) {}
 
 TooFewOperandsException::~TooFewOperandsException() throw() {}
 
@@ -640,3 +653,23 @@ FileDoesNotExist::FileDoesNotExist(FileDoesNotExist const &src) {
 }
 
 FileDoesNotExist::FileDoesNotExist(std::string fileName) : _fileName(fileName) {}
+
+
+InvalidArguments::~InvalidArguments() throw() {}
+
+const char* InvalidArguments::InvalidArguments::what() const throw() {
+	return "\e[31mError\e[0m : Invalid arguments";
+}
+
+InvalidArguments& InvalidArguments::InvalidArguments::operator=(InvalidArguments const &src)
+{
+	(void)src;
+	return *this;
+}
+
+InvalidArguments::InvalidArguments() {}
+
+InvalidArguments::InvalidArguments(InvalidArguments const &src) {
+	*this = src;
+}
+

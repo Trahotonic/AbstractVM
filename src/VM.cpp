@@ -105,8 +105,7 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
 	};
 	_checkAssertionOverflow(type, str, c, types);
 	if (_stack.empty()) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot assert\e[24m - ";
-		throw EmptyStackException();
+		throw EmptyStackException("Cannot assert", c);
 	}
 	if (dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Float &&
 			dynamic_cast<const IOperand*>(*_stack.begin())->getType() != Double) {
@@ -134,8 +133,7 @@ void VM::_assertV(eOperandType type, std::string str, int c) {
 
 void VM::_pop(int c) {
 	if (_stack.empty()) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot pop\e[24m - ";
-		throw EmptyStackException();
+		throw EmptyStackException("Cannot pop", c);
 	}
 	_stack.pop_front();
 }
@@ -151,8 +149,7 @@ std::string VM::_trim(std::string str, eOperandType type) {
 
 void VM::_dump(int c) {
 	if (_stack.empty()) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot dump\e[24m - ";
-		throw EmptyStackException();
+		throw EmptyStackException("Cannot dump", c);
 	}
 	if (!_visualization)
 		for (std::list<const IOperand*>::iterator it = _stack.begin(); it != _stack.end(); it++) {
@@ -165,8 +162,7 @@ void VM::_dump(int c) {
 
 void VM::_print(int c) {
 	if (_stack.empty()) {
-		std::cout << "\e[4mLine " << c << "\e[24m : \e[31mError\e[0m : \e[4mCannot print\e[24m - ";
-		throw EmptyStackException();
+		throw EmptyStackException("Cannot print", c);
 	}
 	if (_stack.front()->getType() == Int8 &&
 		std::stoi(_stack.front()->toString()) >= 32 &&

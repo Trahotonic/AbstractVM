@@ -13,9 +13,12 @@
 
 class EmptyStackException : public virtual std::exception
 {
+	std::string _str;
+	int 		_line;
 public:
 	EmptyStackException(void);
 	EmptyStackException(EmptyStackException const & src);
+	EmptyStackException(std::string, int);
 
 	EmptyStackException	&operator=(EmptyStackException const & src);
 
@@ -344,6 +347,19 @@ public:
     ~FileDoesNotExist(void) throw();
 
     virtual const char* what() const throw();
+};
+
+class InvalidArguments : public virtual std::exception
+{
+public:
+	InvalidArguments(void);
+	InvalidArguments(InvalidArguments const & src);
+
+	InvalidArguments	&operator=(InvalidArguments const & src);
+
+	~InvalidArguments(void) throw();
+
+	virtual const char* what() const throw();
 };
 
 #endif //ABSTRACTVM_EXCEPTIONS_HPP

@@ -23,9 +23,8 @@ std::vector<std::vector<Token*> > Lexer::getTokens() {
 }
 
 void Lexer::readInput(int argc, char **argv) {
-    if (argc == 2) {
+    if (argc == 2)
 		readFromFile(argv[1]);
-    }
     else if (argc == 3) {
     	if (!strcmp(argv[2], "-v"))
 			readFromFile(argv[1]);
@@ -40,8 +39,10 @@ void Lexer::readInput(int argc, char **argv) {
 				throw FileDoesNotExist(argv[1]);
     	}
     }
-    else
+    else if (argc == 1)
         readFromSTDIN();
+	else
+		throw InvalidArguments();
 }
 
 void Lexer::readFromFile(char *file) {
