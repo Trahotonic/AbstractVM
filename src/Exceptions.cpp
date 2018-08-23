@@ -636,7 +636,7 @@ MissingExit::MissingExit(MissingExit const &src) {
 UnexpectedEnd::~UnexpectedEnd() throw() {}
 
 const char* UnexpectedEnd::UnexpectedEnd::what() const throw() {
-	return "Unexpected end of stream";
+	return "\e[31mError reading input\e[0m : Unexpected end of stream";
 }
 
 UnexpectedEnd& UnexpectedEnd::UnexpectedEnd::operator=(UnexpectedEnd const &src)

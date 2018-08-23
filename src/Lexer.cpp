@@ -75,7 +75,6 @@ void Lexer::readFromSTDIN() {
 			return ;
 		analyzeLine(buffer);
 	}
-	std::cout << "\e[31mError reading input\e[0m : ";
 	throw UnexpectedEnd();
 }
 
