@@ -1,9 +1,5 @@
-//
-// Created by Roman KYSLYY on 7/26/18.
-//
-
-#ifndef ABSTRACTVM_FACTORY_HPP
-#define ABSTRACTVM_FACTORY_HPP
+#ifndef FACTORY_HPP
+#define FACTORY_HPP
 
 # include "IOperand.hpp"
 
@@ -26,4 +22,4 @@ public:
 	IOperand const* createOperand(eOperandType type, std::string const &value) const;
 };
 
-#endif //ABSTRACTVM_FACTORY_HPP
+#endif

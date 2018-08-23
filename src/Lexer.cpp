@@ -8,61 +8,65 @@
 Lexer::Lexer() {}
 
 Lexer::Lexer(Lexer const &src) {
-    *this = src;
+	*this = src;
 }
 
 Lexer& Lexer::operator=(Lexer const &src) {
-    static_cast<void>(src);
-    return *this;
+	static_cast<void>(src);
+	return *this;
 }
 
 Lexer::~Lexer() {}
 
 std::vector<std::vector<Token*> > Lexer::getTokens() {
-    return _tokens;
+	return _tokens;
 }
 
 void Lexer::readInput(int argc, char **argv) {
-    if (argc == 2)
-		readFromFile(argv[1]);
-    else if (argc == 3) {
-    	if (!strcmp(argv[2], "-v"))
+	if (argc == 2) {
+		if (strcmp(argv[1], "-v"))
 			readFromFile(argv[1]);
-    	else if (!strcmp(argv[1], "-v"))
+		else
+			readFromSTDIN();
+	}
+	else if (argc == 3) {
+		if (!strcmp(argv[2], "-v"))
+			readFromFile(argv[1]);
+		else if (!strcmp(argv[1], "-v"))
 			readFromFile(argv[2]);
-    	else {
-    		if (!strcmp(argv[1], "-v"))
+		else {
+			if (!strcmp(argv[1], "-v"))
 				throw FileDoesNotExist(argv[2]);
-    		else if (!strcmp(argv[2], "-v"))
+			else if (!strcmp(argv[2], "-v"))
 				throw FileDoesNotExist(argv[2]);
-    		else
+			else
 				throw FileDoesNotExist(argv[1]);
-    	}
-    }
-    else if (argc == 1)
-        readFromSTDIN();
+		}
+	}
+	else if (argc == 1)
+		readFromSTDIN();
 	else
 		throw InvalidArguments();
 }
 
 void Lexer::readFromFile(char *file) {
-    std::ifstream   is(file);
-    if (is.fail())
-        throw FileDoesNotExist(file);
-    std::string     buffer;
-    while (std::getline(is, buffer)) {
+	std::ifstream   is(file);
+	if (is.fail())
+		throw FileDoesNotExist(file);
+	std::string	 buffer;
+	while (std::getline(is, buffer)) {
 		analyzeLine(buffer);
-    }
+	}
 }
 
 void Lexer::readFromSTDIN() {
-    std::string     buffer;
-    std::regex      eof("([\\t\\s]*;;[\\t\\s]*)");
-    while (std::getline(std::cin, buffer)) {
-	    if (std::regex_match(buffer, eof))
-		    return ;
-        analyzeLine(buffer);
-    }
+	std::string	 buffer;
+	std::regex	  eof("([\\t\\s]*;;[\\t\\s]*)");
+	while (std::getline(std::cin, buffer)) {
+		if (std::regex_match(buffer, eof))
+			return ;
+		analyzeLine(buffer);
+	}
 	std::cout << "\e[31mError reading input\e[0m : ";
 	throw UnexpectedEnd();
 }
@@ -99,7 +103,7 @@ void Lexer::lexNonArgInstr(std::cmatch &result, std::string &buffer, std::vector
 	std::regex  whitespaces("([\\t\\s]*)");
 	std::regex  whitespacesTrash("([\\t\\s]+)(.+)");
 	if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespaces) ||
-	    std::regex_match(static_cast<std::string>(result[3]).c_str(), comment)) {
+		std::regex_match(static_cast<std::string>(result[3]).c_str(), comment)) {
 		list.push_back(new Token(INSTRUCTION, result[2]));
 	}
 	else if (std::regex_match(static_cast<std::string>(result[3]).c_str(), whitespacesTrash)){
@@ -113,66 +117,66 @@ void Lexer::lexNonArgInstr(std::cmatch &result, std::string &buffer, std::vector
 }
 
 void Lexer::analyzeLine(std::string &line) {
-    std::cmatch         result;
-    std::string         buffer = line;
-    std::regex          argInstr("([\\t\\s]*)(push|assert)(.*)");
-    std::regex          nonArgInstr("([\\t\\s]*)(add|sub|mul|div|mod|pop|dump|print|exit)(.*)");
-    std::regex          dataType("([\\t\\s]+)(int8|int16|int32|float|double)(.*)");
-    std::regex          brackets("(\\(.*)\\))");
-    std::regex          excess("([\\t\\s]*)(.+)");
-    std::regex          comment("([\\t\\s]*;.*)");
-    std::vector<Token*> list;
-    if (line.empty()) {
-        list.push_back(new Token(EMPTY_LINE, ""));
-        return _tokens.push_back(list);
-    }
-    if (std::regex_match(buffer.c_str(), comment))
-        list.push_back(new Token(COMMENT, result[2]));
-    else if (std::regex_match(buffer.c_str(), result, argInstr))
-        lexArgInstr(result, buffer, list);
-    else if (std::regex_match(buffer.c_str(), result, nonArgInstr))
-       lexNonArgInstr(result, buffer, list);
-    else
-        list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
-    _tokens.push_back(list);
+	std::cmatch		result;
+	std::string		buffer = line;
+	std::regex		argInstr("([\\t\\s]*)(push|assert)(.*)");
+	std::regex		nonArgInstr("([\\t\\s]*)(add|sub|mul|div|mod|pop|dump|print|exit)(.*)");
+	std::regex		dataType("([\\t\\s]+)(int8|int16|int32|float|double)(.*)");
+	std::regex		brackets("(\\(.*)\\))");
+	std::regex		excess("([\\t\\s]*)(.+)");
+	std::regex		comment("([\\t\\s]*;.*)");
+	std::vector<Token*> list;
+	if (line.empty()) {
+		list.push_back(new Token(EMPTY_LINE, ""));
+		return _tokens.push_back(list);
+	}
+	if (std::regex_match(buffer.c_str(), comment))
+		list.push_back(new Token(COMMENT, result[2]));
+	else if (std::regex_match(buffer.c_str(), result, argInstr))
+		lexArgInstr(result, buffer, list);
+	else if (std::regex_match(buffer.c_str(), result, nonArgInstr))
+	   lexNonArgInstr(result, buffer, list);
+	else
+		list.push_back(new Token(UNKNOWN_INSTRUCTION, buffer));
+	_tokens.push_back(list);
 }
 
 void Lexer::lexBra(std::vector<Token*> &list, std::string const & line) {
-    std::regex          valueInPar("(\\()(.+)(\\))(.*)");
-    std::regex          emptyPar("(\\()(\\))(.*)");
-    std::regex          openParExists("(\\()(.*)");
-    std::regex          comment("([\\t\\s]*;.*)");
-    std::regex          close("(.*)(\\)(.*))");
-    std::cmatch         result;
-    std::string         buffer;
-    if (line == "")
-        return list.push_back(new Token(NOARGS, "!"));
-    if (std::regex_match(line.c_str(), result, valueInPar)) {
-        list.push_back(new Token(OPENBRACKET, "("));
-        list.push_back(new Token(VALUE, result[2]));
-        list.push_back(new Token(CLOSEBRACKET, result[3]));
-        buffer = result[4];
-        if (buffer != "")
-            if (!std::regex_match(buffer.c_str(), result, comment))
-                list.push_back(new Token(EXCESS_SYMBOLS, buffer));
-    }
-    else if (std::regex_match(line.c_str(), result, emptyPar)) {
-        list.push_back(new Token(EMPTY_BRACKETS, "()"));
-        buffer = result[3];
-        if (buffer != "")
-            if (!std::regex_match(buffer.c_str(), result, comment))
-                list.push_back(new Token(EXCESS_SYMBOLS, buffer));
-    }
-    else if (std::regex_match(line.c_str(), result, openParExists)) {
-        list.push_back(new Token(OPENBRACKET, "("));
-        list.push_back(new Token(VALUE, result[2]));
-        list.push_back(new Token(MISSING_CLOSEBRACKET, "!"));
-    }
-    else if (!isblank(line[0])) {
+	std::regex		valueInPar("(\\()(.+)(\\))(.*)");
+	std::regex		emptyPar("(\\()(\\))(.*)");
+	std::regex		openParExists("(\\()(.*)");
+	std::regex		comment("([\\t\\s]*;.*)");
+	std::regex		close("(.*)(\\)(.*))");
+	std::cmatch		result;
+	std::string		buffer;
+	if (line == "")
+		return list.push_back(new Token(NOARGS, "!"));
+	if (std::regex_match(line.c_str(), result, valueInPar)) {
+		list.push_back(new Token(OPENBRACKET, "("));
+		list.push_back(new Token(VALUE, result[2]));
+		list.push_back(new Token(CLOSEBRACKET, result[3]));
+		buffer = result[4];
+		if (buffer != "")
+			if (!std::regex_match(buffer.c_str(), result, comment))
+				list.push_back(new Token(EXCESS_SYMBOLS, buffer));
+	}
+	else if (std::regex_match(line.c_str(), result, emptyPar)) {
+		list.push_back(new Token(EMPTY_BRACKETS, "()"));
+		buffer = result[3];
+		if (buffer != "")
+			if (!std::regex_match(buffer.c_str(), result, comment))
+				list.push_back(new Token(EXCESS_SYMBOLS, buffer));
+	}
+	else if (std::regex_match(line.c_str(), result, openParExists)) {
+		list.push_back(new Token(OPENBRACKET, "("));
+		list.push_back(new Token(VALUE, result[2]));
+		list.push_back(new Token(MISSING_CLOSEBRACKET, "!"));
+	}
+	else if (!isblank(line[0])) {
 		buffer = list.back()->getValue() + line;
-	    list.pop_back();
-	    list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
-    }
+		list.pop_back();
+		list.push_back(new Token(UNKNOWN_DATATYPE, buffer));
+	}
 	else
-        list.push_back(new Token(MISSING_OPENBRACKET, line));
+		list.push_back(new Token(MISSING_OPENBRACKET, line));
 }

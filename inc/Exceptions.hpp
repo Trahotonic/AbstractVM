@@ -1,9 +1,5 @@
-//
-// Created by Roman KYSLYY on 7/26/18.
-//
-
-#ifndef ABSTRACTVM_EXCEPTIONS_HPP
-#define ABSTRACTVM_EXCEPTIONS_HPP
+#ifndef EXCEPTIONS_HPP
+#define EXCEPTIONS_HPP
 
 #include <exception>
 #include <vector>
@@ -29,8 +25,8 @@ public:
 
 class TooFewOperandsException : public virtual std::exception
 {
-    std::string _str;
-    int         _line;
+	std::string _str;
+	int		 _line;
 public:
 	TooFewOperandsException(void);
 	TooFewOperandsException(TooFewOperandsException const & src);
@@ -59,7 +55,7 @@ public:
 class InvalidInput : public virtual std::exception
 {
 	std::vector<Token*> _tokens;
-	int                 _line;
+	int				 _line;
 public:
 	InvalidInput(void);
 	InvalidInput(InvalidInput const & src);
@@ -74,7 +70,7 @@ public:
 
 class UnknownCommand : public virtual std::exception
 {
-    std::vector<Token*> _tokens;
+	std::vector<Token*> _tokens;
 public:
 	UnknownCommand(void);
 	UnknownCommand(std::vector<Token*> tokens);
@@ -89,9 +85,9 @@ public:
 
 class ValueOverflow : public virtual std::exception
 {
-    int         _line;
-    std::string _value;
-    std::string _type;
+	int		 _line;
+	std::string _value;
+	std::string _type;
 public:
 	ValueOverflow(void);
 	ValueOverflow(ValueOverflow const & src);
@@ -106,9 +102,9 @@ public:
 
 class ValueUnderflow : public virtual std::exception
 {
-    int         _line;
-    std::string _value;
-    std::string _type;
+	int		 _line;
+	std::string _value;
+	std::string _type;
 public:
 	ValueUnderflow(void);
 	ValueUnderflow(ValueUnderflow const & src);
@@ -156,11 +152,11 @@ public:
 
 class AssertFalse : public virtual std::exception
 {
-	std::string                         _type1;
-	std::string                         _type2;
-	std::string                         _value1;
-	std::string                         _value2;
-	int                                 _line;
+	std::string						 _type1;
+	std::string						 _type2;
+	std::string						 _value1;
+	std::string						 _value2;
+	int								 _line;
 	std::map<eOperandType, std::string> _types;
 public:
 	AssertFalse(void);
@@ -176,7 +172,7 @@ public:
 
 class UnknownDataType : public virtual std::exception
 {
-    std::vector<Token*> _tokens;
+	std::vector<Token*> _tokens;
 public:
 	UnknownDataType(void);
 	UnknownDataType(UnknownDataType const & src);
@@ -191,7 +187,7 @@ public:
 
 class NoOpenBracket : public virtual std::exception
 {
-    std::vector<Token*> _tokens;
+	std::vector<Token*> _tokens;
 public:
 	NoOpenBracket(void);
 	NoOpenBracket(NoOpenBracket const & src);
@@ -206,67 +202,67 @@ public:
 
 class NoCloseBracket : public virtual std::exception
 {
-    std::vector<Token*> _tokens;
+	std::vector<Token*> _tokens;
 public:
-    NoCloseBracket(void);
-    NoCloseBracket(NoCloseBracket const & src);
-    NoCloseBracket(std::vector<Token*> tokens);
+	NoCloseBracket(void);
+	NoCloseBracket(NoCloseBracket const & src);
+	NoCloseBracket(std::vector<Token*> tokens);
 
-    NoCloseBracket	&operator=(NoCloseBracket const & src);
+	NoCloseBracket	&operator=(NoCloseBracket const & src);
 
-    ~NoCloseBracket(void) throw();
+	~NoCloseBracket(void) throw();
 
-    virtual const char* what() const throw();
+	virtual const char* what() const throw();
 };
 
 class EmptyBrackets : public virtual std::exception
 {
 	std::vector<Token*> _tokens;
 public:
-    EmptyBrackets(void);
-    EmptyBrackets(EmptyBrackets const & src);
-    EmptyBrackets(std::vector<Token*> tokens);
+	EmptyBrackets(void);
+	EmptyBrackets(EmptyBrackets const & src);
+	EmptyBrackets(std::vector<Token*> tokens);
 
-    EmptyBrackets	&operator=(EmptyBrackets const & src);
+	EmptyBrackets	&operator=(EmptyBrackets const & src);
 
-    ~EmptyBrackets(void) throw();
+	~EmptyBrackets(void) throw();
 
-    virtual const char* what() const throw();
+	virtual const char* what() const throw();
 };
 
 class NoArgs : public virtual std::exception
 {
-    std::vector<Token*> _tokens;
+	std::vector<Token*> _tokens;
 public:
-    NoArgs(void);
-    NoArgs(NoArgs const & src);
-    NoArgs(std::vector<Token*> tokens);
+	NoArgs(void);
+	NoArgs(NoArgs const & src);
+	NoArgs(std::vector<Token*> tokens);
 
-    NoArgs	&operator=(NoArgs const & src);
+	NoArgs	&operator=(NoArgs const & src);
 
-    ~NoArgs(void) throw();
+	~NoArgs(void) throw();
 
-    virtual const char* what() const throw();
+	virtual const char* what() const throw();
 };
 
 class Excess : public virtual std::exception
 {
 	std::vector<Token*> _tokens;
 public:
-    Excess(void);
-    Excess(std::vector<Token*> tokens);
-    Excess(Excess const & src);
+	Excess(void);
+	Excess(std::vector<Token*> tokens);
+	Excess(Excess const & src);
 
-    Excess	&operator=(Excess const & src);
+	Excess	&operator=(Excess const & src);
 
-    ~Excess(void) throw();
+	~Excess(void) throw();
 
-    virtual const char* what() const throw();
+	virtual const char* what() const throw();
 };
 
 class MissingDataType : public virtual std::exception
 {
-    std::vector<Token*> _tokens;
+	std::vector<Token*> _tokens;
 public:
 	MissingDataType(void);
 	MissingDataType(MissingDataType const & src);
@@ -281,12 +277,12 @@ public:
 
 class NonASCII : public virtual std::exception
 {
-    int         _line;
-    std::string _value;
+	int		 _line;
+	std::string _value;
 public:
 	NonASCII(void);
 	NonASCII(NonASCII const & src);
-    NonASCII(int line, std::string const & value);
+	NonASCII(int line, std::string const & value);
 
 	NonASCII	&operator=(NonASCII const & src);
 
@@ -336,17 +332,17 @@ public:
 
 class FileDoesNotExist : public virtual std::exception
 {
-    std::string _fileName;
+	std::string _fileName;
 public:
-    FileDoesNotExist(void);
-    FileDoesNotExist(FileDoesNotExist const & src);
-    FileDoesNotExist(std::string fileName);
+	FileDoesNotExist(void);
+	FileDoesNotExist(FileDoesNotExist const & src);
+	FileDoesNotExist(std::string fileName);
 
-    FileDoesNotExist	&operator=(FileDoesNotExist const & src);
+	FileDoesNotExist	&operator=(FileDoesNotExist const & src);
 
-    ~FileDoesNotExist(void) throw();
+	~FileDoesNotExist(void) throw();
 
-    virtual const char* what() const throw();
+	virtual const char* what() const throw();
 };
 
 class InvalidArguments : public virtual std::exception
@@ -362,4 +358,4 @@ public:
 	virtual const char* what() const throw();
 };
 
-#endif //ABSTRACTVM_EXCEPTIONS_HPP
+#endif

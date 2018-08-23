@@ -23,9 +23,9 @@ std::string printFirstRed(std::string line) {
 EmptyStackException::~EmptyStackException() throw() {}
 
 const char* EmptyStackException::EmptyStackException::what() const throw() {
-	char                *ret;
-	unsigned long       size;
-	std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
 	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4m" + _str +
 		  "\e[24m - Stack is empty";
@@ -54,18 +54,18 @@ EmptyStackException::EmptyStackException(std::string str, int line) : _str(str),
 TooFewOperandsException::~TooFewOperandsException() throw() {}
 
 const char* TooFewOperandsException::TooFewOperandsException::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4m" + _str +
-            "\e[24m - Too few operands in stack";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4m" + _str +
+			"\e[24m - Too few operands in stack";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 TooFewOperandsException& TooFewOperandsException::TooFewOperandsException::operator=(TooFewOperandsException const &src)
@@ -103,9 +103,9 @@ FloatIntoIntException::FloatIntoIntException(FloatIntoIntException const &src) {
 InvalidInput::~InvalidInput() throw() {}
 
 const char* InvalidInput::InvalidInput::what() const throw() {
-	char                *ret;
-	unsigned long       size;
-	std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
 	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \"" + _tokens[0]->getValueTrim() + " " +
 			_tokens[1]->getValueTrim() + _tokens[2]->getValueTrim() + "\e[31m" +
@@ -135,9 +135,9 @@ InvalidInput::InvalidInput(std::vector<Token *> tokens, int line) : _tokens(toke
 UnknownCommand::~UnknownCommand() throw() {}
 
 const char* UnknownCommand::UnknownCommand::what() const throw() {
-	char                *ret;
-	unsigned long       size;
-	std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
 	str = printFirstRed(_tokens[0]->getValue()) + "Unknown instruction";
 	size = str.length() + 2;
@@ -165,18 +165,18 @@ UnknownCommand::UnknownCommand(std::vector<Token *> tokens) : _tokens(tokens) {}
 ValueOverflow::~ValueOverflow() throw() {}
 
 const char* ValueOverflow::ValueOverflow::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [\e[31m" +
-            _value + "\e[0m] - " + _type + " value overflow";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [\e[31m" +
+			_value + "\e[0m] - " + _type + " value overflow";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 ValueOverflow& ValueOverflow::ValueOverflow::operator=(ValueOverflow const &src)
@@ -196,18 +196,18 @@ ValueOverflow::ValueOverflow(int line, std::string value, std::string type) : _l
 ValueUnderflow::~ValueUnderflow() throw() {}
 
 const char* ValueUnderflow::ValueUnderflow::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [\e[31m" +
-          _value + "\e[0m] - " + _type + " value underflow";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [\e[31m" +
+		  _value + "\e[0m] - " + _type + " value underflow";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 ValueUnderflow& ValueUnderflow::ValueUnderflow::operator=(ValueUnderflow const &src)
@@ -228,23 +228,23 @@ ValueUnderflow::ValueUnderflow(int line, std::string value, std::string type) : 
 DivisionByZero::~DivisionByZero() throw() {}
 
 const char* DivisionByZero::DivisionByZero::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [" + _value1 + " " + _op + " \e[31m" +
-            _value2 + "\e[0m] - ";
-    if (_op == '/')
-        str += "Division";
-    else
-        str += "Modulo";
-    str += " by zero";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : [" + _value1 + " " + _op + " \e[31m" +
+			_value2 + "\e[0m] - ";
+	if (_op == '/')
+		str += "Division";
+	else
+		str += "Modulo";
+	str += " by zero";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 DivisionByZero& DivisionByZero::DivisionByZero::operator=(DivisionByZero const &src)
@@ -263,11 +263,11 @@ DivisionByZero::DivisionByZero(int line, std::string const &value1, std::string 
 _line(line), _value1(value1), _value2(value2), _op(op) {}
 
 void DivisionByZero::checkZero(int c, const IOperand *one, const IOperand * two, char op) {
-    if ((two->getType() == Float && std::stof(two->toString()) == 0) ||
+	if ((two->getType() == Float && std::stof(two->toString()) == 0) ||
 			(two->getType() == Double && std::stod(two->toString()) == 0) ||
 			(two->getType() != Double && two->getType() != Float && std::stoi(two->toString()) == 0)) {
 		throw DivisionByZero(c, one->toString(), two->toString(), op);
-    }
+	}
 }
 
 NoExit::~NoExit() throw() {}
@@ -291,9 +291,9 @@ NoExit::NoExit(NoExit const &src) {
 AssertFalse::~AssertFalse() throw() {}
 
 const char* AssertFalse::AssertFalse::what() const throw() {
-	char                *ret;
-	unsigned long       size;
-	std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
 	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : (\e[35m" + _type1 + " " + _value1 +
 			"\e[0m) and (\e[33m" + _type2 + " " + _value2 + "\e[0m) - " + "Assertion failed";
@@ -324,17 +324,17 @@ _type1(type1), _type2(type2), _value1(value1), _value2(value2), _line(line), _ty
 UnknownDataType::~UnknownDataType() throw() {}
 
 const char* UnknownDataType::UnknownDataType::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = _tokens[0]->getValue() + printFirstRed(_tokens[1]->getValue()) + "Unknown data type";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = _tokens[0]->getValue() + printFirstRed(_tokens[1]->getValue()) + "Unknown data type";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 UnknownDataType& UnknownDataType::UnknownDataType::operator=(UnknownDataType const &src)
@@ -354,18 +354,18 @@ UnknownDataType::UnknownDataType(std::vector<Token *> tokens) : _tokens(tokens) 
 NoOpenBracket::~NoOpenBracket() throw() {}
 
 const char* NoOpenBracket::NoOpenBracket::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = _tokens[0]->getValue() + _tokens[1]->getValue() + "\e[31m!\e[0m" + _tokens[2]->getValue() +
-            " - Missing opening bracket";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = _tokens[0]->getValue() + _tokens[1]->getValue() + "\e[31m!\e[0m" + _tokens[2]->getValue() +
+			" - Missing opening bracket";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 NoOpenBracket& NoOpenBracket::NoOpenBracket::operator=(NoOpenBracket const &src)
@@ -385,18 +385,18 @@ NoOpenBracket::NoOpenBracket(std::vector<Token *> tokens) : _tokens(tokens) {}
 NoCloseBracket::~NoCloseBracket() throw() {}
 
 const char* NoCloseBracket::NoCloseBracket::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = _tokens[0]->getValue() + _tokens[1]->getValue() + _tokens[2]->getValue() + _tokens[3]->getValue() +
-            printFirstRed(_tokens[4]->getValue()) + "Missing closing bracket";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = _tokens[0]->getValue() + _tokens[1]->getValue() + _tokens[2]->getValue() + _tokens[3]->getValue() +
+			printFirstRed(_tokens[4]->getValue()) + "Missing closing bracket";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 NoCloseBracket& NoCloseBracket::NoCloseBracket::operator=(NoCloseBracket const &src)
@@ -416,17 +416,17 @@ NoCloseBracket::NoCloseBracket(std::vector<Token *> tokens) : _tokens(tokens) {}
 EmptyBrackets::~EmptyBrackets() throw() {}
 
 const char* EmptyBrackets::EmptyBrackets::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = _tokens[0]->getValue() + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) + "Empty brackets";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = _tokens[0]->getValue() + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) + "Empty brackets";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 EmptyBrackets& EmptyBrackets::EmptyBrackets::operator=(EmptyBrackets const &src)
@@ -446,18 +446,18 @@ EmptyBrackets::EmptyBrackets(std::vector<Token *> tokens) : _tokens(tokens) {}
 NoArgs::~NoArgs() throw() {}
 
 const char* NoArgs::NoArgs::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) +
-    		"No arguments provided";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + printFirstRed(_tokens[2]->getValue()) +
+			"No arguments provided";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 NoArgs& NoArgs::NoArgs::operator=(NoArgs const &src)
@@ -477,20 +477,20 @@ NoArgs::NoArgs(std::vector<Token *> tokens) : _tokens(tokens) {}
 Excess::~Excess() throw() {}
 
 const char* Excess::Excess::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
 	if (_tokens[0]->getValue() == "push" || _tokens[0]->getValue() == "assert")
-	    str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + _tokens[2]->getValue() + _tokens[3]->getValue() +
-	            _tokens[4]->getValue() + "\e[31m" + _tokens[5]->getValue();
+		str = _tokens[0]->getValue() + " " + _tokens[1]->getValue() + _tokens[2]->getValue() + _tokens[3]->getValue() +
+				_tokens[4]->getValue() + "\e[31m" + _tokens[5]->getValue();
 	else
-	    str = _tokens[0]->getValue() + "\e[31m" + _tokens[1]->getValue();
-    size = str.length() + strlen("\e[0m\" - Excess symbols in the end of line") + 20;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
+		str = _tokens[0]->getValue() + "\e[31m" + _tokens[1]->getValue();
+	size = str.length() + strlen("\e[0m\" - Excess symbols in the end of line") + 20;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
 	strcat(ret, "\e[0m\" - Excess symbols in the end of line");
 	return ret;
 }
@@ -512,17 +512,17 @@ Excess::Excess(std::vector<Token *> tokens) : _tokens(tokens){}
 MissingDataType::~MissingDataType() throw() {}
 
 const char* MissingDataType::MissingDataType::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = _tokens[0]->getValue() + " \e[31m" + _tokens[1]->getValue() + "\e[0m\" - Data type missing";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = _tokens[0]->getValue() + " \e[31m" + _tokens[1]->getValue() + "\e[0m\" - Data type missing";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 MissingDataType& MissingDataType::MissingDataType::operator=(MissingDataType const &src)
@@ -542,18 +542,18 @@ MissingDataType::MissingDataType(std::vector<Token *> tokens) : _tokens(tokens) 
 NonASCII::~NonASCII() throw() {}
 
 const char* NonASCII::NonASCII::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4mCannot print\e[24m - value [\e[33m" +
-            _value + "\e[0m] is invalid to be printed as ASCII character";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = "\e[4mLine " + std::to_string(_line) + "\e[24m : \e[31mError\e[0m : \e[4mCannot print\e[24m - value [\e[33m" +
+			_value + "\e[0m] is invalid to be printed as ASCII character";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 NonASCII& NonASCII::NonASCII::operator=(NonASCII const &src)
@@ -627,29 +627,29 @@ UnexpectedEnd::UnexpectedEnd(UnexpectedEnd const &src) {
 FileDoesNotExist::~FileDoesNotExist() throw() {}
 
 const char* FileDoesNotExist::FileDoesNotExist::what() const throw() {
-    char                *ret;
-    unsigned long       size;
-    std::string         str;
+	char				*ret;
+	unsigned long	   size;
+	std::string		 str;
 
-    str = "\e[31mError\e[0m : file \"" + _fileName + "\" does not exist";
-    size = str.length() + 2;
-    ret = new char[size];
-    for (unsigned long i = 0; i < size; ++i)
-        ret[i] = '\0';
-    strcat(ret, str.c_str());
-    return ret;
+	str = "\e[31mError\e[0m : file \"" + _fileName + "\" does not exist";
+	size = str.length() + 2;
+	ret = new char[size];
+	for (unsigned long i = 0; i < size; ++i)
+		ret[i] = '\0';
+	strcat(ret, str.c_str());
+	return ret;
 }
 
 FileDoesNotExist& FileDoesNotExist::FileDoesNotExist::operator=(FileDoesNotExist const &src)
 {
-    (void)src;
-    return *this;
+	(void)src;
+	return *this;
 }
 
 FileDoesNotExist::FileDoesNotExist() {}
 
 FileDoesNotExist::FileDoesNotExist(FileDoesNotExist const &src) {
-    *this = src;
+	*this = src;
 }
 
 FileDoesNotExist::FileDoesNotExist(std::string fileName) : _fileName(fileName) {}

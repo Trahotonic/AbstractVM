@@ -8,22 +8,22 @@ Visualizer::Visualizer() : _exit(false) {
 }
 
 Visualizer::Visualizer(Visualizer const &src) {
-    *this = src;
+	*this = src;
 }
 
 Visualizer& Visualizer::operator=(Visualizer const &src) {
-    static_cast<void>(src);
-    return *this;
+	static_cast<void>(src);
+	return *this;
 }
 
 Visualizer::~Visualizer() {}
 
 void Visualizer::initVis() {
-    initscr();
-    curs_set(0);
-    start_color();
-    use_default_colors();
-    noecho();
+	initscr();
+	curs_set(0);
+	start_color();
+	use_default_colors();
+	noecho();
 	init_pair(1, COLOR_YELLOW, -1);
 	init_pair(2, COLOR_GREEN, -1);
 	init_pair(3, COLOR_BLUE, -1);
@@ -154,39 +154,39 @@ void Visualizer::endWithError() {
 void Visualizer::visualize(std::list<const IOperand *> stack,
 						   std::vector<MethodData*> &datas, int iter) {
 	int c = 0;
-    std::map<eOperandType, std::string>	typeMap =
-            {{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"},
+	std::map<eOperandType, std::string>	typeMap =
+			{{Int8, "int8"}, {Int16, "int16"}, {Int32, "int32"},
 			 {Float, "float"}, {Double, "double"}};
-    std::string buffer;
+	std::string buffer;
 	int n = 3;
 	refreshWin();
-    for (auto it = stack.begin(); it != stack.end(); ++it) {
-	    toggleAttr((*it)->getType(), true);
-	    mvwprintw(stdscr, n, 1, typeMap[(*it)->getType()].c_str());
-	    toggleAttr((*it)->getType(), false);
-	    mvwprintw(stdscr, n, 7, " ");
-	    if ((*it)->getType() != Float && (*it)->getType() != Double)
-	        mvwprintw(stdscr, n, 8, (*it)->toString().c_str());
-	    else {
-		    if ((*it)->toString().length() <= 24)
-		        mvwprintw(stdscr, n, 8, _trim((*it)->toString(),
+	for (auto it = stack.begin(); it != stack.end(); ++it) {
+		toggleAttr((*it)->getType(), true);
+		mvwprintw(stdscr, n, 1, typeMap[(*it)->getType()].c_str());
+		toggleAttr((*it)->getType(), false);
+		mvwprintw(stdscr, n, 7, " ");
+		if ((*it)->getType() != Float && (*it)->getType() != Double)
+			mvwprintw(stdscr, n, 8, (*it)->toString().c_str());
+		else {
+			if ((*it)->toString().length() <= 24)
+				mvwprintw(stdscr, n, 8, _trim((*it)->toString(),
 											  (*it)->getType()).c_str());
-		    else
+			else
 				printFloat((*it)->toString(), n);
-	    }
-	    ++n;
-	    if (n == 19) {
-		    mvwprintw(stdscr, n, 1, ". . .");
-		    break ;
-	    }
-    }
+		}
+		++n;
+		if (n == 19) {
+			mvwprintw(stdscr, n, 1, ". . .");
+			break ;
+		}
+	}
 	printOps(datas, iter, typeMap);
-    while (c != '\n' && c != 27)
-    	c = getch();
-    if (c == 27) {
-    	endwin();
-    	_exit = true;
-    }
+	while (c != '\n' && c != 27)
+		c = getch();
+	if (c == 27) {
+		endwin();
+		_exit = true;
+	}
 }
 
 bool Visualizer::getExit() {

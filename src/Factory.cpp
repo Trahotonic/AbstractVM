@@ -33,34 +33,34 @@ IOperand const* Factory::createOperand(eOperandType type, std::string const &val
 }
 
 IOperand const* Factory::createInt8(std::string const &value) const {
-    if (value.length() > 19) {
-        if (value[0] == '-') throw ValueUnderflow(line, value, "<Int8>");
-        else throw ValueOverflow(line, value, "<Int8>");
-    }
-    if (std::stol(value) > CHAR_MAX)
+	if (value.length() > 19) {
+		if (value[0] == '-') throw ValueUnderflow(line, value, "<Int8>");
+		else throw ValueOverflow(line, value, "<Int8>");
+	}
+	if (std::stol(value) > CHAR_MAX)
 		throw ValueOverflow(line, value, "<Int8>");
-    if (std::stol(value) < CHAR_MIN)
-        throw ValueUnderflow(line, value, "<Int8>");
+	if (std::stol(value) < CHAR_MIN)
+		throw ValueUnderflow(line, value, "<Int8>");
 	return new Operand<char>(Int8, static_cast<char>(std::stoi(value)), value);
 }
 
 IOperand const* Factory::createInt16(std::string const &value) const {
-    if (value.length() > 19) {
-        if (value[0] == '-') throw ValueUnderflow(line, value, "<Int16>");
-        else throw ValueOverflow(line, value, "<Int16>");
-    }
-    if (std::stol(value) > SHRT_MAX)
-	    throw ValueOverflow(line, value, "<Int16>");
-    if (std::stol(value) < SHRT_MIN)
-	    throw ValueUnderflow(line, value, "<Int16>");
+	if (value.length() > 19) {
+		if (value[0] == '-') throw ValueUnderflow(line, value, "<Int16>");
+		else throw ValueOverflow(line, value, "<Int16>");
+	}
+	if (std::stol(value) > SHRT_MAX)
+		throw ValueOverflow(line, value, "<Int16>");
+	if (std::stol(value) < SHRT_MIN)
+		throw ValueUnderflow(line, value, "<Int16>");
 	return new Operand<short>(Int16, static_cast<short>(std::stoi(value)), value);
 }
 
 IOperand const* Factory::createInt32(std::string const &value) const {
-    if (value.length() > 19) {
-        if (value[0] == '-') throw ValueUnderflow(line, value, "<Int32>");
-        else throw ValueOverflow(line, value, "<Int32>");
-    }
+	if (value.length() > 19) {
+		if (value[0] == '-') throw ValueUnderflow(line, value, "<Int32>");
+		else throw ValueOverflow(line, value, "<Int32>");
+	}
 	if (std::stol(value) > INT_MAX)
 		throw ValueOverflow(line, value, "<Int32>");
 	if (std::stol(value) < INT_MIN)
@@ -73,8 +73,8 @@ IOperand const* Factory::createFloat(std::string const &value) const {
 		std::stof(value);
 	}
 	catch (std::exception & e) {
-	    if (value[0] != '-') throw ValueOverflow(line, value, "<Float>");
-	    else throw ValueUnderflow(line, value, "<Float>");
+		if (value[0] != '-') throw ValueOverflow(line, value, "<Float>");
+		else throw ValueUnderflow(line, value, "<Float>");
 	}
 	return new Operand<float>(Float, std::stof(value), value);
 }
@@ -84,8 +84,8 @@ IOperand const* Factory::createDouble(std::string const &value) const {
 		std::stod(value);
 	}
 	catch (std::exception & e) {
-	    if (value[0] != '-') throw ValueOverflow(line, value, "<Double>");
-	    else throw ValueUnderflow(line, value, "<Double>");
+		if (value[0] != '-') throw ValueOverflow(line, value, "<Double>");
+		else throw ValueUnderflow(line, value, "<Double>");
 	}
 	return new Operand<double>(Double, std::stod(value), value);
 }

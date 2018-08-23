@@ -1,9 +1,5 @@
-//
-// Created by Roman KYSLYY on 7/24/18.
-//
-
-#ifndef ABSTRACTVM_OPERAND_HPP
-#define ABSTRACTVM_OPERAND_HPP
+#ifndef OPERAND_HPP
+#define OPERAND_HPP
 
 # include <iomanip>
 # include <iostream>
@@ -20,7 +16,7 @@ private:
 	eOperandType	_type;
 	T				_value;
 	std::string		_str;
-	Factory         _factory;
+	Factory		 _factory;
 
 public:
 	Operand() : _type(Int8), _value(0), _str("0") {}
@@ -36,8 +32,8 @@ public:
 	}
 
 	T   getValue() const {
-        return _value;
-    }
+		return _value;
+	}
 
 	~Operand() {}
 
@@ -102,7 +98,7 @@ public:
 		if (getMax(&rhs)->getType() == Int8 ||
 			getMax(&rhs)->getType() == Int16 ||
 			getMax(&rhs)->getType() == Int32)
-            return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '+')));
+			return _factory.createOperand(getMax(&rhs)->getType(), std::to_string(getStrResult<long>(rhs, '+')));
 		else if (getMax(&rhs)->getType() == Float)
 			return _factory.createOperand(Float, std::to_string(getStrResult<float>(rhs, '+')));
 		else
@@ -151,4 +147,4 @@ public:
 	}
 };
 
-#endif //ABSTRACTVM_OPERAND_HPP
+#endif

@@ -1,9 +1,5 @@
-//
-// Created by Roman KYSLYY on 7/24/18.
-//
-
-#ifndef ABSTRACTVM_IOPERAND_HPP
-#define ABSTRACTVM_IOPERAND_HPP
+#ifndef IOPERAND_HPP
+#define IOPERAND_HPP
 
 # include <iostream>
 # include <string>
@@ -26,4 +22,4 @@ public:
 	virtual ~IOperand() {}
 };
 
-#endif //ABSTRACTVM_IOPERAND_HPP
+#endif
