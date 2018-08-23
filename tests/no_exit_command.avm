@@ -1,0 +1,11 @@
+; ---------------------
+; no_exit_command.avm -
+; ---------------------
+
+push int32(40)
+
+push int8(2)
+
+add
+
+; no exit command
