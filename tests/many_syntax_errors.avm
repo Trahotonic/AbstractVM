@@ -1,0 +1,23 @@
+; ------------------------
+; many_syntax_errors.avm -
+; ------------------------
+
+push int32(4.)
+
+push float()
+
+push double(
+
+push int8)
+
+push int16(abc)
+
+push int32(.)
+
+push
+
+push int1
+
+pushint32(42)
+
+exit

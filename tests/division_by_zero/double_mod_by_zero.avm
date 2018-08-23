@@ -1,0 +1,11 @@
+; ------------------------
+; double_div_by_zero.avm -
+; ------------------------
+
+push double(42)
+
+push double(0)
+
+mod
+
+exit
