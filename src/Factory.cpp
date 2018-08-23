@@ -38,7 +38,7 @@ IOperand const* Factory::createInt8(std::string const &value) const {
         else throw ValueOverflow(line, value, "<Int8>");
     }
     if (std::stol(value) > CHAR_MAX)
-        throw ValueOverflow(line, value, "<Int8>");
+		throw ValueOverflow(line, value, "<Int8>");
     if (std::stol(value) < CHAR_MIN)
         throw ValueUnderflow(line, value, "<Int8>");
 	return new Operand<char>(Int8, static_cast<char>(std::stoi(value)), value);

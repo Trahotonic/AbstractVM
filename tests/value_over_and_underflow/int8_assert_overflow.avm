@@ -1,0 +1,11 @@
+; -----------------------
+; int8_add_overflow.avm -
+; -----------------------
+
+push int8(125)
+
+assert int8(135)
+
+add
+
+exit
