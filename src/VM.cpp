@@ -162,6 +162,8 @@ void VM::_dump(int c) {
 }
 
 void VM::_print(int c) {
+	if (_visualization)
+		return ;
 	if (_stack.empty()) {
 		throw EmptyStackException("Cannot print", c);
 	}
@@ -186,11 +188,11 @@ void VM::run() {
 	};
 	std::vector<MethodData*> methodDatas = _parser.getMethodDatas();
 	for (int i = 0; i < static_cast<int>(methodDatas.size()); ++i) {
-		if (_visualization)
-			_visualizer.visualize(_stack, methodDatas, i);
-		if (_visualizer.getExit())
-			break ;
 		try {
+			if (_visualization)
+				_visualizer.visualize(_stack, methodDatas, i);
+			if (_visualizer.getExit())
+				break ;
 			if (methodDatas[i]->getInstr() == "push")
 				_push(methodDatas[i]->getType(), methodDatas[i]->getValue());
 			else if (methodDatas[i]->getInstr() == "assert")

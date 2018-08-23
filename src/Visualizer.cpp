@@ -42,6 +42,11 @@ void Visualizer::initVis() {
 	}
 	for (int i = 35; i < 100; ++i)
 		mvwprintw(stdscr, 4, i, "-");
+	for (int i = 101; i < 104; ++i) {
+		mvwprintw(stdscr, 2, i, "-");
+		mvwprintw(stdscr, 4, i, "-");
+	}
+	mvwprintw(stdscr, 3, 104, "|");
 	mvwprintw(stdscr, 1, 15, "STACK");
 	mvwprintw(stdscr, 1, 61, "NEXT OPERATION");
 	attron(A_DIM);
@@ -186,6 +191,13 @@ void Visualizer::visualize(std::list<const IOperand *> stack,
 	if (c == 27) {
 		endwin();
 		_exit = true;
+		return ;
+	}
+	if (datas[iter]->getInstr() == "print") {
+		if (stack.empty())
+			throw EmptyStackException("Cannot print", datas[iter]->getLine());
+		else
+			mvwprintw(stdscr, 3, 102, "%c", std::stoi(stack.front()->toString()));
 	}
 }
 

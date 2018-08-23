@@ -8,6 +8,7 @@
 #include <vector>
 #include "IOperand.hpp"
 #include "MethodData.hpp"
+#include "Exceptions.hpp"
 
 class Visualizer {
 private:
